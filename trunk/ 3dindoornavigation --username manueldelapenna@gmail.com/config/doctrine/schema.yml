@@ -1,0 +1,90 @@
+#Modelo de datos Indoor Navigation 2D/3D
+Estructura:
+  columns:
+    nombre:
+      type:     string(50)
+      notnull:  true
+    tipo:      
+      type: integer
+      notnull: true
+    capacidad:
+      type:     integer
+      notnull:  true      
+    es_navegable:
+      type:     boolean
+      default:  true
+
+Multimedia:
+  columns:
+    nombre:
+      type:     string(255)
+      notnull:  true
+    tipo:      
+      type: integer
+      notnull: true
+    estructura_id:
+      type:     integer
+  relations:
+    Estructura:
+      refClass:   Estructura
+      onDelete:   cascade
+      local:      estructura_id
+      foreign:    id     
+  
+Puntos:
+  columns:
+    punto_origen_x:
+      type:     integer
+      notnull:  true
+    punto_origen_y:
+      type:     integer
+      notnull:  true
+    estructura_id:
+      type:     integer
+  relations:
+    Estructura:
+      refClass:   Estructura
+      onDelete:   cascade
+      local:      estructura_id
+      foreign:    id     
+
+#-----------------------------------------------
+#    modelo que define la union de puntos      #
+#-----------------------------------------------
+PuntoNavegacion:
+  columns:
+    nombre:
+      type:     string(50)
+      notnull:  true
+    punto_origen_x:
+      type:     integer
+      notnull:  true
+    punto_origen_y:
+      type:     integer
+      notnull:  true
+    estructura_id:
+      type:     integer
+  relations:
+    Estructura:
+      refClass:   Estructura
+      onDelete:   restrict
+      local:      estructura_id
+      foreign:    id
+    PuntoNavegacion:
+      class: PuntoNavegacion
+      local: punto_navegacion_1_id
+      foreign: punto_navegacion_2_id
+      refClass: PuntoNavegacionPuntoNavegacion
+      equal: true
+
+PuntoNavegacionPuntoNavegacion:
+  columns:
+    punto_navegacion_1_id:
+      type:     integer
+      primary: true
+    punto_navegacion_2_id:
+      type:     integer
+      primary: true
+    distancia:
+      type:     float
+      notnull:  true

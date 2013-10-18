@@ -1,0 +1,15 @@
+sfGuardUser:
+  Claudio_admin:
+    first_name:     Claudio
+    last_name:      Borré
+    email_address:  borre.claudio@gmail.com
+    username:       claudio
+    password:       claudio
+    is_super_admin: true
+  Luciano_admin:
+    first_name:     Luciano
+    last_name:      Appathie
+    email_address:  luciano.appathie@gmail.com
+    username:       luciano
+    password:       luciano
+    is_super_admin: true

@@ -1,0 +1,49 @@
+# You can find more information about this file on the symfony website:
+# http://www.symfony-project.org/reference/1_4/en/11-App
+
+# default values
+all:
+  sf_guard_plugin:
+    routes_register: false
+  
+  # Change these if you'd like to move/modify CSS & JS files
+  tmcTwitterBootstrapPlugin:
+    bootstrap_path:              /tmcTwitterBootstrapPlugin/css/bootstrap.min.css
+    responsive_bootstrap_path:   /tmcTwitterBootstrapPlugin/css/bootstrap-responsive.min.css
+    admin_styles_path:           /tmcTwitterBootstrapPlugin/css/styles.css
+    jquery_path:                 /tmcTwitterBootstrapPlugin/js/jquery.min.js
+    bootstrap_js_path:           /tmcTwitterBootstrapPlugin/js/bootstrap.min.js
+    admin_js_path:               /tmcTwitterBootstrapPlugin/js/global.js
+
+    # The route/URI to use for the nav bar's "brand" link
+    # profile_route: @homepage?username
+    # The link next for the nav bar's "brand" link
+    dashboard_name: Indoor Navigation - Backend
+    header:
+      menu:
+        Estructuras:
+          credentials: [super_admin]
+          dropdown:
+            Listado:
+              route: estructura
+            Crear:  
+              route: estructura_new              
+        Puntos:                        
+          credentials: [super_admin]
+          dropdown:
+            Puntos:
+              route: puntos                         
+            Puntos de Navegación:  
+              route: punto_navegacion
+            Relaciones entre Puntos de Navegación:
+              route: punto_navegacion_punto_navegacion
+        Multimedia:
+          credentials: [super_admin]
+          dropdown:
+            Listado:
+              route: multimedia                         
+            Crear:  
+              route: multimedia_new          
+
+    footer:
+      copyright:          "Indoor Navigation &copy; <?php echo date("Y") ?>"  

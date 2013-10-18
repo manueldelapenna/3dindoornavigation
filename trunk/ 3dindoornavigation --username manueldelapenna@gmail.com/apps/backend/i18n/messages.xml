@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE xliff PUBLIC "-//XLIFF//DTD XLIFF//EN" "http://www.oasis-open.org/committees/xliff/documents/xliff.dtd" >
+<xliff version="1.0">
+  <file original="global" source-language="en" datatype="plaintext">
+    <header />
+    <body>
+      <!-- General -->
+      <trans-unit id="1">
+        <source>Required.</source>
+        <target>Campo obligatorio.</target>
+      </trans-unit>
+      <trans-unit id="2">
+        <source>Invalid.</source>
+        <target>Campo inválido.</target>
+      </trans-unit>
+      <trans-unit id="3">
+        <source>"%value%" is not an integer.</source>
+        <target>Campo inválido. "%value%" no es un número entero.</target>
+      </trans-unit>      
+      <trans-unit id="4">
+        <source>is empty</source>
+        <target>¿és nulo?</target>
+      </trans-unit>
+      <trans-unit id="5">
+        <source>from</source>
+        <target>de</target>
+      </trans-unit>
+      <trans-unit id="6">
+        <source>to</source>
+        <target>hasta</target>
+      </trans-unit>
+      <trans-unit id="7">
+        <source>Created at</source>
+        <target>Creado el</target>
+      </trans-unit>
+      <trans-unit id="8">
+        <source>Updated at</source>
+        <target>Actualizado el</target>
+      </trans-unit>
+      <trans-unit id="9">
+        <source>developed by</source>
+        <target>desarrollador por</target>
+      </trans-unit>
+      <trans-unit id="10">
+        <source>Remember</source>
+        <target>Recordar</target>
+      </trans-unit>
+      <trans-unit id="11">
+        <source>Username or E-Mail</source>
+        <target>Usuario o email</target>
+      </trans-unit>
+      <trans-unit id="12">
+        <source>Password</source>
+        <target>Contraseña</target>
+      </trans-unit>
+      <trans-unit id="13">
+        <source>The username and/or password is invalid.</source>
+        <target>El usuario o la contraseña no son válidos.</target>
+      </trans-unit>
+      <trans-unit id="14">
+        <source>Forgot your password?</source>
+        <target>Recuperar contraseña</target>
+      </trans-unit>
+      <trans-unit id="15">
+        <source>Want to register?</source>
+        <target>Desea registrarse?</target>
+      </trans-unit>           
+      
+      <!-- Form -->
+      <trans-unit id="16">
+        <source>The item was created successfully.</source>
+        <target>El elemento se ha creado satisfactoriamente.</target>
+      </trans-unit>
+      <trans-unit id="17">
+        <source>The item was updated successfully.</source>
+        <target>El elemento se ha actualizado satisfactoriamente.</target>
+      </trans-unit>
+      <trans-unit id="18">
+        <source>The item was created successfully. You can add another one below.</source>
+        <target>El elemento se ha creado satisfactoriamente. Usted puede agregar otro debajo.</target>
+      </trans-unit>
+      <trans-unit id="19">
+        <source>The item has not been saved due to some errors.</source>
+        <target>El elemento no se ha guardado debido a unos errores.</target>
+      </trans-unit>
+      <trans-unit id="20">
+        <source>The item was deleted successfully.</source>
+        <target>El elemento se ha eliminado satisfactoriamente.</target>
+      </trans-unit>
+      <trans-unit id="21">
+        <source>You must at least select one item.</source>
+        <target>Usted debe seleccionar al menos un elemento.</target>
+      </trans-unit>
+      <trans-unit id="22">
+        <source>You must select an action to execute on the selected items.</source>
+        <target>Usted debe seleccionar una acción a ejecutar para los elementos seleccionados.</target>
+      </trans-unit>
+      <trans-unit id="23">
+        <source>A problem occurs when deleting the selected items as some items do not exist anymore.</source>
+        <target>Ocurrio un problema al eliminar los elementos seleccionados ya que algunos no existen.</target>
+      </trans-unit>
+      <trans-unit id="24">
+        <source>The selected items have been deleted successfully.</source>
+        <target>Los elementos seleccionados han sido eliminados satisfactoriamente.</target>
+      </trans-unit>
+      <trans-unit id="25">
+        <source>A problem occurs when deleting the selected items.</source>
+        <target>Ocurrio un problema al intentar elimnar los elementos seleccionados.</target>
+      </trans-unit>
+      <trans-unit id="26">
+        <source>An object with the same "%column%" already exist.</source>
+        <target>Ya existe un elemento con el mismo "%column%" que intenta ingresar.</target>
+      </trans-unit>    
+      <trans-unit id="27">
+        <source>Delete</source>
+        <target>Eliminar</target>
+      </trans-unit>                                    
+      <trans-unit id="28">
+        <source>No results</source>
+        <target>Sin resultados</target>
+      </trans-unit>
+      <trans-unit id="29">
+        <source>There are active filters, not all results may be shown.</source>
+        <target>Hay filtros activados, no todos los resultados son mostrados.</target>
+      </trans-unit>
+
+              
+      <!--Generators-->             
+      <trans-unit id="30">
+        <source>Tipo to string</source>
+        <target>Tipo</target>
+      </trans-unit>
+      <trans-unit id="31">
+        <source>Estructura to string</source>
+        <target>Pertenece a</target>
+      </trans-unit>
+
+
+    </body>
+  </file>
+</xliff>

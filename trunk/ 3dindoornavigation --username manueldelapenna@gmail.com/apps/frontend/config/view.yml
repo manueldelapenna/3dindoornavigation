@@ -1,0 +1,20 @@
+# You can find more information about this file on the symfony website:
+# http://www.symfony-project.org/reference/1_4/en/13-View
+
+default:
+  http_metas:
+    content-type: text/html
+
+  metas:
+    title:        Indoor Navigation 2D/3D
+    description:  Sistema de navegación 2D/3D para interiores
+    #keywords:     symfony, project
+    language:     es_AR
+    #robots:       index, follow
+
+  stylesheets:    [indoor-navigation.css, base.css, jquery-ui.css, info.css]
+
+  javascripts:    [kinetic-v3.10.4.js, kinetic-functions.js, Three.js, Detector.js, Stats.js, OrbitControls.js, THREEx.KeyboardState.js, THREEx.FullScreen.js, THREEx.WindowResize.js, jquery-1.9.1.js, jquery-ui.js, info.js]
+
+  has_layout:     true
+  layout:         layout

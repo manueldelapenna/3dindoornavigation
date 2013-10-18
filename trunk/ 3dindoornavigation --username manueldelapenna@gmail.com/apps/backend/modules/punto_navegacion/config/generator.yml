@@ -1,0 +1,27 @@
+generator:
+  class: tmcTwitterBootstrapDoctrineGenerator
+  param:
+    model_class:           PuntoNavegacion
+    theme:                 tmcTwitterBootstrap
+    non_verbose_templates: true
+    with_show:             false
+    singular:              ~
+    plural:                ~
+    route_prefix:          punto_navegacion
+    with_doctrine_route:   true
+    actions_base_class:    sfActions
+
+    config:
+      actions: ~
+      fields:  ~
+      list:
+        title:  'Listado de Puntos de Navegación'
+        display: [nombre, punto_origen_x, punto_origen_y, nombre_estructura]
+      filter:  ~
+      form:    ~
+      edit:    ~
+      new:
+        title: 'Nuevo Punto de Navegación'
+        display: [nombre, punto_origen_x, punto_origen_y, estructura_id]
+      show:    ~
+      revert:  ~

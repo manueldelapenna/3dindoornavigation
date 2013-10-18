@@ -1,0 +1,73 @@
+multimedia:
+  class: sfDoctrineRouteCollection
+  options:
+    model:                Multimedia
+    module:               multimedia
+    prefix_path:          /multimedia
+    column:               id
+    with_wildcard_routes: true
+
+punto_navegacion_punto_navegacion:
+  class: sfDoctrineRouteCollection
+  options:
+    model:                PuntoNavegacionPuntoNavegacion
+    module:               punto_navegacion_punto_navegacion
+    prefix_path:          /punto_navegacion_punto_navegacion
+    column:               Array
+    with_wildcard_routes: true
+
+punto_navegacion:
+  class: sfDoctrineRouteCollection
+  options:
+    model:                PuntoNavegacion
+    module:               punto_navegacion
+    prefix_path:          /punto_navegacion
+    column:               id
+    with_wildcard_routes: true
+
+estructura:
+  class: sfDoctrineRouteCollection
+  options:
+    model:                Estructura
+    module:               estructura
+    prefix_path:          /estructura
+    column:               id
+    with_wildcard_routes: true
+
+puntos:
+  class: sfDoctrineRouteCollection
+  options:
+    model:                Puntos
+    module:               puntos
+    prefix_path:          /puntos
+    column:               id
+    with_wildcard_routes: true
+
+sf_guard_signin:
+  url:   /login
+  param: { module: sfGuardAuth, action: signin }
+
+sf_guard_signout:
+  url:   /logout
+  param: { module: sfGuardAuth, action: signout }
+
+sf_guard_password:
+  url:   /request_password
+  param: { module: sfGuardAuth, action: password }
+
+# You can find more information about this file on the symfony website:
+# http://www.symfony-project.org/reference/1_4/en/10-Routing
+
+# default rules
+homepage:
+  url:   /
+  param: { module: estructura, action: index }
+
+# generic rules
+# please, remove them by adding more specific rules
+default_index:
+  url:   /:module
+  param: { action: index }
+
+default:
+  url:   /:module/:action/*

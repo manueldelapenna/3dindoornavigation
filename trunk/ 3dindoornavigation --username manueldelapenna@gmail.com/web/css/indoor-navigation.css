@@ -1,0 +1,10 @@
+.mensaje_error{
+  margin: 4px 0;
+  padding: 4px 4px 4px 30px;
+  background: url(../images/error_1.png) no-repeat 10px 4px;
+  border-top: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+  background-color: #DCB0F2;
+  color: black;
+  font-weight: bold;
+}
