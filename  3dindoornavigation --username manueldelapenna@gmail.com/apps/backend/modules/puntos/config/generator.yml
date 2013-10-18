@@ -1,0 +1,33 @@
+generator:
+  class: tmcTwitterBootstrapDoctrineGenerator
+  param:
+    model_class:           Puntos
+    theme:                 tmcTwitterBootstrap
+    non_verbose_templates: true
+    with_show:             false
+    singular:              ~
+    plural:                ~
+    route_prefix:          puntos
+    with_doctrine_route:   true
+    actions_base_class:    sfActions
+
+    config:
+      actions: ~
+      fields:  ~
+      list:
+        title:    'Listado de Puntos'
+        display:  [punto_origen_x,punto_origen_y, estructura_to_string]
+        object_actions:
+          _edit: ~
+          _delete: ~
+      filter:  ~
+      form:    ~
+      edit:
+        title:  'Edición de Punto'
+      new:
+        title: 'Nuevo Punto'
+      show:
+        title:    'Ver Punto'
+        display:
+          Información General: [punto_origen_x, punto_origen_y, estructura_to_string]        
+      revert:  ~

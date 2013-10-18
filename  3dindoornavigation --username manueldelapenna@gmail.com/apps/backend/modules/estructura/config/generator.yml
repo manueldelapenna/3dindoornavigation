@@ -1,0 +1,30 @@
+generator:
+  class: tmcTwitterBootstrapDoctrineGenerator
+  param:
+    model_class:           Estructura
+    theme:                 tmcTwitterBootstrap
+    non_verbose_templates: true
+    with_show:             false
+    singular:              ~
+    plural:                ~
+    route_prefix:          estructura
+    with_doctrine_route:   true
+    actions_base_class:    sfActions
+
+    config:
+      actions: ~
+      fields:
+      list:
+        title:  'Listado de Estructuras'
+        display: [nombre, tipo_to_string, capacidad, es_navegable]
+      filter:  ~
+      form:    ~
+      edit:
+        title:  'Edición de Estructura'
+      new:
+        title:  'Nueva Estructura'
+      show:
+        title:    'Ver Estructura'
+        display:
+          Información General: [nombre, tipo_to_string, capacidad, es_navegable]        
+      revert:  ~

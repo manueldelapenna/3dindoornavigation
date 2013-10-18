@@ -1,0 +1,26 @@
+generator:
+  class: tmcTwitterBootstrapDoctrineGenerator
+  param:
+    model_class:           PuntoNavegacionPuntoNavegacion
+    theme:                 tmcTwitterBootstrap
+    non_verbose_templates: true
+    with_show:             false
+    singular:              ~
+    plural:                ~
+    route_prefix:          punto_navegacion_punto_navegacion
+    with_doctrine_route:   true
+    actions_base_class:    sfActions
+
+    config:
+      actions: ~
+      fields:  ~
+      list:
+        batch_actions: []
+        title:    'Listado de Relaciones entre Puntos de Navegación'
+        display:  [punto_navegacion_id1, punto_navegacion_id2, distancia]        
+      filter:  ~
+      form:    ~
+      edit:    ~
+      new:     ~
+      show:    ~
+      revert:  ~
