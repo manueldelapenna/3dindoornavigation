@@ -138,7 +138,7 @@
 <!-- 3D -->
 
 <div id="ThreeJS" style="position: relative; border-style: solid; left:0px; top:0px; height: 500px; width: 600px;"></div>
-<script src="https://raw.github.com/sole/tween.js/master/build/tween.min.js"></script>
+
 <script>
 /*
 	Three.js "tutorials by example"
