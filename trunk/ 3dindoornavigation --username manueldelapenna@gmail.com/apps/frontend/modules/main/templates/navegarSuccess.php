@@ -138,7 +138,7 @@
 <!-- 3D -->
 
 <div id="ThreeJS" style="position: relative; border-style: solid; left:0px; top:0px; height: 500px; width: 600px;"></div>
-
+<script src="https://raw.github.com/sole/tween.js/master/build/tween.min.js"></script>
 <script>
 /*
 	Three.js "tutorials by example"
@@ -371,13 +371,18 @@ function init()
 function animate() 
 {
     requestAnimationFrame( animate );
-	render();		
-	update();
+    
+        update();
+        render();		
+        TWEEN.update();
+    
+    
+    
 }
 
 function update()
 {
-	
+        
 	var delta = clock.getDelta(); // seconds.
 	var moveDistance = 200 * delta; // 200 pixels per second
 	var rotateAngle = Math.PI / 2 * delta;   // pi/2 radians (90 degrees) per second
@@ -388,8 +393,7 @@ function update()
 	
 	// move forwards/backwards/left/right
 	if ( keyboard.pressed("W") )
-	    //console.log(collision());
-		camera.translateZ( -moveDistance );
+            	camera.translateZ( -moveDistance );
 	if ( keyboard.pressed("S") )
 		camera.translateZ(  moveDistance );
 	if ( keyboard.pressed("Q") )
@@ -410,9 +414,29 @@ function update()
 	
 	if ( keyboard.pressed("Z") )
 	{
+            
 		camera.position.set(3500,25,200);
                 camera.rotation.set(0,0,0);
 	}
+        
+        if ( keyboard.pressed("C") )
+	{
+            var tween = new TWEEN.Tween(camera.position).to({
+                x: 3500,
+                y: 25,
+                z: 200
+            });
+            tween.easing(TWEEN.Easing.Linear.None).onUpdate(function () {
+                //camera.lookAt(camera.position);
+            });
+            tween.onComplete(function () {
+                //camera.lookAt(camera.position);
+            });
+            tween.start();
+            
+            
+	}
+        
 	
 }
 
@@ -435,7 +459,8 @@ function collision() {
 
 function render() 
 {
-	renderer.render( scene, camera );
+    
+     renderer.render( scene, camera );
 }
 
 </script>
