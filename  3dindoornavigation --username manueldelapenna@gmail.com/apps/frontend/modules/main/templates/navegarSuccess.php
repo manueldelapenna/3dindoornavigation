@@ -149,11 +149,11 @@
 // MAIN
 
 // standard global variables
-var container, scene, camera, renderer;// controls, stats;
+var container, scene, camera, renderer;// controls
 var keyboard = new THREEx.KeyboardState();
 var clock = new THREE.Clock();
 // custom global variables
-var cube;
+
 var collidableMeshList = [];
 
 init();
@@ -169,8 +169,8 @@ function init()
 	var VIEW_ANGLE = 45, ASPECT = SCREEN_WIDTH / SCREEN_HEIGHT, NEAR = 0.1, FAR = 20000;
 	camera = new THREE.PerspectiveCamera( VIEW_ANGLE, ASPECT, NEAR, FAR);
 	scene.add(camera);
-	camera.position.set(0,150,400);
-	camera.lookAt(scene.position);	
+	camera.position.set(3500,25,200);
+	camera.rotation.set(0,0,0);
 	// RENDERER
 	if ( Detector.webgl )
 		renderer = new THREE.WebGLRenderer( {antialias:true} );
@@ -366,22 +366,6 @@ function init()
             collidableMeshList.push(pared);
             scene.add( pared );
 
-
-
-        
-        //persona
-	var materialArray = [];
-	materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture('../../../../images/xpos.png') }));
-	materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture('../../../../images/xneg.png') }));
-	materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture('../../../../images/ypos.png') }));
-	materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture('../../../../images/yneg.png') }));
-	materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture('../../../../images/zpos.png') }));
-	materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture('../../../../images/zneg.png') }));
-	var MovingCubeMat = new THREE.MeshFaceMaterial(materialArray);
-	var MovingCubeGeom = new THREE.CubeGeometry( 50, 50, 50, 1, 1, 1, materialArray );
-	person = new THREE.Mesh( MovingCubeGeom, MovingCubeMat );
-	person.position.set(3500, 25, 200);
-	scene.add( person );	
 }
 
 function animate() 
@@ -405,45 +389,31 @@ function update()
 	// move forwards/backwards/left/right
 	if ( keyboard.pressed("W") )
 	    //console.log(collision());
-		person.translateZ( -moveDistance );
+		camera.translateZ( -moveDistance );
 	if ( keyboard.pressed("S") )
-		person.translateZ(  moveDistance );
+		camera.translateZ(  moveDistance );
 	if ( keyboard.pressed("Q") )
-		person.translateX( -moveDistance );
+		camera.translateX( -moveDistance );
 	if ( keyboard.pressed("E") )
-		person.translateX(  moveDistance );	
+		camera.translateX(  moveDistance );	
 
 	// rotate left/right/up/down
 	var rotation_matrix = new THREE.Matrix4().identity();
 	if ( keyboard.pressed("A") )
-		person.rotateOnAxis( new THREE.Vector3(0,1,0), rotateAngle);
+		camera.rotateOnAxis( new THREE.Vector3(0,1,0), rotateAngle);
 	if ( keyboard.pressed("D") )
-		person.rotateOnAxis( new THREE.Vector3(0,1,0), -rotateAngle);
+		camera.rotateOnAxis( new THREE.Vector3(0,1,0), -rotateAngle);
 	if ( keyboard.pressed("R") )
-		person.rotateOnAxis( new THREE.Vector3(1,0,0), rotateAngle);
+		camera.rotateOnAxis( new THREE.Vector3(1,0,0), rotateAngle);
 	if ( keyboard.pressed("F") )
-		person.rotateOnAxis( new THREE.Vector3(1,0,0), -rotateAngle);
+		camera.rotateOnAxis( new THREE.Vector3(1,0,0), -rotateAngle);
 	
 	if ( keyboard.pressed("Z") )
 	{
-		person.position.set(400,25,500);
-		person.rotation.set(0,0,0);
+		camera.position.set(3500,25,200);
+                camera.rotation.set(0,0,0);
 	}
 	
-	var relativeCameraOffset = new THREE.Vector3(0,0,10);
-
-	var cameraOffset = relativeCameraOffset.applyMatrix4( person.matrixWorld );
-
-	camera.position.x = cameraOffset.x;
-	camera.position.y = cameraOffset.y;
-	camera.position.z = cameraOffset.z;
-	camera.lookAt( person.position );
-	
-	//camera.updateMatrix();
-	//camera.updateProjectionMatrix();
-	
-        //controls.update();
-	//stats.update();
 }
 
 function collision() {
