@@ -382,7 +382,6 @@ function animate()
 
 function update()
 {
-        
 	var delta = clock.getDelta(); // seconds.
 	var moveDistance = 200 * delta; // 200 pixels per second
 	var rotateAngle = Math.PI / 2 * delta;   // pi/2 radians (90 degrees) per second
@@ -419,26 +418,53 @@ function update()
                 camera.rotation.set(0,0,0);
 	}
         
+        
+        
         if ( keyboard.pressed("C") )
 	{
-            var tween = new TWEEN.Tween(camera.position).to({
-                x: 3500,
-                y: 25,
-                z: 200
+           if ((camera.position.x - 3500) != 0){
+                        var pendiente = (camera.position.z - 200) / (camera.position.x - 3500);
+                        var angulo_rotacion = Math.atan(pendiente);
+           }
+                        
+           var tween2 = new TWEEN.Tween(camera.rotation).to({
+                x: 0,
+                y: angulo_rotacion,
+                z: 0
             });
-            tween.easing(TWEEN.Easing.Linear.None).onUpdate(function () {
+            tween2.easing(TWEEN.Easing.Linear.None).onUpdate(function () {
+                
+                //console.log(camera.rotation)
                 //camera.lookAt(camera.position);
             });
-            tween.onComplete(function () {
+            tween2.onComplete(function () {
                 //camera.lookAt(camera.position);
+                                        
+                
+                            var tween = new TWEEN.Tween(camera.position).to({
+                                x: 3500,
+                                y: 25,
+                                z: 200
+                            });
+                            tween.easing(TWEEN.Easing.Linear.None).onUpdate(function () {
+
+                                console.log(camera.rotation)
+                                //camera.lookAt(camera.position);
+                            });
+                            tween.onComplete(function () {
+                                //camera.lookAt(camera.position);
+                            });
+                            tween.start();
             });
-            tween.start();
+            tween2.start();
             
             
 	}
+         
         
-	
 }
+
+
 
 function collision() {
 
