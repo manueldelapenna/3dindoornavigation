@@ -422,47 +422,56 @@ function update()
         
         if ( keyboard.pressed("C") )
 	{
-           if ((camera.position.x - 3500) != 0){
-                        var pendiente = (camera.position.z - 200) / (camera.position.x - 3500);
-                        var angulo_rotacion = Math.atan(pendiente);
+           var pendiente = (camera.position.z - 200) / (camera.position.x - 3500);
+           var angulo_rotacion = Math.atan(pendiente);
+           
+           var anguloAGirar = (angulo_rotacion - camera.rotation.y);
+           if (anguloAGirar > 3.1415926535820002){
+                anguloAGirar = -(6.2831853071640005 - anguloAGirar);
            }
+                     
                         
            var tween2 = new TWEEN.Tween(camera.rotation).to({
                 x: 0,
-                y: angulo_rotacion,
-                z: 0
-            });
+                y: anguloAGirar,
+                z: 0 ,});
             tween2.easing(TWEEN.Easing.Linear.None).onUpdate(function () {
                 
                 //console.log(camera.rotation)
                 //camera.lookAt(camera.position);
             });
             tween2.onComplete(function () {
-                //camera.lookAt(camera.position);
-                                        
+          
+               //camera.lookAt(camera.position);
                 
-                            var tween = new TWEEN.Tween(camera.position).to({
-                                x: 3500,
-                                y: 25,
-                                z: 200
-                            });
-                            tween.easing(TWEEN.Easing.Linear.None).onUpdate(function () {
+                        var tween = new TWEEN.Tween(camera.position).to({
+                             x: 3500,
+                               y: 25,
+                               z: 200
+                          });
+                         tween.easing(TWEEN.Easing.Linear.None).onUpdate(function () {
 
-                                console.log(camera.rotation)
+                             console.log(camera.rotation)
                                 //camera.lookAt(camera.position);
-                            });
-                            tween.onComplete(function () {
+                          });
+                        tween.onComplete(function () {
                                 //camera.lookAt(camera.position);
-                            });
-                            tween.start();
-            });
-            tween2.start();
-            
-            
-	}
-         
-        
+                        });
+                        tween.start(); 
+                                    
+        });
+        tween2.start();     
+                
+    }
+    
 }
+
+
+  
+            
+     
+        
+
 
 
 
