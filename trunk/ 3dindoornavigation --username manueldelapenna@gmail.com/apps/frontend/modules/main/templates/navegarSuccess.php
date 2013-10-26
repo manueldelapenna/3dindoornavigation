@@ -137,8 +137,8 @@
 
 <!-- 3D -->
 
-<div id="ThreeJS" style="position: relative; border-style: solid; left:0px; top:0px; height: 500px; width: 600px;"></div>
 
+<div id="ThreeJS" style="position: relative; border-style: solid; left:0px; top:0px; height: 500px; width: 600px;"></div>
 <script>
 /*
 	Three.js "tutorials by example"
@@ -171,7 +171,8 @@ function init()
 	scene.add(camera);
 	camera.position.set(3500,25,200);
 	camera.rotation.set(0,0,0);
-	// RENDERER
+	
+        // RENDERER
 	if ( Detector.webgl )
 		renderer = new THREE.WebGLRenderer( {antialias:true} );
 	else
@@ -179,17 +180,7 @@ function init()
 	renderer.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
 	container = document.getElementById( 'ThreeJS' );
 	container.appendChild( renderer.domElement );
-	// EVENTS
-	//THREEx.WindowResize(renderer, camera);
-	THREEx.FullScreen.bindKey({ charCode : 'm'.charCodeAt(0) });
-        
-        var border = 20;
-        var elevation = 150;
-
-	// LIGHT
-	var light = new THREE.PointLight(0xffffff);
-	light.position.set(0,250,0);
-	scene.add(light);
+		
 	// FLOOR
 	var floorTexture = new THREE.ImageUtils.loadTexture('../../../../images/cemento_alisado.jpg');
 	floorTexture.wrapS = floorTexture.wrapT = THREE.RepeatWrapping; 
@@ -200,12 +191,6 @@ function init()
 	floor.position.y = -0.5;
 	floor.rotation.x = Math.PI / 2;
 	scene.add(floor);
-	// SKYBOX/FOG
-	var skyBoxGeometry = new THREE.CubeGeometry( 10000, 10000, 10000 );
-	var skyBoxMaterial = new THREE.MeshBasicMaterial( { color: 0x9999ff, side: THREE.BackSide } );
-	var skyBox = new THREE.Mesh( skyBoxGeometry, skyBoxMaterial );
-	// scene.add(skyBox);
-	scene.fog = new THREE.FogExp2( 0x9999ff, 0.00025 );
 	
 	////////////
 	// CUSTOM //
@@ -221,7 +206,7 @@ function init()
              
              if ($punto_anterior != null){
                  
-                 //if ($punto_pared->getEstructuraId()==2){
+                 //si los puntos pertenecen a la misma estructura se hacen los calculos y se dibujan
                  if ($punto_anterior->getEstructuraId() == $punto_pared->getEstructuraId()){
                      
                      //distancia = raiz[(y2 - y1)^2 + (x2 - x1)^2]
@@ -242,32 +227,15 @@ function init()
                     }else{
                         $angulo_rotacion = deg2rad(90);
                     }
-                                       
+                    ?>             
                     
-                     ?>             
-                                 
-                     
+                    dibujarPared(<?php echo  $distancia ?>,<?php echo $punto_medio_x ?>,<?php echo -$punto_medio_y ?>,<?php echo $angulo_rotacion?>);
+                                         
                     
-    // create an array with six textures for a cool cube
-                
-                    var materialArray = [];
-                    materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture('../../../../images/crate.png') }));
-                    materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture('../../../../images/crate.png') }));
-                    materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture('../../../../images/crate.png') }));
-                    materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture('../../../../images/crate.png') }));
-                    materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture('../../../../images/walls.jpg') }));
-                    materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture('../../../../images/walls.jpg') }));
-                    var MovingCubeMat = new THREE.MeshFaceMaterial(materialArray);
-                    var MovingCubeGeom = new THREE.CubeGeometry( <?php echo  $distancia ?>, elevation, border, 1, 1, 1, materialArray );
-
-                    pared = new THREE.Mesh( MovingCubeGeom, MovingCubeMat );
-                    pared.position.set(<?php echo $punto_medio_x ?>, 75, <?php echo -$punto_medio_y ?>);
-                    pared.rotation.y = <?php echo $angulo_rotacion?>;
-                    collidableMeshList.push(pared);
-                    scene.add( pared );
-                    
+                 
+                 //si los puntos no pertenecen a la misma estructura dibuja el ultimo con el primero del mismo id y guarda el primero del otro id de estructura
            <?php }else{
-                    //dibuja el ultimo con el primero del mismo id y guarda el primero del otro id de estructura
+                    
                     //distancia = raiz[(y2 - y1)^2 + (x2 - x1)^2]
                     $distancia = sqrt(pow($primer_punto->getPuntoOrigenY() - $punto_anterior->getPuntoOrigenY(),2) + pow($primer_punto->getPuntoOrigenX() - $punto_anterior->getPuntoOrigenX(),2));
                                          
@@ -275,7 +243,6 @@ function init()
                     $punto_medio_x = ($primer_punto->getPuntoOrigenX() + $punto_anterior->getPuntoOrigenX())/2;
                     $punto_medio_y = ($primer_punto->getPuntoOrigenY() + $punto_anterior->getPuntoOrigenY())/2;
                     
-
                     //pendiente  = m = (y1-y2) / (x1-x2)
                     //m = TAN(α)
                     //α= ATAN(m) , ATAN=arcotangente 
@@ -286,85 +253,57 @@ function init()
                     }else{
                         $angulo_rotacion = deg2rad(90);
                     }
-                                       
-                    
-                     ?>             
+                    ?>             
                                  
                      
+                    dibujarPared(<?php echo  $distancia ?>,<?php echo $punto_medio_x ?>,<?php echo -$punto_medio_y ?>,<?php echo $angulo_rotacion?>);
                     
-    // create an array with six textures for a cool cube
-                
-                    var materialArray = [];
-                    materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture('../../../../images/crate.png') }));
-                    materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture('../../../../images/crate.png') }));
-                    materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture('../../../../images/crate.png') }));
-                    materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture('../../../../images/crate.png') }));
-                    materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture('../../../../images/walls.jpg') }));
-                    materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture('../../../../images/walls.jpg') }));
-                    var MovingCubeMat = new THREE.MeshFaceMaterial(materialArray);
-                    var MovingCubeGeom = new THREE.CubeGeometry( <?php echo  $distancia ?>, elevation, border, 1, 1, 1, materialArray );
-
-                    pared = new THREE.Mesh( MovingCubeGeom, MovingCubeMat );
-                    pared.position.set(<?php echo $punto_medio_x ?>, 75, <?php echo -$punto_medio_y ?>);
-                    pared.rotation.y = <?php echo $angulo_rotacion?>;
-                    collidableMeshList.push(pared);
-                    scene.add( pared );
-                    
-           <?php
-               
+                    <?php
                
                     $primer_punto = $punto_pared;
                  }                 
-                 //}
+             //se guarda el primer punto
              }else{
                  $primer_punto = $punto_pared;
-                 
              }
              
+             //finalmente se actualizan los puntos para seguir iterando
              $punto_anterior = $punto_pared;
         endforeach;
-            //dibuja la pared faltante (primer punto de la última estructura con último punto de la última estructura
-            //distancia = raiz[(y2 - y1)^2 + (x2 - x1)^2]
-            $distancia = sqrt(pow($primer_punto->getPuntoOrigenY() - $punto_anterior->getPuntoOrigenY(),2) + pow($primer_punto->getPuntoOrigenX() - $punto_anterior->getPuntoOrigenX(),2));
+            
+        //dibuja la pared faltante (primer punto de la última estructura con último punto de la última estructura
+        //distancia = raiz[(y2 - y1)^2 + (x2 - x1)^2]
+        $distancia = sqrt(pow($primer_punto->getPuntoOrigenY() - $punto_anterior->getPuntoOrigenY(),2) + pow($primer_punto->getPuntoOrigenX() - $punto_anterior->getPuntoOrigenX(),2));
 
-             //punto medio = (x1 + x2) / 2 ; (y1 + y2) / 2
-            $punto_medio_x = ($primer_punto->getPuntoOrigenX() + $punto_anterior->getPuntoOrigenX())/2;
-            $punto_medio_y = ($primer_punto->getPuntoOrigenY() + $punto_anterior->getPuntoOrigenY())/2;
-
-
-            //pendiente  = m = (y1-y2) / (x1-x2)
-            //m = TAN(α)
-            //α= ATAN(m) , ATAN=arcotangente 
-
-            if (($punto_anterior->getPuntoOrigenX() - $primer_punto->getPuntoOrigenX()) != 0){
-                $pendiente = ($punto_anterior->getPuntoOrigenY() - $primer_punto->getPuntoOrigenY()) / ($punto_anterior->getPuntoOrigenX() - $primer_punto->getPuntoOrigenX());
-                $angulo_rotacion = atan($pendiente);
-            }else{
-                $angulo_rotacion = deg2rad(90);
-            }
+         //punto medio = (x1 + x2) / 2 ; (y1 + y2) / 2
+        $punto_medio_x = ($primer_punto->getPuntoOrigenX() + $punto_anterior->getPuntoOrigenX())/2;
+        $punto_medio_y = ($primer_punto->getPuntoOrigenY() + $punto_anterior->getPuntoOrigenY())/2;
 
 
-             ?>             
+        //pendiente  = m = (y1-y2) / (x1-x2)
+        //m = TAN(α)
+        //α= ATAN(m) , ATAN=arcotangente 
+
+        if (($punto_anterior->getPuntoOrigenX() - $primer_punto->getPuntoOrigenX()) != 0){
+            $pendiente = ($punto_anterior->getPuntoOrigenY() - $primer_punto->getPuntoOrigenY()) / ($punto_anterior->getPuntoOrigenX() - $primer_punto->getPuntoOrigenX());
+            $angulo_rotacion = atan($pendiente);
+        }else{
+            $angulo_rotacion = deg2rad(90);
+        }
+
+
+         ?>             
 
 
 
-// create an array with six textures for a cool cube
+        dibujarPared(<?php echo  $distancia ?>,<?php echo $punto_medio_x ?>,<?php echo -$punto_medio_y ?>,<?php echo $angulo_rotacion?>);
 
-            var materialArray = [];
-            materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture('../../../../images/crate.png') }));
-            materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture('../../../../images/crate.png') }));
-            materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture('../../../../images/crate.png') }));
-            materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture('../../../../images/crate.png') }));
-            materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture('../../../../images/walls.jpg') }));
-            materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture('../../../../images/walls.jpg') }));
-            var MovingCubeMat = new THREE.MeshFaceMaterial(materialArray);
-            var MovingCubeGeom = new THREE.CubeGeometry( <?php echo  $distancia ?>, elevation, border, 1, 1, 1, materialArray );
-
-            pared = new THREE.Mesh( MovingCubeGeom, MovingCubeMat );
-            pared.position.set(<?php echo $punto_medio_x ?>, 75, <?php echo -$punto_medio_y ?>);
-            pared.rotation.y = <?php echo $angulo_rotacion?>;
-            collidableMeshList.push(pared);
-            scene.add( pared );
+        
+        //cubo de referencia inicio
+        var cube = new THREE.Mesh(new THREE.CubeGeometry(15, 15, 15), new THREE.MeshNormalMaterial());
+        //cube.overdraw = true;
+        cube.position.set(3500, 0, 200);
+        scene.add(cube);
 
 }
 
@@ -401,11 +340,10 @@ function update()
 		camera.translateX(  moveDistance );	
 
 	// rotate left/right/up/down
-	var rotation_matrix = new THREE.Matrix4().identity();
 	if ( keyboard.pressed("A") )
-		camera.rotateOnAxis( new THREE.Vector3(0,1,0), rotateAngle);
+                camera.rotation.y += rotateAngle;
 	if ( keyboard.pressed("D") )
-		camera.rotateOnAxis( new THREE.Vector3(0,1,0), -rotateAngle);
+		camera.rotation.y -= rotateAngle;
 	if ( keyboard.pressed("R") )
 		camera.rotateOnAxis( new THREE.Vector3(1,0,0), rotateAngle);
 	if ( keyboard.pressed("F") )
@@ -418,62 +356,77 @@ function update()
                 camera.rotation.set(0,0,0);
 	}
         
-        
-        
         if ( keyboard.pressed("C") )
 	{
-           var pendiente = (camera.position.z - 200) / (camera.position.x - 3500);
-           var angulo_rotacion = Math.atan(pendiente);
            
-           var anguloAGirar = (angulo_rotacion - camera.rotation.y);
-           if (anguloAGirar > 3.1415926535820002){
-                anguloAGirar = -(6.2831853071640005 - anguloAGirar);
-           }
-                     
-                        
-           var tween2 = new TWEEN.Tween(camera.rotation).to({
-                x: 0,
-                y: anguloAGirar,
-                z: 0 ,});
-            tween2.easing(TWEEN.Easing.Linear.None).onUpdate(function () {
-                
-                //console.log(camera.rotation)
-                //camera.lookAt(camera.position);
-            });
-            tween2.onComplete(function () {
-          
-               //camera.lookAt(camera.position);
-                
-                        var tween = new TWEEN.Tween(camera.position).to({
-                             x: 3500,
-                               y: 25,
-                               z: 200
-                          });
-                         tween.easing(TWEEN.Easing.Linear.None).onUpdate(function () {
-
-                             console.log(camera.rotation)
-                                //camera.lookAt(camera.position);
-                          });
-                        tween.onComplete(function () {
-                                //camera.lookAt(camera.position);
-                        });
-                        tween.start(); 
-                                    
-        });
-        tween2.start();     
-                
+           irAPunto(3500,25,200,camera);
+               
     }
     
 }
-
-
-  
-            
-     
+function dibujarPared(distancia,puntoMedioX,puntoMedioY,anguloRotacion) {
+    
+    var border = 20;
+    var elevation = 150;
         
+    // se crea la pared
+    var materialArray = [];
+    materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture('../../../../images/crate.png') }));
+    materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture('../../../../images/crate.png') }));
+    materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture('../../../../images/crate.png') }));
+    materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture('../../../../images/crate.png') }));
+    materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture('../../../../images/walls.jpg') }));
+    materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture('../../../../images/walls.jpg') }));
+    var MovingCubeMat = new THREE.MeshFaceMaterial(materialArray);
+    var MovingCubeGeom = new THREE.CubeGeometry(distancia, elevation, border, 1, 1, 1, materialArray );
 
+    pared = new THREE.Mesh( MovingCubeGeom, MovingCubeMat );
+    pared.position.set(puntoMedioX, 75, puntoMedioY);
+    pared.rotation.y = anguloRotacion;
+    collidableMeshList.push(pared);
+    scene.add( pared );
+}
 
+function irAPunto(x,y,z,cam) {
+  
+    //calcula pendiente y angulo de rotacion
+    var pendiente = (cam.position.x - 3500) / (cam.position.z - 200);
+    var angulo_rotacion = Math.atan(pendiente);
 
+    // si el punto de destino de z es mayor al actual, da media vuelta mas
+    if (200>cam.position.z){
+        angulo_rotacion += Math.PI;
+    }
+
+    //rotacion
+    var animacionRotacion = new TWEEN.Tween(cam.rotation).to({
+         x: 0,
+         y: angulo_rotacion,
+         z: 0,});
+     animacionRotacion.easing(TWEEN.Easing.Linear.None).onUpdate(function () {
+         //mientras rota no hace nada
+     });
+     animacionRotacion.onComplete(function () {
+         //termina de rotar y avanza
+         var animacionAvance = new TWEEN.Tween(cam.position).to({
+              x: x,
+                y: y,
+                z: z
+           });
+         animacionAvance.easing(TWEEN.Easing.Linear.None).onUpdate(function () {
+             //mientras avanza no hace nada
+           });
+         animacionAvance.onComplete(function () {
+             //termina de avanzar y no hace nada
+         });
+         //comienza a avanzar
+         animacionAvance.start(); 
+
+    });
+    //comienza a rotar
+    animacionRotacion.start();            
+}
+        
 
 function collision() {
 
