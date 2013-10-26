@@ -315,8 +315,6 @@ function animate()
         render();		
         TWEEN.update();
     
-    
-    
 }
 
 function update()
@@ -324,10 +322,6 @@ function update()
 	var delta = clock.getDelta(); // seconds.
 	var moveDistance = 200 * delta; // 200 pixels per second
 	var rotateAngle = Math.PI / 2 * delta;   // pi/2 radians (90 degrees) per second
-	
-	// local transformations
-
-	
 	
 	// move forwards/backwards/left/right
 	if ( keyboard.pressed("W") )
@@ -351,14 +345,12 @@ function update()
 	
 	if ( keyboard.pressed("Z") )
 	{
-            
 		camera.position.set(3500,25,200);
                 camera.rotation.set(0,0,0);
 	}
         
         if ( keyboard.pressed("C") )
 	{
-           
            irAPunto(3500,25,200,camera);
                
     }
