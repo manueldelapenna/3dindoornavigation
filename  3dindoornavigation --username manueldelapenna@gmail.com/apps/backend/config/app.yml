@@ -43,7 +43,14 @@ all:
             Listado:
               route: multimedia                         
             Crear:  
-              route: multimedia_new          
+              route: multimedia_new
+        Paredes Dibujables:
+          credentials: [super_admin]
+          dropdown:
+            Listado:
+              route: pared_dibujable
+            Crear:  
+              route: pared_dibujable_new 
 
     footer:
       copyright:          "Indoor Navigation &copy; <?php echo date("Y") ?>"  

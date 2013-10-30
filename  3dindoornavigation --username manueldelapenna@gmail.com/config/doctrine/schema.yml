@@ -88,3 +88,29 @@ PuntoNavegacionPuntoNavegacion:
     distancia:
       type:     float
       notnull:  true
+      
+ParedDibujable:
+  columns:
+    punto_1_id:
+      type:     integer
+      notnull:  true
+    punto_2_id:
+      type:     integer
+      notnull:  true
+    link_imagen:
+      type:     string
+      notnull:  true
+    descripcion:
+      type:     string
+      notnull:  true
+  relations:
+    Punto1:
+      class:   Puntos
+      onDelete:   restrict
+      local:      punto_1_id
+      foreign:    id
+    Punto2:
+      class:   Puntos
+      onDelete:   restrict
+      local:      punto_2_id
+      foreign:    id

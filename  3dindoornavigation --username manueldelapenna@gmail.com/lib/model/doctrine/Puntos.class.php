@@ -12,6 +12,9 @@
  */
 class Puntos extends BasePuntos
 {
+  public function __toString() {
+    return '('.$this->getPuntoOrigenX().','.$this->getPuntoOrigenY().')';
+  }
   public function getEstructuraToString(){
     return Doctrine::getTable('Estructura')->find($this->getEstructuraId())->getNombre();
   }
