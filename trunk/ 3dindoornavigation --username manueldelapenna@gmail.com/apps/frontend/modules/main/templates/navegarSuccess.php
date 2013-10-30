@@ -201,9 +201,15 @@ function init()
         <?php
         
         $punto_anterior = null;
-                
+        
+        //foreach ($paredes_dibujables as $pared):
         foreach ($puntos_todas_paredes as $punto_pared):
-             
+            //los puntos se acceden así:
+            // $punto1 = $punto_pared->getPunto1()
+            // $punto2 = $punto_pared->getPunto2()
+            // de ahi reemplazas punto anterior por punto 1 y punto pared por punto 2 y sacás todos los ifs
+            // la distancia, el punto medio y el ángulo hay que seguir calculandolo
+            // podés ir llenando la tabla desde el backend para ir probando
              if ($punto_anterior != null){
                  
                  //si los puntos pertenecen a la misma estructura se hacen los calculos y se dibujan

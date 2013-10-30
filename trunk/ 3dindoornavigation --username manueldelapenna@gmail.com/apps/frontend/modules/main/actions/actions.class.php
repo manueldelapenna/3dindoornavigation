@@ -30,6 +30,7 @@ class mainActions extends sfActions
     $this->getUser()->setAttribute('fin_id',$request->getParameter('est_id'));
     $this->estructuras = Doctrine::getTable('Estructura')->findAll();
     $this->puntos_todas_paredes = Doctrine::getTable('Puntos')->findAll();
+    $this->paredes_dibujables = Doctrine::getTable('ParedDibujable')->findAll();
     $d = new Dijkstra();
     $d->cargarListaDeAdyacencia();
 
