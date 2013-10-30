@@ -1,3 +1,12 @@
+pared_dibujable:
+  class: sfDoctrineRouteCollection
+  options:
+    model:                ParedDibujable
+    module:               pared_dibujable
+    prefix_path:          /pared_dibujable
+    column:               id
+    with_wildcard_routes: true
+
 multimedia:
   class: sfDoctrineRouteCollection
   options:
