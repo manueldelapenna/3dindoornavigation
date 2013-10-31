@@ -200,35 +200,35 @@ function init()
         
         <?php
         
-        $punto_anterior = null;
+        //$punto_anterior = null;
         
-        //foreach ($paredes_dibujables as $pared):
-        foreach ($puntos_todas_paredes as $punto_pared):
+        foreach ($paredes_dibujables as $punto_pared):
+        //foreach ($puntos_todas_paredes as $punto_pared):
             //los puntos se acceden así:
-            // $punto1 = $punto_pared->getPunto1()
-            // $punto2 = $punto_pared->getPunto2()
+            $punto1 = $punto_pared->getPunto1();
+            $punto2 = $punto_pared->getPunto2();
             // de ahi reemplazas punto anterior por punto 1 y punto pared por punto 2 y sacás todos los ifs
             // la distancia, el punto medio y el ángulo hay que seguir calculandolo
             // podés ir llenando la tabla desde el backend para ir probando
-             if ($punto_anterior != null){
+            // if ($punto_anterior != null){
                  
                  //si los puntos pertenecen a la misma estructura se hacen los calculos y se dibujan
-                 if ($punto_anterior->getEstructuraId() == $punto_pared->getEstructuraId()){
+                 //if ($punto_anterior->getEstructuraId() == $punto_pared->getEstructuraId()){
                      
                      //distancia = raiz[(y2 - y1)^2 + (x2 - x1)^2]
-                     $distancia = sqrt(pow($punto_pared->getPuntoOrigenY() - $punto_anterior->getPuntoOrigenY(),2) + pow($punto_pared->getPuntoOrigenX() - $punto_anterior->getPuntoOrigenX(),2));
+                    $distancia = sqrt(pow($punto2->getPuntoOrigenY() - $punto1->getPuntoOrigenY(),2) + pow($punto2->getPuntoOrigenX() - $punto1->getPuntoOrigenX(),2));
                                          
                      //punto medio = (x1 + x2) / 2 ; (y1 + y2) / 2
-                    $punto_medio_x = ($punto_pared->getPuntoOrigenX() + $punto_anterior->getPuntoOrigenX())/2;
-                    $punto_medio_y = ($punto_pared->getPuntoOrigenY() + $punto_anterior->getPuntoOrigenY())/2;
+                    $punto_medio_x = ($punto2->getPuntoOrigenX() + $punto1->getPuntoOrigenX())/2;
+                    $punto_medio_y = ($punto2->getPuntoOrigenY() + $punto1->getPuntoOrigenY())/2;
                     
 
                     //pendiente  = m = (y1-y2) / (x1-x2)
                     //m = TAN(α)
                     //α= ATAN(m) , ATAN=arcotangente 
                     
-                    if (($punto_anterior->getPuntoOrigenX() - $punto_pared->getPuntoOrigenX()) != 0){
-                        $pendiente = ($punto_anterior->getPuntoOrigenY() - $punto_pared->getPuntoOrigenY()) / ($punto_anterior->getPuntoOrigenX() - $punto_pared->getPuntoOrigenX());
+                    if (($punto1->getPuntoOrigenX() - $punto2->getPuntoOrigenX()) != 0){
+                        $pendiente = ($punto1->getPuntoOrigenY() - $punto2->getPuntoOrigenY()) / ($punto1->getPuntoOrigenX() - $punto2->getPuntoOrigenX());
                         $angulo_rotacion = atan($pendiente);
                     }else{
                         $angulo_rotacion = deg2rad(90);
@@ -240,69 +240,72 @@ function init()
                     
                  
                  //si los puntos no pertenecen a la misma estructura dibuja el ultimo con el primero del mismo id y guarda el primero del otro id de estructura
-           <?php }else{
+           <?php 
+           
+           
+           //         }else{
                     
                     //distancia = raiz[(y2 - y1)^2 + (x2 - x1)^2]
-                    $distancia = sqrt(pow($primer_punto->getPuntoOrigenY() - $punto_anterior->getPuntoOrigenY(),2) + pow($primer_punto->getPuntoOrigenX() - $punto_anterior->getPuntoOrigenX(),2));
+            //        $distancia = sqrt(pow($primer_punto->getPuntoOrigenY() - $punto_anterior->getPuntoOrigenY(),2) + pow($primer_punto->getPuntoOrigenX() - $punto_anterior->getPuntoOrigenX(),2));
                                          
                      //punto medio = (x1 + x2) / 2 ; (y1 + y2) / 2
-                    $punto_medio_x = ($primer_punto->getPuntoOrigenX() + $punto_anterior->getPuntoOrigenX())/2;
-                    $punto_medio_y = ($primer_punto->getPuntoOrigenY() + $punto_anterior->getPuntoOrigenY())/2;
+           //         $punto_medio_x = ($primer_punto->getPuntoOrigenX() + $punto_anterior->getPuntoOrigenX())/2;
+           //         $punto_medio_y = ($primer_punto->getPuntoOrigenY() + $punto_anterior->getPuntoOrigenY())/2;
                     
                     //pendiente  = m = (y1-y2) / (x1-x2)
                     //m = TAN(α)
                     //α= ATAN(m) , ATAN=arcotangente 
                     
-                    if (($punto_anterior->getPuntoOrigenX() - $primer_punto->getPuntoOrigenX()) != 0){
-                        $pendiente = ($punto_anterior->getPuntoOrigenY() - $primer_punto->getPuntoOrigenY()) / ($punto_anterior->getPuntoOrigenX() - $primer_punto->getPuntoOrigenX());
-                        $angulo_rotacion = atan($pendiente);
-                    }else{
-                        $angulo_rotacion = deg2rad(90);
-                    }
-                    ?>             
+           //         if (($punto_anterior->getPuntoOrigenX() - $primer_punto->getPuntoOrigenX()) != 0){
+           //             $pendiente = ($punto_anterior->getPuntoOrigenY() - $primer_punto->getPuntoOrigenY()) / ($punto_anterior->getPuntoOrigenX() - $primer_punto->getPuntoOrigenX());
+           //             $angulo_rotacion = atan($pendiente);
+           //         }else{
+          //              $angulo_rotacion = deg2rad(90);
+           //         }
+          //          ?>             
                                  
                      
-                    dibujarPared(<?php echo  $distancia ?>,<?php echo $punto_medio_x ?>,<?php echo -$punto_medio_y ?>,<?php echo $angulo_rotacion?>);
+         //           dibujarPared(<?php echo  $distancia ?>,<?php echo $punto_medio_x ?>,<?php echo -$punto_medio_y ?>,<?php echo $angulo_rotacion?>);
                     
-                    <?php
+        //            <?php
                
-                    $primer_punto = $punto_pared;
-                 }                 
+        //            $primer_punto = $punto_pared;
+        //         }                 
              //se guarda el primer punto
-             }else{
-                 $primer_punto = $punto_pared;
-             }
+        //     }else{
+        //         $primer_punto = $punto_pared;
+        //     }
              
              //finalmente se actualizan los puntos para seguir iterando
-             $punto_anterior = $punto_pared;
-        endforeach;
+      //       $punto_anterior = $punto_pared;
+      endforeach;
             
         //dibuja la pared faltante (primer punto de la última estructura con último punto de la última estructura
         //distancia = raiz[(y2 - y1)^2 + (x2 - x1)^2]
-        $distancia = sqrt(pow($primer_punto->getPuntoOrigenY() - $punto_anterior->getPuntoOrigenY(),2) + pow($primer_punto->getPuntoOrigenX() - $punto_anterior->getPuntoOrigenX(),2));
+      //  $distancia = sqrt(pow($primer_punto->getPuntoOrigenY() - $punto_anterior->getPuntoOrigenY(),2) + pow($primer_punto->getPuntoOrigenX() - $punto_anterior->getPuntoOrigenX(),2));
 
          //punto medio = (x1 + x2) / 2 ; (y1 + y2) / 2
-        $punto_medio_x = ($primer_punto->getPuntoOrigenX() + $punto_anterior->getPuntoOrigenX())/2;
-        $punto_medio_y = ($primer_punto->getPuntoOrigenY() + $punto_anterior->getPuntoOrigenY())/2;
+       // $punto_medio_x = ($primer_punto->getPuntoOrigenX() + $punto_anterior->getPuntoOrigenX())/2;
+      //  $punto_medio_y = ($primer_punto->getPuntoOrigenY() + $punto_anterior->getPuntoOrigenY())/2;
 
 
         //pendiente  = m = (y1-y2) / (x1-x2)
         //m = TAN(α)
         //α= ATAN(m) , ATAN=arcotangente 
 
-        if (($punto_anterior->getPuntoOrigenX() - $primer_punto->getPuntoOrigenX()) != 0){
-            $pendiente = ($punto_anterior->getPuntoOrigenY() - $primer_punto->getPuntoOrigenY()) / ($punto_anterior->getPuntoOrigenX() - $primer_punto->getPuntoOrigenX());
-            $angulo_rotacion = atan($pendiente);
-        }else{
-            $angulo_rotacion = deg2rad(90);
-        }
+      //  if (($punto_anterior->getPuntoOrigenX() - $primer_punto->getPuntoOrigenX()) != 0){
+     //       $pendiente = ($punto_anterior->getPuntoOrigenY() - $primer_punto->getPuntoOrigenY()) / ($punto_anterior->getPuntoOrigenX() - $primer_punto->getPuntoOrigenX());
+     //       $angulo_rotacion = atan($pendiente);
+     //   }else{
+     //       $angulo_rotacion = deg2rad(90);
+     //   }
 
 
-         ?>             
+     //    ?>             
 
 
 
-        dibujarPared(<?php echo  $distancia ?>,<?php echo $punto_medio_x ?>,<?php echo -$punto_medio_y ?>,<?php echo $angulo_rotacion?>);
+      //  dibujarPared(<?php echo  $distancia ?>,<?php echo $punto_medio_x ?>,<?php echo -$punto_medio_y ?>,<?php echo $angulo_rotacion?>);
 
         
         //cubo de referencia inicio
