@@ -9,21 +9,27 @@
  * @property integer $punto_2_id
  * @property string $link_imagen
  * @property string $descripcion
+ * @property integer $orientacion_pared_id
+ * @property OrientacionPared $OrientacionPared
  * @property Puntos $Punto1
  * @property Puntos $Punto2
  * 
- * @method integer        getPunto1Id()    Returns the current record's "punto_1_id" value
- * @method integer        getPunto2Id()    Returns the current record's "punto_2_id" value
- * @method string         getLinkImagen()  Returns the current record's "link_imagen" value
- * @method string         getDescripcion() Returns the current record's "descripcion" value
- * @method Puntos         getPunto1()      Returns the current record's "Punto1" value
- * @method Puntos         getPunto2()      Returns the current record's "Punto2" value
- * @method ParedDibujable setPunto1Id()    Sets the current record's "punto_1_id" value
- * @method ParedDibujable setPunto2Id()    Sets the current record's "punto_2_id" value
- * @method ParedDibujable setLinkImagen()  Sets the current record's "link_imagen" value
- * @method ParedDibujable setDescripcion() Sets the current record's "descripcion" value
- * @method ParedDibujable setPunto1()      Sets the current record's "Punto1" value
- * @method ParedDibujable setPunto2()      Sets the current record's "Punto2" value
+ * @method integer          getPunto1Id()             Returns the current record's "punto_1_id" value
+ * @method integer          getPunto2Id()             Returns the current record's "punto_2_id" value
+ * @method string           getLinkImagen()           Returns the current record's "link_imagen" value
+ * @method string           getDescripcion()          Returns the current record's "descripcion" value
+ * @method integer          getOrientacionParedId()   Returns the current record's "orientacion_pared_id" value
+ * @method OrientacionPared getOrientacionPared()     Returns the current record's "OrientacionPared" value
+ * @method Puntos           getPunto1()               Returns the current record's "Punto1" value
+ * @method Puntos           getPunto2()               Returns the current record's "Punto2" value
+ * @method ParedDibujable   setPunto1Id()             Sets the current record's "punto_1_id" value
+ * @method ParedDibujable   setPunto2Id()             Sets the current record's "punto_2_id" value
+ * @method ParedDibujable   setLinkImagen()           Sets the current record's "link_imagen" value
+ * @method ParedDibujable   setDescripcion()          Sets the current record's "descripcion" value
+ * @method ParedDibujable   setOrientacionParedId()   Sets the current record's "orientacion_pared_id" value
+ * @method ParedDibujable   setOrientacionPared()     Sets the current record's "OrientacionPared" value
+ * @method ParedDibujable   setPunto1()               Sets the current record's "Punto1" value
+ * @method ParedDibujable   setPunto2()               Sets the current record's "Punto2" value
  * 
  * @package    tesis-recargada
  * @subpackage model
@@ -51,11 +57,20 @@ abstract class BaseParedDibujable extends sfDoctrineRecord
              'type' => 'string',
              'notnull' => true,
              ));
+        $this->hasColumn('orientacion_pared_id', 'integer', null, array(
+             'type' => 'integer',
+             'notnull' => true,
+             ));
     }
 
     public function setUp()
     {
         parent::setUp();
+        $this->hasOne('OrientacionPared', array(
+             'local' => 'orientacion_pared_id',
+             'foreign' => 'id',
+             'onDelete' => 'restrict'));
+
         $this->hasOne('Puntos as Punto1', array(
              'local' => 'punto_1_id',
              'foreign' => 'id',
