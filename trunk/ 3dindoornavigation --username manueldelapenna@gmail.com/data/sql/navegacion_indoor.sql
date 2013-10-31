@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 3.2.4
+-- version 4.0.4.1
 -- http://www.phpmyadmin.net
 --
--- Servidor: localhost
--- Tiempo de generación: 30-10-2013 a las 00:44:43
--- Versión del servidor: 5.1.41
--- Versión de PHP: 5.3.1
+-- Servidor: 127.0.0.1
+-- Tiempo de generación: 31-10-2013 a las 22:02:25
+-- Versión del servidor: 5.5.32
+-- Versión de PHP: 5.4.19
 
-SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -18,6 +19,8 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 --
 -- Base de datos: `indoor_navigation`
 --
+CREATE DATABASE IF NOT EXISTS `indoor_navigation` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `indoor_navigation`;
 
 -- --------------------------------------------------------
 
@@ -35,7 +38,7 @@ CREATE TABLE IF NOT EXISTS `estructura` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=27 ;
 
 --
--- Volcar la base de datos para la tabla `estructura`
+-- Volcado de datos para la tabla `estructura`
 --
 
 INSERT INTO `estructura` (`id`, `nombre`, `tipo`, `capacidad`, `es_navegable`) VALUES
@@ -81,7 +84,7 @@ CREATE TABLE IF NOT EXISTS `multimedia` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=16 ;
 
 --
--- Volcar la base de datos para la tabla `multimedia`
+-- Volcado de datos para la tabla `multimedia`
 --
 
 INSERT INTO `multimedia` (`id`, `nombre`, `tipo`, `estructura_id`) VALUES
@@ -116,12 +119,45 @@ CREATE TABLE IF NOT EXISTS `pared_dibujable` (
   PRIMARY KEY (`id`),
   KEY `punto_1_id_idx` (`punto_1_id`),
   KEY `punto_2_id_idx` (`punto_2_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=58 ;
 
 --
--- Volcar la base de datos para la tabla `pared_dibujable`
+-- Volcado de datos para la tabla `pared_dibujable`
 --
 
+INSERT INTO `pared_dibujable` (`id`, `punto_1_id`, `punto_2_id`, `link_imagen`, `descripcion`) VALUES
+(6, 5, 6, 'link 5', 'Pared de entrada principal a la Facultad.'),
+(7, 6, 7, 'link 6', 'Pared union, frente con lateral derecha.'),
+(8, 7, 8, 'link 7', 'Pared Lateral derecha sobre la entrada princial de la facultad'),
+(9, 8, 9, 'link 8', 'Pared union lateral derecha, lateral siguiente.'),
+(10, 9, 123, 'link 9', 'Pared final, derecha atras.'),
+(12, 109, 12, 'link 11', 'Pared detras de la Fotocopiadora.'),
+(13, 12, 17, 'link 12', 'Pasiilo a sector nuevo, Entrada secundaria, frente aula 5, pasillo interno hasta biblioteca.'),
+(19, 17, 18, 'link 15', 'Union pasillo lateral izquierdo, con frente de Biblioteca.'),
+(20, 18, 21, 'link 16', 'Frente de la Biblioteca de la Facultad'),
+(21, 21, 22, 'link 17', 'Union Biblioteca, con pasillo de Alumnos.'),
+(22, 22, 23, 'link 18', 'Pasillo interno, con salida al patio interno, frente a alumnos'),
+(23, 23, 39, 'link 19', 'Puerta Entrada a pasillo interno, entrando por la entrada de bicicletas.'),
+(27, 43, 46, 'link  22', 'Alumnos'),
+(28, 46, 50, 'link 23', 'Alumnos ventanilla principal.'),
+(29, 50, 55, 'link 24', 'pared lateral alumnos'),
+(31, 55, 65, 'link 26', 'Intencia, Oficina G, Alumnos B, Personal y Concursos'),
+(37, 89, 76, 'link 28', 'Frente Aula 1, 2, 3 y 4'),
+(39, 120, 76, 'link 29', 'Lateral aula 1'),
+(42, 89, 92, 'link 32', 'Pared final aula 4 mirando desde pizarron.'),
+(44, 123, 126, 'link 34', 'Baño mujeres 1'),
+(45, 126, 127, 'link 35', 'Pared lateral derecha de la escalera a 2do piso'),
+(46, 127, 128, 'link 36', 'Frente del ascensor + escalera'),
+(47, 128, 125, 'Link 37', 'Pared lateral izquierda ascensor mirando de frente.'),
+(48, 120, 125, 'link 38', 'Baño de Hombres 1'),
+(49, 92, 101, 'link 39', 'Escalera a primer piso, entrada por atras cercana al aula 4'),
+(51, 5, 65, 'Link', 'Pared lateral derecha Intendencia'),
+(52, 102, 101, 'Link', 'Puerta baño de hombres 2'),
+(53, 107, 102, 'Link', 'Union Baño mujeres y hombres 2'),
+(54, 107, 108, 'link', 'Puerta baño mujeres 2'),
+(55, 108, 109, 'link', 'BAño mujeres 2, pared final del mapa'),
+(56, 38, 39, 'link', 'Pared frontal escalera 3'),
+(57, 38, 43, 'link', 'Pared lateral final Economica financiera con escalera 3');
 
 -- --------------------------------------------------------
 
@@ -138,7 +174,7 @@ CREATE TABLE IF NOT EXISTS `puntos` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=133 ;
 
 --
--- Volcar la base de datos para la tabla `puntos`
+-- Volcado de datos para la tabla `puntos`
 --
 
 INSERT INTO `puntos` (`id`, `punto_origen_x`, `punto_origen_y`, `estructura_id`) VALUES
@@ -291,7 +327,7 @@ CREATE TABLE IF NOT EXISTS `punto_navegacion` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=62 ;
 
 --
--- Volcar la base de datos para la tabla `punto_navegacion`
+-- Volcado de datos para la tabla `punto_navegacion`
 --
 
 INSERT INTO `punto_navegacion` (`id`, `nombre`, `punto_origen_x`, `punto_origen_y`, `estructura_id`) VALUES
@@ -371,7 +407,7 @@ CREATE TABLE IF NOT EXISTS `punto_navegacion_punto_navegacion` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Volcar la base de datos para la tabla `punto_navegacion_punto_navegacion`
+-- Volcado de datos para la tabla `punto_navegacion_punto_navegacion`
 --
 
 INSERT INTO `punto_navegacion_punto_navegacion` (`punto_navegacion_1_id`, `punto_navegacion_2_id`, `distancia`) VALUES
@@ -453,11 +489,6 @@ CREATE TABLE IF NOT EXISTS `sf_guard_forgot_password` (
   KEY `user_id_idx` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
---
--- Volcar la base de datos para la tabla `sf_guard_forgot_password`
---
-
-
 -- --------------------------------------------------------
 
 --
@@ -474,11 +505,6 @@ CREATE TABLE IF NOT EXISTS `sf_guard_group` (
   UNIQUE KEY `name` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
---
--- Volcar la base de datos para la tabla `sf_guard_group`
---
-
-
 -- --------------------------------------------------------
 
 --
@@ -493,11 +519,6 @@ CREATE TABLE IF NOT EXISTS `sf_guard_group_permission` (
   PRIMARY KEY (`group_id`,`permission_id`),
   KEY `sf_guard_group_permission_permission_id_sf_guard_permission_id` (`permission_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Volcar la base de datos para la tabla `sf_guard_group_permission`
---
-
 
 -- --------------------------------------------------------
 
@@ -515,11 +536,6 @@ CREATE TABLE IF NOT EXISTS `sf_guard_permission` (
   UNIQUE KEY `name` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
---
--- Volcar la base de datos para la tabla `sf_guard_permission`
---
-
-
 -- --------------------------------------------------------
 
 --
@@ -536,11 +552,6 @@ CREATE TABLE IF NOT EXISTS `sf_guard_remember_key` (
   PRIMARY KEY (`id`),
   KEY `user_id_idx` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
-
---
--- Volcar la base de datos para la tabla `sf_guard_remember_key`
---
-
 
 -- --------------------------------------------------------
 
@@ -569,11 +580,11 @@ CREATE TABLE IF NOT EXISTS `sf_guard_user` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 --
--- Volcar la base de datos para la tabla `sf_guard_user`
+-- Volcado de datos para la tabla `sf_guard_user`
 --
 
 INSERT INTO `sf_guard_user` (`id`, `first_name`, `last_name`, `email_address`, `username`, `algorithm`, `salt`, `password`, `is_active`, `is_super_admin`, `last_login`, `created_at`, `updated_at`) VALUES
-(1, 'Claudio', 'Borré', 'borre.claudio@gmail.com', 'claudio', 'sha1', '73b49f7fa540b2dbba86d9f98d917d6d', '4c709dc731e4da96f662b31615229f745932867f', 1, 1, '2013-10-30 00:37:24', '2012-11-01 21:28:43', '2013-10-30 00:37:24'),
+(1, 'Claudio', 'Borré', 'borre.claudio@gmail.com', 'claudio', 'sha1', '73b49f7fa540b2dbba86d9f98d917d6d', '4c709dc731e4da96f662b31615229f745932867f', 1, 1, '2013-10-31 00:32:13', '2012-11-01 21:28:43', '2013-10-31 00:32:13'),
 (2, 'Luciano', 'Appathie', 'luciano.appathie@gmail.com', 'luciano', 'sha1', '9ab44ed71a59096dc51682cd58ffe72c', '2ce5e1c4c48e884c739bb7117a182914c333e97c', 1, 1, '2012-11-26 10:13:03', '2012-11-01 21:28:43', '2012-11-26 10:13:03');
 
 -- --------------------------------------------------------
@@ -591,11 +602,6 @@ CREATE TABLE IF NOT EXISTS `sf_guard_user_group` (
   KEY `sf_guard_user_group_group_id_sf_guard_group_id` (`group_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Volcar la base de datos para la tabla `sf_guard_user_group`
---
-
-
 -- --------------------------------------------------------
 
 --
@@ -612,12 +618,7 @@ CREATE TABLE IF NOT EXISTS `sf_guard_user_permission` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Volcar la base de datos para la tabla `sf_guard_user_permission`
---
-
-
---
--- Filtros para las tablas descargadas (dump)
+-- Restricciones para tablas volcadas
 --
 
 --
