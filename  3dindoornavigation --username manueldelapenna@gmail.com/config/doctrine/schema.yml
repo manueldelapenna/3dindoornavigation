@@ -88,6 +88,12 @@ PuntoNavegacionPuntoNavegacion:
     distancia:
       type:     float
       notnull:  true
+
+OrientacionPared:
+  columns:
+    nombre:
+      type:     string
+      notnull:  true
       
 ParedDibujable:
   columns:
@@ -103,7 +109,15 @@ ParedDibujable:
     descripcion:
       type:     string
       notnull:  true
+    orientacion_pared_id:
+      type:     integer
+      notnull:  true
   relations:
+    OrientacionPared:
+      class:   OrientacionPared
+      onDelete:   restrict
+      local:      orientacion_pared_id
+      foreign:    id
     Punto1:
       class:   Puntos
       onDelete:   restrict

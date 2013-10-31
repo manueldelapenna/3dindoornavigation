@@ -191,122 +191,41 @@ function init()
 	floor.position.y = -0.5;
 	floor.rotation.x = Math.PI / 2;
 	scene.add(floor);
-	
-	////////////
-	// CUSTOM //
-	////////////
-	
-        //paredes de afuera
+
         
+        //construccion de paredes
         <?php
-        
-        //$punto_anterior = null;
-        
-        foreach ($paredes_dibujables as $punto_pared):
-        //foreach ($puntos_todas_paredes as $punto_pared):
-            //los puntos se acceden así:
-            $punto1 = $punto_pared->getPunto1();
-            $punto2 = $punto_pared->getPunto2();
-            // de ahi reemplazas punto anterior por punto 1 y punto pared por punto 2 y sacás todos los ifs
-            // la distancia, el punto medio y el ángulo hay que seguir calculandolo
-            // podés ir llenando la tabla desde el backend para ir probando
-            // if ($punto_anterior != null){
-                 
-                 //si los puntos pertenecen a la misma estructura se hacen los calculos y se dibujan
-                 //if ($punto_anterior->getEstructuraId() == $punto_pared->getEstructuraId()){
+                
+        foreach ($paredes_dibujables as $pared):
+            $punto1 = $pared->getPunto1();
+            $punto2 = $pared->getPunto2();
                      
-                     //distancia = raiz[(y2 - y1)^2 + (x2 - x1)^2]
-                    $distancia = sqrt(pow($punto2->getPuntoOrigenY() - $punto1->getPuntoOrigenY(),2) + pow($punto2->getPuntoOrigenX() - $punto1->getPuntoOrigenX(),2));
-                                         
-                     //punto medio = (x1 + x2) / 2 ; (y1 + y2) / 2
-                    $punto_medio_x = ($punto2->getPuntoOrigenX() + $punto1->getPuntoOrigenX())/2;
-                    $punto_medio_y = ($punto2->getPuntoOrigenY() + $punto1->getPuntoOrigenY())/2;
-                    
+            //distancia = raiz[(y2 - y1)^2 + (x2 - x1)^2]
+            $distancia = sqrt(pow($punto2->getPuntoOrigenY() - $punto1->getPuntoOrigenY(),2) + pow($punto2->getPuntoOrigenX() - $punto1->getPuntoOrigenX(),2));
 
-                    //pendiente  = m = (y1-y2) / (x1-x2)
-                    //m = TAN(α)
-                    //α= ATAN(m) , ATAN=arcotangente 
+            //punto medio = (x1 + x2) / 2 ; (y1 + y2) / 2
+            $punto_medio_x = ($punto2->getPuntoOrigenX() + $punto1->getPuntoOrigenX())/2;
+            $punto_medio_y = ($punto2->getPuntoOrigenY() + $punto1->getPuntoOrigenY())/2;
+
+            //pendiente  = m = (y1-y2) / (x1-x2)
+            //m = TAN(α)
+            //α= ATAN(m) , ATAN=arcotangente 
                     
-                    if (($punto1->getPuntoOrigenX() - $punto2->getPuntoOrigenX()) != 0){
-                        $pendiente = ($punto1->getPuntoOrigenY() - $punto2->getPuntoOrigenY()) / ($punto1->getPuntoOrigenX() - $punto2->getPuntoOrigenX());
-                        $angulo_rotacion = atan($pendiente);
-                    }else{
-                        $angulo_rotacion = deg2rad(90);
-                    }
-                    ?>             
-                    
-                    dibujarPared(<?php echo  $distancia ?>,<?php echo $punto_medio_x ?>,<?php echo -$punto_medio_y ?>,<?php echo $angulo_rotacion?>);
-                                         
-                    
-                 
-                 //si los puntos no pertenecen a la misma estructura dibuja el ultimo con el primero del mismo id y guarda el primero del otro id de estructura
-           <?php 
-           
-           
-           //         }else{
-                    
-                    //distancia = raiz[(y2 - y1)^2 + (x2 - x1)^2]
-            //        $distancia = sqrt(pow($primer_punto->getPuntoOrigenY() - $punto_anterior->getPuntoOrigenY(),2) + pow($primer_punto->getPuntoOrigenX() - $punto_anterior->getPuntoOrigenX(),2));
-                                         
-                     //punto medio = (x1 + x2) / 2 ; (y1 + y2) / 2
-           //         $punto_medio_x = ($primer_punto->getPuntoOrigenX() + $punto_anterior->getPuntoOrigenX())/2;
-           //         $punto_medio_y = ($primer_punto->getPuntoOrigenY() + $punto_anterior->getPuntoOrigenY())/2;
-                    
-                    //pendiente  = m = (y1-y2) / (x1-x2)
-                    //m = TAN(α)
-                    //α= ATAN(m) , ATAN=arcotangente 
-                    
-           //         if (($punto_anterior->getPuntoOrigenX() - $primer_punto->getPuntoOrigenX()) != 0){
-           //             $pendiente = ($punto_anterior->getPuntoOrigenY() - $primer_punto->getPuntoOrigenY()) / ($punto_anterior->getPuntoOrigenX() - $primer_punto->getPuntoOrigenX());
-           //             $angulo_rotacion = atan($pendiente);
-           //         }else{
-          //              $angulo_rotacion = deg2rad(90);
-           //         }
-          //          ?>             
-                                 
-                     
-         //           dibujarPared(<?php echo  $distancia ?>,<?php echo $punto_medio_x ?>,<?php echo -$punto_medio_y ?>,<?php echo $angulo_rotacion?>);
-                    
-        //            <?php
-               
-        //            $primer_punto = $punto_pared;
-        //         }                 
-             //se guarda el primer punto
-        //     }else{
-        //         $primer_punto = $punto_pared;
-        //     }
-             
-             //finalmente se actualizan los puntos para seguir iterando
-      //       $punto_anterior = $punto_pared;
-      endforeach;
+            if (($punto1->getPuntoOrigenX() - $punto2->getPuntoOrigenX()) != 0){
+                $pendiente = ($punto1->getPuntoOrigenY() - $punto2->getPuntoOrigenY()) / ($punto1->getPuntoOrigenX() - $punto2->getPuntoOrigenX());
+                $angulo_rotacion = atan($pendiente);
+            }else{
+                $angulo_rotacion = deg2rad(90);
+            }
+            $orientacion = $pared->getOrientacionPared()->getNombre();
             
-        //dibuja la pared faltante (primer punto de la última estructura con último punto de la última estructura
-        //distancia = raiz[(y2 - y1)^2 + (x2 - x1)^2]
-      //  $distancia = sqrt(pow($primer_punto->getPuntoOrigenY() - $punto_anterior->getPuntoOrigenY(),2) + pow($primer_punto->getPuntoOrigenX() - $punto_anterior->getPuntoOrigenX(),2));
-
-         //punto medio = (x1 + x2) / 2 ; (y1 + y2) / 2
-       // $punto_medio_x = ($primer_punto->getPuntoOrigenX() + $punto_anterior->getPuntoOrigenX())/2;
-      //  $punto_medio_y = ($primer_punto->getPuntoOrigenY() + $punto_anterior->getPuntoOrigenY())/2;
-
-
-        //pendiente  = m = (y1-y2) / (x1-x2)
-        //m = TAN(α)
-        //α= ATAN(m) , ATAN=arcotangente 
-
-      //  if (($punto_anterior->getPuntoOrigenX() - $primer_punto->getPuntoOrigenX()) != 0){
-     //       $pendiente = ($punto_anterior->getPuntoOrigenY() - $primer_punto->getPuntoOrigenY()) / ($punto_anterior->getPuntoOrigenX() - $primer_punto->getPuntoOrigenX());
-     //       $angulo_rotacion = atan($pendiente);
-     //   }else{
-     //       $angulo_rotacion = deg2rad(90);
-     //   }
-
-
-     //    ?>             
-
-
-
-      //  dibujarPared(<?php echo  $distancia ?>,<?php echo $punto_medio_x ?>,<?php echo -$punto_medio_y ?>,<?php echo $angulo_rotacion?>);
-
+            ?>             
+            
+            dibujarPared(<?php echo  $distancia ?>,<?php echo $punto_medio_x ?>,<?php echo -$punto_medio_y ?>,<?php echo $angulo_rotacion?>,'<?php echo $orientacion?>');
+            <?php 
+        endforeach;
+        ?>
+            
         
         //cubo de referencia inicio
         var cube = new THREE.Mesh(new THREE.CubeGeometry(15, 15, 15), new THREE.MeshNormalMaterial());
@@ -365,19 +284,25 @@ function update()
     }
     
 }
-function dibujarPared(distancia,puntoMedioX,puntoMedioY,anguloRotacion) {
+function dibujarPared(distancia,puntoMedioX,puntoMedioY,anguloRotacion,orientacion) {
     
-    var border = 20;
+    var border = 0;
     var elevation = 150;
         
     // se crea la pared
     var materialArray = [];
-    materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture('../../../../images/crate.png') }));
-    materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture('../../../../images/crate.png') }));
-    materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture('../../../../images/crate.png') }));
-    materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture('../../../../images/crate.png') }));
-    materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture('../../../../images/walls.jpg') }));
-    materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture('../../../../images/walls.jpg') }));
+    materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture('') }));
+    materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture('') }));
+    materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture('') }));
+    materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture('') }));
+    
+    if (orientacion == 'Norte/Oeste'){
+        materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture('') }));
+        materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture('../../../../images/walls.jpg') }));
+    }else{
+        materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture('../../../../images/walls.jpg') }));
+        materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture('') }));
+    } 
     var MovingCubeMat = new THREE.MeshFaceMaterial(materialArray);
     var MovingCubeGeom = new THREE.CubeGeometry(distancia, elevation, border, 1, 1, 1, materialArray );
 

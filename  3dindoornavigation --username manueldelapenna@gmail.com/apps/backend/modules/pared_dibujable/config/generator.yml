@@ -16,7 +16,7 @@ generator:
       fields:  ~
       list:
         title:    'Listado de Paredes Dibujables'
-        display:  [Punto1,Punto2, link_imagen, descripcion]
+        display:  [Punto1,Punto2, link_imagen, descripcion,OrientacionPared]
         object_actions:
           _edit: ~
           _delete: ~
@@ -29,6 +29,6 @@ generator:
       show:
         title:    'Ver Pared'
         display:
-          Información General: [Punto1, Punto2, link_imagen,descripcion]        
+          Información General: [Punto1, Punto2, link_imagen,descripcion, OrientacionPared]        
       revert:  ~
 

@@ -1,6 +1,7 @@
 CREATE TABLE estructura (id BIGINT AUTO_INCREMENT, nombre VARCHAR(50) NOT NULL, tipo BIGINT NOT NULL, capacidad BIGINT NOT NULL, es_navegable TINYINT(1) DEFAULT '1', PRIMARY KEY(id)) ENGINE = INNODB;
 CREATE TABLE multimedia (id BIGINT AUTO_INCREMENT, nombre VARCHAR(255) NOT NULL, tipo BIGINT NOT NULL, estructura_id BIGINT, PRIMARY KEY(id)) ENGINE = INNODB;
-CREATE TABLE pared_dibujable (id BIGINT AUTO_INCREMENT, punto_1_id BIGINT NOT NULL, punto_2_id BIGINT NOT NULL, link_imagen TEXT NOT NULL, descripcion TEXT NOT NULL, INDEX punto_1_id_idx (punto_1_id), INDEX punto_2_id_idx (punto_2_id), PRIMARY KEY(id)) ENGINE = INNODB;
+CREATE TABLE orientacion_pared (id BIGINT AUTO_INCREMENT, nombre TEXT NOT NULL, PRIMARY KEY(id)) ENGINE = INNODB;
+CREATE TABLE pared_dibujable (id BIGINT AUTO_INCREMENT, punto_1_id BIGINT NOT NULL, punto_2_id BIGINT NOT NULL, link_imagen TEXT NOT NULL, descripcion TEXT NOT NULL, orientacion_pared_id BIGINT NOT NULL, INDEX orientacion_pared_id_idx (orientacion_pared_id), INDEX punto_1_id_idx (punto_1_id), INDEX punto_2_id_idx (punto_2_id), PRIMARY KEY(id)) ENGINE = INNODB;
 CREATE TABLE punto_navegacion (id BIGINT AUTO_INCREMENT, nombre VARCHAR(50) NOT NULL, punto_origen_x BIGINT NOT NULL, punto_origen_y BIGINT NOT NULL, estructura_id BIGINT, PRIMARY KEY(id)) ENGINE = INNODB;
 CREATE TABLE punto_navegacion_punto_navegacion (punto_navegacion_1_id BIGINT, punto_navegacion_2_id BIGINT, distancia FLOAT(18, 2) NOT NULL, PRIMARY KEY(punto_navegacion_1_id, punto_navegacion_2_id)) ENGINE = INNODB;
 CREATE TABLE puntos (id BIGINT AUTO_INCREMENT, punto_origen_x BIGINT NOT NULL, punto_origen_y BIGINT NOT NULL, estructura_id BIGINT, PRIMARY KEY(id)) ENGINE = INNODB;
@@ -14,6 +15,7 @@ CREATE TABLE sf_guard_user_group (user_id BIGINT, group_id BIGINT, created_at DA
 CREATE TABLE sf_guard_user_permission (user_id BIGINT, permission_id BIGINT, created_at DATETIME NOT NULL, updated_at DATETIME NOT NULL, PRIMARY KEY(user_id, permission_id)) ENGINE = INNODB;
 ALTER TABLE pared_dibujable ADD CONSTRAINT pared_dibujable_punto_2_id_puntos_id FOREIGN KEY (punto_2_id) REFERENCES puntos(id) ON DELETE RESTRICT;
 ALTER TABLE pared_dibujable ADD CONSTRAINT pared_dibujable_punto_1_id_puntos_id FOREIGN KEY (punto_1_id) REFERENCES puntos(id) ON DELETE RESTRICT;
+ALTER TABLE pared_dibujable ADD CONSTRAINT pared_dibujable_orientacion_pared_id_orientacion_pared_id FOREIGN KEY (orientacion_pared_id) REFERENCES orientacion_pared(id) ON DELETE RESTRICT;
 ALTER TABLE punto_navegacion_punto_navegacion ADD CONSTRAINT pppi FOREIGN KEY (punto_navegacion_1_id) REFERENCES punto_navegacion(id);
 ALTER TABLE sf_guard_forgot_password ADD CONSTRAINT sf_guard_forgot_password_user_id_sf_guard_user_id FOREIGN KEY (user_id) REFERENCES sf_guard_user(id) ON DELETE CASCADE;
 ALTER TABLE sf_guard_group_permission ADD CONSTRAINT sf_guard_group_permission_permission_id_sf_guard_permission_id FOREIGN KEY (permission_id) REFERENCES sf_guard_permission(id) ON DELETE CASCADE;

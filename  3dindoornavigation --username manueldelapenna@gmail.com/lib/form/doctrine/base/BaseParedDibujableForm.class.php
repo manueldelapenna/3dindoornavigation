@@ -15,19 +15,21 @@ abstract class BaseParedDibujableForm extends BaseFormDoctrine
   public function setup()
   {
     $this->setWidgets(array(
-      'id'          => new sfWidgetFormInputHidden(),
-      'punto_1_id'  => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Punto1'), 'add_empty' => false)),
-      'punto_2_id'  => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Punto2'), 'add_empty' => false)),
-      'link_imagen' => new sfWidgetFormTextarea(),
-      'descripcion' => new sfWidgetFormTextarea(),
+      'id'                   => new sfWidgetFormInputHidden(),
+      'punto_1_id'           => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Punto1'), 'add_empty' => false)),
+      'punto_2_id'           => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Punto2'), 'add_empty' => false)),
+      'link_imagen'          => new sfWidgetFormTextarea(),
+      'descripcion'          => new sfWidgetFormTextarea(),
+      'orientacion_pared_id' => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('OrientacionPared'), 'add_empty' => false)),
     ));
 
     $this->setValidators(array(
-      'id'          => new sfValidatorChoice(array('choices' => array($this->getObject()->get('id')), 'empty_value' => $this->getObject()->get('id'), 'required' => false)),
-      'punto_1_id'  => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Punto1'))),
-      'punto_2_id'  => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Punto2'))),
-      'link_imagen' => new sfValidatorString(),
-      'descripcion' => new sfValidatorString(),
+      'id'                   => new sfValidatorChoice(array('choices' => array($this->getObject()->get('id')), 'empty_value' => $this->getObject()->get('id'), 'required' => false)),
+      'punto_1_id'           => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Punto1'))),
+      'punto_2_id'           => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Punto2'))),
+      'link_imagen'          => new sfValidatorString(),
+      'descripcion'          => new sfValidatorString(),
+      'orientacion_pared_id' => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('OrientacionPared'))),
     ));
 
     $this->widgetSchema->setNameFormat('pared_dibujable[%s]');
