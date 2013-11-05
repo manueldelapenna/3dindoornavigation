@@ -139,6 +139,7 @@
 
 
 <div id="ThreeJS" style="position: relative; border-style: solid; left:0px; top:0px; height: 500px; width: 600px;"></div>
+<input type="button" value="ajax" onclick="ejecutarAjax()"/>
 <script>
 /*
 	Three.js "tutorials by example"
@@ -373,8 +374,43 @@ function collision() {
 
 function render() 
 {
-    
      renderer.render( scene, camera );
+}
+
+function ejecutarAjax() 
+{
+    puntoActual = 7;
+    $.ajax({
+        url: "<?php echo url_for('main/prueba')?>?id="+puntoActual,
+        dataType: "json",
+        success: function(data){
+            alert(data.mensaje);
+            alert(data.id);
+        },
+        error: function(jqXHR, textStatus, errorThrown){
+            alert("No funca");
+        }
+     });
+     
+}
+
+function getPuntoSiguiente() 
+{
+    idActual = <?php echo $sf_user->getAttribute('actual_id')?>;
+    //idFin = <?php echo $sf_user->getAttribute('fin_id')?>;
+    $.ajax({
+        url: "<?php echo url_for('main/siguiente')?>?idActual="+idActual,
+        dataType: "json",
+        success: function(data){
+            irAPunto(data.xSiguiente,25,data.ySiguiente,camera);
+            //alert('Siguiente x: '+data.xSiguiente+ 'Siguiente y:' + data.ySiguiente);
+            
+        },
+        error: function(jqXHR, textStatus, errorThrown){
+            alert("No funca");
+        }
+     });
+ 
 }
 
 </script>

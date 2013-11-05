@@ -14,6 +14,37 @@ class mainActions extends sfActions
    * Función para persitir todos los objetos necesarios en la base de datos
    * @param sfWebRequest $request 
    */  
+  public function executePrueba(sfWebRequest $request){
+    
+    $datos = array(
+        "mensaje" => "pruebita",
+        "id" => $request->getParameter('id')
+      );
+       
+      return $this->renderText(json_encode($datos));
+  }    
+  
+  public function executeSiguiente(sfWebRequest $request){
+    $idActual = $request->getParameter('idActual');
+    //$idUltimo = $request->getParameter('idFin');
+
+    $borrados = $this->getUser()->getAttribute('borrados');        
+    $borrados[] = $this->getUser()->getAttribute($idActual);    
+    $this->getUser()->setAttribute('borrados',$borrados);
+    
+    $idSiguiente = $this->getUser()->getAttribute('siguiente_id');
+    $this->getUser()->setAttribute('actual_id',$idSiguiente);
+    
+    $puntoSiguiente = Doctrine::getTable('PuntoNavegacion')->find($idSiguiente);
+    
+    $datos = array(
+        "xSiguiente" => $puntoSiguiente->getPuntoOrigenX(),
+        "ySiguiente" => $puntoSiguiente->getPuntoOrigenY(),
+      );
+       
+      return $this->renderText(json_encode($datos));
+  } 
+    
   public function executeCrearEstructuras(sfWebRequest $request){
     $crear_objectos = new Utilities();
     $crear_objectos->crearObjetos();
