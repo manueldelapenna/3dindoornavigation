@@ -87,7 +87,8 @@ class mainActions extends sfActions
     $punto_navegacion = PuntoNavegacionTable::getPuntoNavegacionParaEstructuraId($estructura->getId()); 
     $this->destino = $punto_navegacion->getId();
     $d->caminoMinimoDesdeHasta($this->getUser()->getAttribute('actual_id'), $this->destino);    
-    $this->puntos_navegacion = $d->getCamino();    
+    $this->puntos_navegacion = $d->getCamino();  
+    //var_dump($this->puntos_navegacion); die;
   } 
  
   /**
