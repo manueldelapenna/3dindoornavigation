@@ -392,7 +392,7 @@ function getPuntoSiguiente()
 //     });
     posActual--;
     irAPunto(puntosNavegacion[posActual].x,25,-puntosNavegacion[posActual].y,camera);            
-    deshabilitarBotonAvanzar()
+  
 }
 
 function getPuntoAnterior() 
@@ -401,27 +401,29 @@ function getPuntoAnterior()
     irAPunto(puntosNavegacion[posActual].x,25,-puntosNavegacion[posActual].y,camera);            
 }
 
+function zoomIn(){
+    
+} 
+
+function zoomOut(){
+    
+} 
+
 function deshabilitarBotonRetroceder(){
-    $('#link_retroceder').attr("disabled", "disabled");
+    $('#link_retroceder').addClass('ui-disabled');      
 }
   
 function deshabilitarBotonAvanzar(){
-    $('#link_avanzar').attr("data-theme",'c');
-   $('#link_avanzar').attr("disabled", "disabled");
-   
-   
+    $('#link_avanzar').addClass('ui-disabled');      
+      
 }
 
 function deshabilitarBotonZoomIn(){
-  <?php if ($sf_user->getAttribute('escala') == sfConfig::get('app_minimo_escala')):?> 
     $('#link_zoom_in').addClass('ui-disabled');      
-  <?php endif;?>          
 } 
 
 function deshabilitarBotonZoomOut(){
-  <?php if ($sf_user->getAttribute('escala') == sfConfig::get('app_maximo_escala')):?> 
     $('#link_zoom_out').addClass('ui-disabled');      
-  <?php endif;?>          
 } 
 
 
