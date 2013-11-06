@@ -26,23 +26,29 @@ class mainActions extends sfActions
   
   public function executeSiguiente(sfWebRequest $request){
     $idActual = $request->getParameter('idActual');
-    //$idUltimo = $request->getParameter('idFin');
+    
 
     $borrados = $this->getUser()->getAttribute('borrados');        
-    $borrados[] = $this->getUser()->getAttribute($idActual);    
+    $borrados[] = intval($this->getUser()->getAttribute('actual_id'));    
     $this->getUser()->setAttribute('borrados',$borrados);
     
     $idSiguiente = $this->getUser()->getAttribute('siguiente_id');
-    $this->getUser()->setAttribute('actual_id',$idSiguiente);
+    $this->getUser()->setAttribute('actual_id', $idSiguiente);
     
     $puntoSiguiente = Doctrine::getTable('PuntoNavegacion')->find($idSiguiente);
     
     $datos = array(
         "xSiguiente" => $puntoSiguiente->getPuntoOrigenX(),
         "ySiguiente" => $puntoSiguiente->getPuntoOrigenY(),
+        "idSiguiente" => $idSiguiente,
+        "borrados" => $borrados,
+        "actual" => $this->getUser()->getAttribute('actual_id'),
       );
        
       return $this->renderText(json_encode($datos));
+      
+    
+      
   } 
     
   public function executeCrearEstructuras(sfWebRequest $request){
