@@ -22,18 +22,16 @@
 
 <div data-role="controlgroup" data-type="horizontal" data-mini="false">
   
-  <input type="button" id="link_retroceder" onclick="getPuntoAnterior()" 
-         data-icon="arrow-l" data-theme="a" rel = "external" value="Retroceder"/>
+  <a type="button" id="link_retroceder" href="javascript:getPuntoAnterior()" 
+     data-icon="arrow-l" data-theme="a" rel = "external">Retroceder </a>
+  
+  <a type="button" id="link_avanzar" href="javascript:getPuntoSiguiente()" 
+     data-icon="arrow-r" data-theme="a" rel = "external">Avanzar </a>
     
-  <input type="button" id="link_avanzar" onclick="getPuntoSiguiente()" 
-     data-icon="arrow-r" data-theme="a" rel = "external" value="Avanzar"/>
-  
-  
-  
-  <a id="link_zoom_in" href="<?php echo $basepath."/".$enviroment."/main/zoomIn";?>" 
+  <a id="link_zoom_in" href="javascript:zoomIn()" 
      data-role="button" data-icon="plus" data-theme="a" rel = "external"> Zoom In 
   </a>
-  <a id="link_zoom_out" href="<?php echo $basepath."/".$enviroment."/main/zoomOut";?>" 
+  <a id="link_zoom_out" href="javascript:zoomOut()" 
      data-role="button" data-icon="minus" data-theme="a" rel = "external"> Zoom Out 
   </a>
 </div>
