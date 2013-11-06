@@ -109,6 +109,7 @@
 
 
 <div id="ThreeJS" style="position: relative; border-style: solid; left:0px; top:0px; height: 500px; width: 600px;"></div>
+
 <div data-role="popup" id="popupDialog" data-overlay-theme="a" data-theme="a" style="max-width:600px;" class="ui-corner-all" aria-disabled="false" data-shadow="true" data-corners="true" data-transition="pop">
   <div data-role="header" data-theme="a" class="ui-corner-top ui-header ui-bar-d" role="banner">
     <h1 class="ui-title" role="heading" aria-level="1">Felicitaciones</h1>
@@ -116,7 +117,7 @@
   <div data-role="content" data-theme="a" style="padding:15px;" class="ui-corner-bottom ui-content ui-body-d" role="main">
     <p>Usted a llegado a su destino</p>
     <?php echo link_to('Navegar a otro sitio' ,'main/buscar',array("rel" => "external", " data-role" => "button", "data-icon" => "search" , "data-theme"=>"a", "data-corners" => "true"));?>            
-    <?php echo link_to_function('Cerrar' ,'"#"',array("data-rel"=>"back" ,"data-role" => "button", "data-icon" => "back" ,  "data-theme"=>"a", "data-corners" => "true"));?>                                   
+    <?php echo link_to_function('Cerrar' ,'cerrarDialogo()',array("data-rel"=>"back" ,"data-role" => "button", "data-icon" => "back" ,  "data-theme"=>"a", "data-corners" => "true"));?>                                   
   </div>
 </div>
 
@@ -141,6 +142,7 @@ var keyboard = new THREEx.KeyboardState();
 var clock = new THREE.Clock();
 //hay q obtener de alguna forma el array de puntos
 posActual = <?php echo count($puntos_navegacion)-1?>;
+cantPuntos = <?php echo count($puntos_navegacion)-1?>;
 puntosNavegacion = [];
 <?php foreach($puntos_navegacion as $punto_navegacion):?>
     var punto = new Object();
@@ -191,7 +193,7 @@ function init()
 	floor.rotation.x = Math.PI / 2;
 	scene.add(floor);
 
-        
+        chequearBotonera();
         //construccion de paredes
         <?php
                 
@@ -312,7 +314,7 @@ function dibujarPared(distancia,puntoMedioX,puntoMedioY,anguloRotacion,orientaci
     scene.add( pared );
 }
 
-function irAPunto(destinoX,destinoY,destinoZ,cam) {
+function irAPunto(destinoX,destinoY,destinoZ,cam,debeAvanzar) {
     
     //calcula pendiente y angulo de rotacion
     var pendiente = (cam.position.x - destinoX) / (cam.position.z - destinoZ);
@@ -334,19 +336,23 @@ function irAPunto(destinoX,destinoY,destinoZ,cam) {
      animacionRotacion.onComplete(function () {
          //termina de rotar y avanza
          
-         var animacionAvance = new TWEEN.Tween(cam.position).to({
-                x: destinoX,
-                y: destinoY,
-                z: destinoZ
-           });
-         animacionAvance.easing(TWEEN.Easing.Linear.None).onUpdate(function () {
-             //mientras avanza no hace nada
-           });
-         animacionAvance.onComplete(function () {
-             //termina de avanzar y no hace nada
-         });
-         //comienza a avanzar
-         animacionAvance.start(); 
+         if (debeAvanzar){
+            var animacionAvance = new TWEEN.Tween(cam.position).to({
+                   x: destinoX,
+                   y: destinoY,
+                   z: destinoZ
+              });
+            animacionAvance.easing(TWEEN.Easing.Linear.None).onUpdate(function () {
+                //mientras avanza no hace nada
+              });
+            animacionAvance.onComplete(function () {
+                //termina de avanzar y no hace nada
+            });
+            //comienza a avanzar
+            animacionAvance.start(); 
+         }else{
+             $("#popupDialog").popup("open",100,300);
+         }
 
     });
     //comienza a rotar
@@ -390,15 +396,26 @@ function getPuntoSiguiente()
 //            alert("No funca");
 //        }
 //     });
+    
     posActual--;
-    irAPunto(puntosNavegacion[posActual].x,25,-puntosNavegacion[posActual].y,camera);            
+    if (posActual > 0){
+        irAPunto(puntosNavegacion[posActual].x,25,-puntosNavegacion[posActual].y,camera,true);            
+    }else{
+    
+        irAPunto(puntosNavegacion[posActual].x,25,-puntosNavegacion[posActual].y,camera,false);
+        
+        
+    }
+    chequearBotonera();
   
 }
 
 function getPuntoAnterior() 
 {
     posActual++;
-    irAPunto(puntosNavegacion[posActual].x,25,-puntosNavegacion[posActual].y,camera);            
+    irAPunto(puntosNavegacion[posActual].x,25,-puntosNavegacion[posActual].y,camera,true);            
+    chequearBotonera();
+    
 }
 
 function rotar360(angulo_rotacion,cam){
@@ -430,14 +447,34 @@ function deshabilitarBotonAvanzar(){
       
 }
 
-function deshabilitarBotonZoomIn(){
-    $('#link_zoom_in').addClass('ui-disabled');      
-} 
+function habilitarBotonRetroceder(){
+    $('#link_retroceder').removeClass('ui-disabled');      
+}
+  
+function habilitarBotonAvanzar(){
+    $('#link_avanzar').removeClass('ui-disabled');      
+      
+}
 
-function deshabilitarBotonZoomOut(){
-    $('#link_zoom_out').addClass('ui-disabled');      
-} 
+function chequearBotonera(){
+    if (posActual == 0){
+        deshabilitarBotonAvanzar();
+        //vuelve al anterior porque solamente lo mira
+        posActual++;
+    }else{
+        if (posActual == cantPuntos){
+            deshabilitarBotonRetroceder();
+        }else{
+            habilitarBotonAvanzar();
+            habilitarBotonRetroceder();
+        }
+    }
+       
+}
 
 
+function cerrarDialogo(){
+    $("#popupDialog").close();
+}
 </script>
     
