@@ -153,6 +153,7 @@
 var container, scene, camera, renderer;// controls
 var keyboard = new THREEx.KeyboardState();
 var clock = new THREE.Clock();
+idActual = <?php echo $sf_user->getAttribute('actual_id')?>;
 // custom global variables
 
 var collidableMeshList = [];
@@ -169,9 +170,10 @@ function init()
 	var SCREEN_WIDTH = 600, SCREEN_HEIGHT = 500;
 	var VIEW_ANGLE = 45, ASPECT = SCREEN_WIDTH / SCREEN_HEIGHT, NEAR = 0.1, FAR = 20000;
 	camera = new THREE.PerspectiveCamera( VIEW_ANGLE, ASPECT, NEAR, FAR);
-	scene.add(camera);
 	camera.position.set(3500,25,200);
 	camera.rotation.set(0,0,0);
+        scene.add(camera);
+	
 	
         // RENDERER
 	if ( Detector.webgl )
@@ -280,7 +282,7 @@ function update()
         
         if ( keyboard.pressed("C") )
 	{
-           irAPunto(3500,25,200,camera);
+           irAPunto(3615,25,-525,camera);
                
     }
     
@@ -314,14 +316,14 @@ function dibujarPared(distancia,puntoMedioX,puntoMedioY,anguloRotacion,orientaci
     scene.add( pared );
 }
 
-function irAPunto(x,y,z,cam) {
-  
+function irAPunto(destinoX,destinoY,destinoZ,cam) {
+    
     //calcula pendiente y angulo de rotacion
-    var pendiente = (cam.position.x - 3500) / (cam.position.z - 200);
+    var pendiente = (cam.position.x - destinoX) / (cam.position.z - destinoZ);
     var angulo_rotacion = Math.atan(pendiente);
 
     // si el punto de destino de z es mayor al actual, da media vuelta mas
-    if (200>cam.position.z){
+    if (destinoZ>cam.position.z){
         angulo_rotacion += Math.PI;
     }
 
@@ -335,10 +337,11 @@ function irAPunto(x,y,z,cam) {
      });
      animacionRotacion.onComplete(function () {
          //termina de rotar y avanza
+         
          var animacionAvance = new TWEEN.Tween(cam.position).to({
-              x: x,
-                y: y,
-                z: z
+                x: destinoX,
+                y: destinoY,
+                z: destinoZ
            });
          animacionAvance.easing(TWEEN.Easing.Linear.None).onUpdate(function () {
              //mientras avanza no hace nada
@@ -396,15 +399,13 @@ function ejecutarAjax()
 
 function getPuntoSiguiente() 
 {
-    idActual = <?php echo $sf_user->getAttribute('actual_id')?>;
-    //idFin = <?php echo $sf_user->getAttribute('fin_id')?>;
+    
     $.ajax({
-        url: "<?php echo url_for('main/siguiente')?>?idActual="+idActual,
+        url: "../../../main/siguiente?idActual="+parseInt(idActual),
         dataType: "json",
         success: function(data){
-            irAPunto(data.xSiguiente,25,data.ySiguiente,camera);
-            //alert('Siguiente x: '+data.xSiguiente+ 'Siguiente y:' + data.ySiguiente);
-            
+            idActual = parseInt(data.idSiguiente);
+            irAPunto(parseInt(data.xSiguiente),25,parseInt(-data.ySiguiente),camera);            
         },
         error: function(jqXHR, textStatus, errorThrown){
             alert("No funca");
