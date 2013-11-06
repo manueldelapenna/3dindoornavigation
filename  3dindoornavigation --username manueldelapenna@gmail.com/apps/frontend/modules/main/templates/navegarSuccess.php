@@ -401,13 +401,25 @@ function getPuntoAnterior()
     irAPunto(puntosNavegacion[posActual].x,25,-puntosNavegacion[posActual].y,camera);            
 }
 
-function zoomIn(){
+function rotar360(angulo_rotacion,cam){
+     //calcula pendiente y angulo de rotacion
     
+    //rotacion
+    var animacionRotacion = new TWEEN.Tween(cam.rotation).to({
+         x: 0,
+         y: cam.rotation.y + angulo_rotacion,
+         z: 0,},5000);
+     animacionRotacion.easing(TWEEN.Easing.Linear.None).onUpdate(function () {
+         //mientras rota no hace nada
+     });
+     animacionRotacion.onComplete(function () {
+         //termina de rotar y avanza
+    
+    });
+    //comienza a rotar
+    animacionRotacion.start();            
 } 
 
-function zoomOut(){
-    
-} 
 
 function deshabilitarBotonRetroceder(){
     $('#link_retroceder').addClass('ui-disabled');      
