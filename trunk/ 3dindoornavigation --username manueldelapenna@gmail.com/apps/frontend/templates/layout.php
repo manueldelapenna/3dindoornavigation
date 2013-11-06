@@ -24,11 +24,7 @@
       </div><!-- /navbar -->
       
       <div data-role="content">        
-        <?php if ($sf_request->getParameter('action') == 'navegar'):?>
-          <?php include_partial('global/barra_navegacion');?>        
-        <?php endif;?>        
-        <?php include_partial('global/mensajes_usuario');?>
-        <div id="container"> </div><!--/container - Acá se dibuja el canvas-->    
+
         <?php echo $sf_content; ?>
       </div><!-- /content -->
       

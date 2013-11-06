@@ -21,13 +21,12 @@
 </div>-->
 
 <div data-role="controlgroup" data-type="horizontal" data-mini="false">
-  <a id="link_retroceder" href="<?php echo $basepath."/".$enviroment."/main/retroceder";?>" 
-     data-role="button" data-icon="arrow-l" data-theme="a" rel = "external"> Retroceder 
-  </a>    
   
+  <input type="button" id="link_retroceder" onclick="getPuntoAnterior()" 
+         data-icon="arrow-l" data-theme="a" rel = "external" value="Retroceder"/>
     
-  <input type="button" id="link_retroceder" onclick="getPuntoSiguiente()" 
-     data-icon="arrow-l" data-theme="a" rel = "external" value="Avanzar"/>
+  <input type="button" id="link_avanzar" onclick="getPuntoSiguiente()" 
+     data-icon="arrow-r" data-theme="a" rel = "external" value="Avanzar"/>
   
   
   

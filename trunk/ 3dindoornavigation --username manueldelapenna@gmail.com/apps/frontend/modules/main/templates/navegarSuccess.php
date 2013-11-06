@@ -1,4 +1,6 @@
 <?php use_helper("JavascriptBase");?>
+
+<div id="container"> </div><!--/container - Acá se dibuja el canvas-->    
 <script>
   _BASEPATH = "<?php echo $basepath;?>"; 
   _ENVIROMENT = "<?php echo $enviroment;?>";
@@ -65,10 +67,10 @@
   function inicio(){    
     dibujarFacu(stage);
     dibujarTodosLosPuntos(stage,layer);
-    deshabilitarBotonRetroceder();
-    deshabilitarBotonAvanzar();    
-    deshabilitarBotonZoomOut();
-    deshabilitarBotonZoomIn();
+//    deshabilitarBotonRetroceder();
+//    deshabilitarBotonAvanzar();    
+//    deshabilitarBotonZoomOut();
+//    deshabilitarBotonZoomIn();
     //Centra el canvas cada vez que realizamos una petición
     centrar(stage);
   }  
@@ -97,32 +99,16 @@
       stage.draw();
   }    
   
-  function deshabilitarBotonRetroceder(){
-    <?php if (count($sf_user->getAttribute('borrados')) == 0 ):?> 
-      $('#link_retroceder').addClass('ui-disabled');
-    <?php endif;?>      
-  }
   
-  function deshabilitarBotonAvanzar(){
-    <?php if (count($puntos_navegacion) == 2):?> 
-      $("#popupDialog").popup("open",100,300);        
-      $('#link_avanzar').addClass('ui-disabled');      
-    <?php endif;?>          
-  }
-  
-  function deshabilitarBotonZoomIn(){
-    <?php if ($sf_user->getAttribute('escala') == sfConfig::get('app_minimo_escala')):?> 
-      $('#link_zoom_in').addClass('ui-disabled');      
-    <?php endif;?>          
-  } 
-  
-  function deshabilitarBotonZoomOut(){
-    <?php if ($sf_user->getAttribute('escala') == sfConfig::get('app_maximo_escala')):?> 
-      $('#link_zoom_out').addClass('ui-disabled');      
-    <?php endif;?>          
-  } 
 </script>
 
+
+
+
+<!-- 3D -->
+
+
+<div id="ThreeJS" style="position: relative; border-style: solid; left:0px; top:0px; height: 500px; width: 600px;"></div>
 <div data-role="popup" id="popupDialog" data-overlay-theme="a" data-theme="a" style="max-width:600px;" class="ui-corner-all" aria-disabled="false" data-shadow="true" data-corners="true" data-transition="pop">
   <div data-role="header" data-theme="a" class="ui-corner-top ui-header ui-bar-d" role="banner">
     <h1 class="ui-title" role="heading" aria-level="1">Felicitaciones</h1>
@@ -134,12 +120,12 @@
   </div>
 </div>
 
-
-<!-- 3D -->
-
-
-<div id="ThreeJS" style="position: relative; border-style: solid; left:0px; top:0px; height: 500px; width: 600px;"></div>
-<input type="button" value="ajax" onclick="ejecutarAjax()"/>
+        <?php if ($sf_request->getParameter('action') == 'navegar'):?>
+          <?php include_partial('global/barra_navegacion');?>        
+        <?php endif;?>        
+        <?php include_partial('global/mensajes_usuario');?>
+        
+        
 <script>
 /*
 	Three.js "tutorials by example"
@@ -153,7 +139,16 @@
 var container, scene, camera, renderer;// controls
 var keyboard = new THREEx.KeyboardState();
 var clock = new THREE.Clock();
-idActual = <?php echo $sf_user->getAttribute('actual_id')?>;
+//hay q obtener de alguna forma el array de puntos
+posActual = <?php echo count($puntos_navegacion)-1?>;
+puntosNavegacion = [];
+<?php foreach($puntos_navegacion as $punto_navegacion):?>
+    var punto = new Object();
+    punto.x = <?php echo $punto_navegacion->getPuntoOrigenX();?>;
+    punto.y = <?php echo $punto_navegacion->getPuntoOrigenY();?>;
+    puntosNavegacion.push(punto);           
+<?php endforeach;?>
+
 // custom global variables
 
 var collidableMeshList = [];
@@ -164,6 +159,7 @@ animate();
 // FUNCTIONS 		
 function init() 
 {
+        
 	// SCENE
 	scene = new THREE.Scene();
 	// CAMERA
@@ -380,39 +376,54 @@ function render()
      renderer.render( scene, camera );
 }
 
-function ejecutarAjax() 
-{
-    puntoActual = 7;
-    $.ajax({
-        url: "<?php echo url_for('main/prueba')?>?id="+puntoActual,
-        dataType: "json",
-        success: function(data){
-            alert(data.mensaje);
-            alert(data.id);
-        },
-        error: function(jqXHR, textStatus, errorThrown){
-            alert("No funca");
-        }
-     });
-     
-}
-
 function getPuntoSiguiente() 
 {
     
-    $.ajax({
-        url: "../../../main/siguiente?idActual="+parseInt(idActual),
-        dataType: "json",
-        success: function(data){
-            idActual = parseInt(data.idSiguiente);
-            irAPunto(parseInt(data.xSiguiente),25,parseInt(-data.ySiguiente),camera);            
-        },
-        error: function(jqXHR, textStatus, errorThrown){
-            alert("No funca");
-        }
-     });
- 
+//    $.ajax({
+//        url: "../../../main/siguiente?idActual="+parseInt(idActual),
+//        dataType: "json",
+//        success: function(data){
+//            idActual = parseInt(data.idSiguiente);
+//            irAPunto(parseInt(data.xSiguiente),25,parseInt(-data.ySiguiente),camera);            
+//        },
+//        error: function(jqXHR, textStatus, errorThrown){
+//            alert("No funca");
+//        }
+//     });
+    posActual--;
+    irAPunto(puntosNavegacion[posActual].x,25,-puntosNavegacion[posActual].y,camera);            
+    deshabilitarBotonAvanzar()
 }
+
+function getPuntoAnterior() 
+{
+    posActual++;
+    irAPunto(puntosNavegacion[posActual].x,25,-puntosNavegacion[posActual].y,camera);            
+}
+
+function deshabilitarBotonRetroceder(){
+    $('#link_retroceder').attr("disabled", "disabled");
+}
+  
+function deshabilitarBotonAvanzar(){
+    $('#link_avanzar').attr("data-theme",'c');
+   $('#link_avanzar').attr("disabled", "disabled");
+   
+   
+}
+
+function deshabilitarBotonZoomIn(){
+  <?php if ($sf_user->getAttribute('escala') == sfConfig::get('app_minimo_escala')):?> 
+    $('#link_zoom_in').addClass('ui-disabled');      
+  <?php endif;?>          
+} 
+
+function deshabilitarBotonZoomOut(){
+  <?php if ($sf_user->getAttribute('escala') == sfConfig::get('app_maximo_escala')):?> 
+    $('#link_zoom_out').addClass('ui-disabled');      
+  <?php endif;?>          
+} 
+
 
 </script>
     
