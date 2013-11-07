@@ -95,12 +95,19 @@ class mainActions extends sfActions
    * Función que dibuja el template Busqueda
    * @param sfWebRequest $request 
    */  
+ public function executeOrigen(sfWebRequest $request){
+    //En actual ID se seteará el parámetro que vendrá del código de barra.
+    $this->estructuras = EstructuraTable::getNavegables(); 
+  }
+  
   public function executeBuscar(sfWebRequest $request){
     //En actual ID se seteará el parámetro que vendrá del código de barra.
-    $this->getUser()->setAttribute('actual_id',1);
+    $estructuraOrigenId = $request->getParameter('id_estructura_origen');
+    $puntoNavegacionOrigen = PuntoNavegacionTable::getPuntoDeNavegacionAPartirDeEstructura($estructuraOrigenId)->getFirst();
+    $this->getUser()->setAttribute('actual_id',$puntoNavegacionOrigen->getId());
     $this->getUser()->setAttribute('borrados', array());
     $this->getUser()->setAttribute('escala',sfConfig::get('app_escala'));
-    $this->estructuras = EstructuraTable::getNavegables(); 
+    $this->estructuras = EstructuraTable::getNavegables($estructuraOrigenId); 
   }  
 
   /**

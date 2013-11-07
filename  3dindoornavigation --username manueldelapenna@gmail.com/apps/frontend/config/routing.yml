@@ -4,7 +4,7 @@
 # default rules
 homepage:
   url:   /
-  param: { module: main, action: buscar }
+  param: { module: main, action: origen }
 
 # generic rules
 # please, remove them by adding more specific rules

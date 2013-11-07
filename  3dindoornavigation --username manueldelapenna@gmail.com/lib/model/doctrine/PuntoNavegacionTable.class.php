@@ -41,4 +41,11 @@ class PuntoNavegacionTable extends Doctrine_Table
       return $query->fetchOne()->getPuntoOrigenY();      
     }
     
+      public static function getPuntoDeNavegacionAPartirDeEstructura($estructuraId){
+      $query = Doctrine_Query::create()->
+              from('PuntoNavegacion pn')->
+              where("pn.estructura_id = $estructuraId");              
+      
+      return $query->execute();              
+    }
 }
