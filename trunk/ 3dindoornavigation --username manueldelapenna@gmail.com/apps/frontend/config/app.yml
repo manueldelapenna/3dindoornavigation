@@ -12,5 +12,5 @@ all:
   #parámetro utilizado para darle una escala a las figuras que se dibujan en el canvas
   escala: '15'
   #Versión del prototipo
-  version: 2.0
+  version: '2.0'
     
