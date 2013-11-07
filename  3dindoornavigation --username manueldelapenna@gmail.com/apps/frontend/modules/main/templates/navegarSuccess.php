@@ -474,7 +474,7 @@ function chequearBotonera(){
 
 
 function cerrarDialogo(){
-    $("#popupDialog").close();
+    $("#popupDialog").popup("close");
 }
 </script>
     
