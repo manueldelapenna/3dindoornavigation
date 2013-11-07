@@ -17,12 +17,15 @@ class EstructuraTable extends Doctrine_Table
         return Doctrine_Core::getTable('Estructura');
     }
     
-    public static function getNavegables(){
+    public static function getNavegables($origen){
       $query = Doctrine_Query::create()->
               from('Estructura e')->
               where('e.es_navegable = 1')->
+              andWhere("e.id <> $origen")->
               orderBy('e.nombre');
       
       return $query->execute();              
     }
+    
+
 }
