@@ -29,7 +29,7 @@
       </div><!-- /content -->
       
       <div data-role="footer">
-        <h4 style="font-size: 22px"> &copy; 2012 | Navegaci&oacute;n Indoor 2D | Versi&oacute;n <?php echo sfConfig::get('app_version');?> </h4>
+        <h4 style="font-size: 22px"> &copy; 2014 | Navegaci&oacute;n Indoor 3D | Versi&oacute;n <?php echo sfConfig::get('app_version');?> </h4>
       </div><!-- /footer -->
     </div><!-- /div data-role -->
   </body>
