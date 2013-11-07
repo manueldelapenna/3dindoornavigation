@@ -20,7 +20,7 @@
   </a>
 </div>-->
 
-<div data-role="controlgroup" data-type="horizontal" data-mini="false">
+<div style="position:absolute;" data-role="controlgroup" data-type="horizontal" data-mini="false">
   
   <a type="button" id="link_retroceder" href="javascript:getPuntoAnterior()" 
      data-icon="arrow-l" data-theme="a" rel = "external">Retroceder </a>
@@ -34,4 +34,6 @@
   <a id="link_zoom_out" href="javascript:rotar360(-2*Math.PI,camera)" 
      data-role="button" data-icon="arrow-r" data-theme="a" rel = "external">360º Derecha
   </a>
+    
+  
 </div>
