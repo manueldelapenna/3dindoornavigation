@@ -1,6 +1,13 @@
 <?php use_helper("JavascriptBase");?>
 
-<div id="container"> </div><!--/container - Acá se dibuja el canvas-->    
+<div id="container">
+    <div id="ThreeJS" style="float:left; border-style: solid; left:0px; top:0px; height: 500px; width: window.innerWidth"> 
+        <?php include_partial('global/barra_navegacion');?>     
+    </div>
+        
+    <div id="container" style="float: right;"> </div><!--/container - Acá se dibuja el canvas-->    
+</div>
+
 <script>
   _BASEPATH = "<?php echo $basepath;?>"; 
   _ENVIROMENT = "<?php echo $enviroment;?>";
@@ -71,8 +78,8 @@
 //    deshabilitarBotonAvanzar();    
 //    deshabilitarBotonZoomOut();
 //    deshabilitarBotonZoomIn();
-    //Centra el canvas cada vez que realizamos una petición
-    centrar(stage);
+    
+     stage.draw();
   }  
 
   function rotar(deg){
@@ -80,24 +87,6 @@
       stage.draw();
   }
 
-  function centrar(){
-      x = "<?php echo PuntoNavegacionTable::getPuntoNavegacionXPara($sf_user->getAttribute('actual_id')) 
-                                      / $sf_user->getAttribute('escala') + 10;?>";
-      y = "<?php echo (sfConfig::get('app_maximo_y') - 
-                 PuntoNavegacionTable::getPuntoNavegacionYPara($sf_user->getAttribute('actual_id'))) / 
-                 $sf_user->getAttribute('escala');?>";
-                                            
-      offset = "<?php echo $sf_user->getAttribute('escala') ;?>";
-      
-      if(offset < 5){
-        stage.setX( (-x/2) - (offset*50) )  ;
-        stage.setY((-y/2) - (offset*50) );
-      }else{
-        stage.setX( (-x/2) + (offset*10)  )
-        stage.setY((-y/2) + (offset*10) ); 
-      }                       
-      stage.draw();
-  }    
   
   
 </script>
@@ -108,7 +97,7 @@
 <!-- 3D -->
 
 
-<div id="ThreeJS" style="position: relative; border-style: solid; left:0px; top:0px; height: 500px; width: 600px;"></div>
+
 
 <div data-role="popup" id="popupDialog" data-overlay-theme="a" data-theme="a" style="max-width:600px;" class="ui-corner-all" aria-disabled="false" data-shadow="true" data-corners="true" data-transition="pop">
   <div data-role="header" data-theme="a" class="ui-corner-top ui-header ui-bar-d" role="banner">
@@ -121,9 +110,9 @@
   </div>
 </div>
 
-        <?php if ($sf_request->getParameter('action') == 'navegar'):?>
-          <?php include_partial('global/barra_navegacion');?>        
-        <?php endif;?>        
+        
+        
+        
         <?php include_partial('global/mensajes_usuario');?>
         
         
@@ -165,10 +154,10 @@ function init()
 	// SCENE
 	scene = new THREE.Scene();
 	// CAMERA
-	var SCREEN_WIDTH = 600, SCREEN_HEIGHT = 500;
+	var SCREEN_WIDTH = window.innerWidth-36, SCREEN_HEIGHT = 500;
 	var VIEW_ANGLE = 45, ASPECT = SCREEN_WIDTH / SCREEN_HEIGHT, NEAR = 0.1, FAR = 20000;
 	camera = new THREE.PerspectiveCamera( VIEW_ANGLE, ASPECT, NEAR, FAR);
-	camera.position.set(3500,25,200);
+	camera.position.set(puntosNavegacion[posActual].x,25,-puntosNavegacion[posActual].y);
 	camera.rotation.set(0,0,0);
         scene.add(camera);
 	
@@ -476,5 +465,6 @@ function chequearBotonera(){
 function cerrarDialogo(){
     $("#popupDialog").popup("close");
 }
+
 </script>
     
