@@ -350,7 +350,7 @@ CREATE TABLE IF NOT EXISTS `punto_navegacion` (
 --
 
 INSERT INTO `punto_navegacion` (`id`, `nombre`, `punto_origen_x`, `punto_origen_y`, `estructura_id`) VALUES
-(1, 'P1', 3615, 220, NULL),
+(1, 'P1', 3615, 285, NULL),
 (2, 'P2', 3615, 525, NULL),
 (3, 'P3', 3065, 525, NULL),
 (4, 'P4', 3065, 300, 11),
