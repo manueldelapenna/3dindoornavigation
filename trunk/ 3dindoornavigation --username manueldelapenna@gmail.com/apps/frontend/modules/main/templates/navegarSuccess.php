@@ -1,12 +1,11 @@
 <?php use_helper("JavascriptBase");?>
 
-<div id="container">
-    <div id="ThreeJS" style="float:left; border-style: solid; left:0px; top:0px; height: 500px; width: window.innerWidth"> 
+
+    <div id="ThreeJS" style="position: relative; left; border-style: solid; left:0px; top:0px; height: 500px; width: window.innerWidth"> 
         <?php include_partial('global/barra_navegacion');?>     
+        <div id="container" style="position:absolute; right: 10px; bottom:10px"> </div><!--/container - Acá se dibuja el canvas-->    
     </div>
         
-    <div id="container" style="float: right;"> </div><!--/container - Acá se dibuja el canvas-->    
-</div>
 
 <script>
   _BASEPATH = "<?php echo $basepath;?>"; 
