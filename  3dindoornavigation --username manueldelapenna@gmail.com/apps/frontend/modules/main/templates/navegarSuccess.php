@@ -271,7 +271,14 @@ function update()
            irAPunto(3615,25,-525,camera);
                
         }   
-          
+        if ( keyboard.pressed("P") )
+	{
+           console.log(camera.position);
+        }
+        
+        if ( keyboard.pressed("L") )
+                camera.rotation.y += Math.PI/2;
+    
 }
 function dibujarPared(distancia,puntoMedioX,puntoMedioY,anguloRotacion,orientacion) {
     
