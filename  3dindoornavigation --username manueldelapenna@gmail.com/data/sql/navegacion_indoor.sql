@@ -1,14 +1,15 @@
 -- phpMyAdmin SQL Dump
--- version 3.2.4
+-- version 4.0.4.1
 -- http://www.phpmyadmin.net
 --
--- Servidor: localhost
--- Tiempo de generación: 31-10-2013 a las 21:23:26
--- Versión del servidor: 5.1.41
--- Versión de PHP: 5.3.1
+-- Servidor: 127.0.0.1
+-- Tiempo de generación: 12-11-2013 a las 20:23:49
+-- Versión del servidor: 5.5.32
+-- Versión de PHP: 5.4.19
 
 SET FOREIGN_KEY_CHECKS=0;
-SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -19,6 +20,8 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 --
 -- Base de datos: `indoor_navigation`
 --
+CREATE DATABASE IF NOT EXISTS `indoor_navigation` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `indoor_navigation`;
 
 -- --------------------------------------------------------
 
@@ -36,7 +39,7 @@ CREATE TABLE IF NOT EXISTS `estructura` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=27 ;
 
 --
--- Volcar la base de datos para la tabla `estructura`
+-- Volcado de datos para la tabla `estructura`
 --
 
 INSERT INTO `estructura` (`id`, `nombre`, `tipo`, `capacidad`, `es_navegable`) VALUES
@@ -82,7 +85,7 @@ CREATE TABLE IF NOT EXISTS `multimedia` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=16 ;
 
 --
--- Volcar la base de datos para la tabla `multimedia`
+-- Volcado de datos para la tabla `multimedia`
 --
 
 INSERT INTO `multimedia` (`id`, `nombre`, `tipo`, `estructura_id`) VALUES
@@ -112,10 +115,10 @@ CREATE TABLE IF NOT EXISTS `orientacion_pared` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `nombre` text NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 --
--- Volcar la base de datos para la tabla `orientacion_pared`
+-- Volcado de datos para la tabla `orientacion_pared`
 --
 
 INSERT INTO `orientacion_pared` (`id`, `nombre`) VALUES
@@ -142,7 +145,7 @@ CREATE TABLE IF NOT EXISTS `pared_dibujable` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=58 ;
 
 --
--- Volcar la base de datos para la tabla `pared_dibujable`
+-- Volcado de datos para la tabla `pared_dibujable`
 --
 
 INSERT INTO `pared_dibujable` (`id`, `punto_1_id`, `punto_2_id`, `link_imagen`, `descripcion`, `orientacion_pared_id`) VALUES
@@ -193,7 +196,7 @@ CREATE TABLE IF NOT EXISTS `puntos` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=133 ;
 
 --
--- Volcar la base de datos para la tabla `puntos`
+-- Volcado de datos para la tabla `puntos`
 --
 
 INSERT INTO `puntos` (`id`, `punto_origen_x`, `punto_origen_y`, `estructura_id`) VALUES
@@ -346,26 +349,26 @@ CREATE TABLE IF NOT EXISTS `punto_navegacion` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=62 ;
 
 --
--- Volcar la base de datos para la tabla `punto_navegacion`
+-- Volcado de datos para la tabla `punto_navegacion`
 --
 
 INSERT INTO `punto_navegacion` (`id`, `nombre`, `punto_origen_x`, `punto_origen_y`, `estructura_id`) VALUES
 (1, 'P1', 3615, 285, NULL),
 (2, 'P2', 3615, 525, NULL),
 (3, 'P3', 3065, 525, NULL),
-(4, 'P4', 3065, 300, 11),
+(4, 'P4', 3065, 354, 11),
 (5, 'P5', 2920, 525, NULL),
-(6, 'P6', 2920, 300, 10),
+(6, 'P6', 2920, 356, 10),
 (7, 'P7', 2700, 525, NULL),
-(8, 'P8', 2700, 300, 9),
+(8, 'P8', 2700, 351, 9),
 (9, 'P9', 2400, 525, NULL),
-(10, 'P10', 2400, 300, 8),
+(10, 'P10', 2400, 355, 8),
 (11, 'P11', 2100, 525, NULL),
-(12, 'P12', 2100, 400, 7),
+(12, 'P12', 2100, 453, 7),
 (13, 'P13', 1800, 525, NULL),
-(14, 'P14', 1800, 400, 6),
+(14, 'P14', 1800, 454, 6),
 (15, 'P15', 1350, 525, NULL),
-(16, 'P16', 1350, 400, 5),
+(16, 'P16', 1350, 452, 5),
 (17, 'P17', 825, 525, NULL),
 (18, 'P18', 825, 250, 4),
 (19, 'P19', 825, 563, NULL),
@@ -374,28 +377,28 @@ INSERT INTO `punto_navegacion` (`id`, `nombre`, `punto_origen_x`, `punto_origen_
 (22, 'P22', 2100, 650, NULL),
 (23, 'P23', 2400, 650, NULL),
 (24, 'p24', 3815, 900, NULL),
-(25, 'p25', 3350, 1050, 12),
+(25, 'p25', 3465, 1050, 12),
 (26, 'p26', 4030, 1290, NULL),
 (27, 'p27', 4130, 1230, NULL),
-(28, 'p28', 4280, 1530, 26),
+(28, 'p28', 4280, 1450, 26),
 (29, 'p29', 4270, 1150, NULL),
-(30, 'p30', 4440, 1440, 25),
+(30, 'p30', 4440, 1367, 25),
 (31, 'p31', 4380, 1090, NULL),
-(32, 'p32', 4670, 1620, 24),
+(32, 'p32', 4633, 1541, 24),
 (33, 'p33', 3830, 1400, NULL),
-(34, 'p34', 4120, 1920, 23),
+(34, 'p34', 4044, 1861, 23),
 (35, 'p35', 3540, 1560, NULL),
-(36, 'p36', 3620, 1700, 14),
+(36, 'p36', 3620, 1596, 14),
 (37, 'p37', 3210, 1750, NULL),
-(38, 'p38', 3300, 1890, 15),
+(38, 'p38', 3300, 1777, 15),
 (39, 'p39', 2880, 1940, NULL),
-(40, 'p40', 2960, 2080, 16),
+(40, 'p40', 2960, 1964, 16),
 (41, 'p41', 2550, 2130, NULL),
-(42, 'p42', 2630, 2270, 17),
+(42, 'p42', 2630, 2149, 17),
 (43, 'p43', 1775, 2550, NULL),
-(44, 'p44', 1930, 2830, 18),
+(44, 'p44', 1917, 2759, 18),
 (45, 'p45', 1630, 2625, NULL),
-(46, 'p46', 1540, 2460, 13),
+(46, 'p46', 1540, 2545, 13),
 (47, 'p47', 1500, 2700, NULL),
 (48, 'p48', 1400, 2530, NULL),
 (49, 'p49', 1230, 2330, NULL),
@@ -405,10 +408,10 @@ INSERT INTO `punto_navegacion` (`id`, `nombre`, `punto_origen_x`, `punto_origen_
 (53, 'p53', 1600, 2890, NULL),
 (54, 'p54', 1440, 2990, NULL),
 (55, 'p55', 1470, 3050, NULL),
-(56, 'p56', 1540, 3010, 20),
+(56, 'p56', 1501, 3032, 20),
 (57, 'p57', 1380, 3020, NULL),
 (58, 'p58', 1410, 3080, NULL),
-(59, 'p59', 1335, 3120, 21),
+(59, 'p59', 1371, 3102, 21),
 (60, 'p60', 1300, 3060, NULL),
 (61, 'p61', 1270, 3000, 22);
 
@@ -426,7 +429,7 @@ CREATE TABLE IF NOT EXISTS `punto_navegacion_punto_navegacion` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Volcar la base de datos para la tabla `punto_navegacion_punto_navegacion`
+-- Volcado de datos para la tabla `punto_navegacion_punto_navegacion`
 --
 
 INSERT INTO `punto_navegacion_punto_navegacion` (`punto_navegacion_1_id`, `punto_navegacion_2_id`, `distancia`) VALUES
@@ -508,11 +511,6 @@ CREATE TABLE IF NOT EXISTS `sf_guard_forgot_password` (
   KEY `user_id_idx` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
---
--- Volcar la base de datos para la tabla `sf_guard_forgot_password`
---
-
-
 -- --------------------------------------------------------
 
 --
@@ -529,11 +527,6 @@ CREATE TABLE IF NOT EXISTS `sf_guard_group` (
   UNIQUE KEY `name` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
---
--- Volcar la base de datos para la tabla `sf_guard_group`
---
-
-
 -- --------------------------------------------------------
 
 --
@@ -548,11 +541,6 @@ CREATE TABLE IF NOT EXISTS `sf_guard_group_permission` (
   PRIMARY KEY (`group_id`,`permission_id`),
   KEY `sf_guard_group_permission_permission_id_sf_guard_permission_id` (`permission_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Volcar la base de datos para la tabla `sf_guard_group_permission`
---
-
 
 -- --------------------------------------------------------
 
@@ -570,11 +558,6 @@ CREATE TABLE IF NOT EXISTS `sf_guard_permission` (
   UNIQUE KEY `name` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
---
--- Volcar la base de datos para la tabla `sf_guard_permission`
---
-
-
 -- --------------------------------------------------------
 
 --
@@ -591,11 +574,6 @@ CREATE TABLE IF NOT EXISTS `sf_guard_remember_key` (
   PRIMARY KEY (`id`),
   KEY `user_id_idx` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
-
---
--- Volcar la base de datos para la tabla `sf_guard_remember_key`
---
-
 
 -- --------------------------------------------------------
 
@@ -624,7 +602,7 @@ CREATE TABLE IF NOT EXISTS `sf_guard_user` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 --
--- Volcar la base de datos para la tabla `sf_guard_user`
+-- Volcado de datos para la tabla `sf_guard_user`
 --
 
 INSERT INTO `sf_guard_user` (`id`, `first_name`, `last_name`, `email_address`, `username`, `algorithm`, `salt`, `password`, `is_active`, `is_super_admin`, `last_login`, `created_at`, `updated_at`) VALUES
@@ -646,11 +624,6 @@ CREATE TABLE IF NOT EXISTS `sf_guard_user_group` (
   KEY `sf_guard_user_group_group_id_sf_guard_group_id` (`group_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Volcar la base de datos para la tabla `sf_guard_user_group`
---
-
-
 -- --------------------------------------------------------
 
 --
@@ -667,12 +640,7 @@ CREATE TABLE IF NOT EXISTS `sf_guard_user_permission` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Volcar la base de datos para la tabla `sf_guard_user_permission`
---
-
-
---
--- Filtros para las tablas descargadas (dump)
+-- Restricciones para tablas volcadas
 --
 
 --
