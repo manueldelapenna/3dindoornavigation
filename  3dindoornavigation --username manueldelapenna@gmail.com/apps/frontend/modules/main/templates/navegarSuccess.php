@@ -29,8 +29,6 @@
                 , "<?php echo $estructura->getId();?>"
                 , "<?php echo $destino;?>"                
                 , new Array(<?php echo implode(',',$arreglo_de_puntos);?>));
-      <?php else:?> 
-        <?php echo ('No existen estructuras cargadas para ser dibujadas');?>
       <?php endif;?>
     <?php endforeach;?>}        
 </script>
@@ -95,9 +93,6 @@
 
 <!-- 3D -->
 
-
-
-
 <div data-role="popup" id="popupDialog" data-overlay-theme="a" data-theme="a" style="max-width:600px;" class="ui-corner-all" aria-disabled="false" data-shadow="true" data-corners="true" data-transition="pop">
   <div data-role="header" data-theme="a" class="ui-corner-top ui-header ui-bar-d" role="banner">
     <h1 class="ui-title" role="heading" aria-level="1">Felicitaciones</h1>
@@ -157,7 +152,17 @@ function init()
 	var VIEW_ANGLE = 45, ASPECT = SCREEN_WIDTH / SCREEN_HEIGHT, NEAR = 0.1, FAR = 20000;
 	camera = new THREE.PerspectiveCamera( VIEW_ANGLE, ASPECT, NEAR, FAR);
 	camera.position.set(puntosNavegacion[posActual].x,25,-puntosNavegacion[posActual].y);
-	camera.rotation.set(0,0,0);
+                
+        //calcula pendiente y angulo de rotacion para mirar al siguiente punto
+        var pendiente = (puntosNavegacion[posActual-1].x - camera.position.x) / (-puntosNavegacion[posActual-1].y - camera.position.z);
+        var angulo_rotacion = Math.atan(pendiente);
+
+        // si el punto de destino de z es mayor al actual, da media vuelta mas
+        if (-puntosNavegacion[posActual-1].y>camera.position.z){
+            angulo_rotacion += Math.PI;
+        }
+        
+	camera.rotation.y = angulo_rotacion;
         scene.add(camera);
 	
 	
