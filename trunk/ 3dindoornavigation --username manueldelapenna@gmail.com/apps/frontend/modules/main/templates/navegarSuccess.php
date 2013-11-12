@@ -330,6 +330,10 @@ function irAPunto(destinoX,destinoY,destinoZ,cam,debeAvanzar) {
     if (destinoZ>cam.position.z){
         angulo_rotacion += Math.PI;
     }
+    //calcula el giro mas corto
+    if (Math.abs(cam.rotation.y - angulo_rotacion)>Math.PI){
+        angulo_rotacion = angulo_rotacion - 2*Math.PI;
+    }
 
     //rotacion
     var animacionRotacion = new TWEEN.Tween(cam.rotation).to({
@@ -430,7 +434,7 @@ function getPuntoAnterior()
 
 function rotar360(angulo_rotacion,cam){
      //calcula pendiente y angulo de rotacion
-    
+
     //rotacion
     var animacionRotacion = new TWEEN.Tween(cam.rotation).to({
          x: 0,
@@ -440,9 +444,11 @@ function rotar360(angulo_rotacion,cam){
          //mientras rota no hace nada
      });
      animacionRotacion.onComplete(function () {
-         //termina de rotar y avanza
+         //termina de rotar y normaliza el angulo
+         cam.rotation.y -= angulo_rotacion;
     
     });
+        
     //comienza a rotar
     animacionRotacion.start();            
 } 
