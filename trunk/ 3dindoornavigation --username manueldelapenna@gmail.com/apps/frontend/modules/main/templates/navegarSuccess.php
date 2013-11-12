@@ -270,8 +270,8 @@ function update()
 	{
            irAPunto(3615,25,-525,camera);
                
-    }
-    
+        }   
+          
 }
 function dibujarPared(distancia,puntoMedioX,puntoMedioY,anguloRotacion,orientacion) {
     
