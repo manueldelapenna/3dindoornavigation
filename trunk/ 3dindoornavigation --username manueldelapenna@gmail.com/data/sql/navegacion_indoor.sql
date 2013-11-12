@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 12-11-2013 a las 20:23:49
+-- Tiempo de generación: 12-11-2013 a las 21:46:53
 -- Versión del servidor: 5.5.32
 -- Versión de PHP: 5.4.19
 
@@ -45,7 +45,7 @@ CREATE TABLE IF NOT EXISTS `estructura` (
 INSERT INTO `estructura` (`id`, `nombre`, `tipo`, `capacidad`, `es_navegable`) VALUES
 (1, 'Facultad de Informática', 2, 1000, 0),
 (2, 'Pared de afuera', 3, 0, 0),
-(3, 'Consultorio Médico', 1, 10, 0),
+(3, 'Consultorio Médico', 1, 10, 1),
 (4, 'Pared al lado de Económico Financiera', 3, 0, 0),
 (5, 'Área Económico Financiera', 1, 15, 1),
 (6, 'Secretaria Administrativa', 1, 15, 1),
@@ -380,7 +380,7 @@ INSERT INTO `punto_navegacion` (`id`, `nombre`, `punto_origen_x`, `punto_origen_
 (25, 'p25', 3465, 1050, 12),
 (26, 'p26', 4030, 1290, NULL),
 (27, 'p27', 4130, 1230, NULL),
-(28, 'p28', 4280, 1450, 26),
+(28, 'p28', 4244, 1458, 26),
 (29, 'p29', 4270, 1150, NULL),
 (30, 'p30', 4440, 1367, 25),
 (31, 'p31', 4380, 1090, NULL),
@@ -388,17 +388,17 @@ INSERT INTO `punto_navegacion` (`id`, `nombre`, `punto_origen_x`, `punto_origen_
 (33, 'p33', 3830, 1400, NULL),
 (34, 'p34', 4044, 1861, 23),
 (35, 'p35', 3540, 1560, NULL),
-(36, 'p36', 3620, 1596, 14),
+(36, 'p36', 3575, 1623, 14),
 (37, 'p37', 3210, 1750, NULL),
-(38, 'p38', 3300, 1777, 15),
+(38, 'p38', 3240, 1805, 15),
 (39, 'p39', 2880, 1940, NULL),
-(40, 'p40', 2960, 1964, 16),
+(40, 'p40', 2907, 1987, 16),
 (41, 'p41', 2550, 2130, NULL),
-(42, 'p42', 2630, 2149, 17),
+(42, 'p42', 2574, 2175, 17),
 (43, 'p43', 1775, 2550, NULL),
-(44, 'p44', 1917, 2759, 18),
+(44, 'p44', 1886, 2776, 18),
 (45, 'p45', 1630, 2625, NULL),
-(46, 'p46', 1540, 2545, 13),
+(46, 'p46', 1582, 2534, 13),
 (47, 'p47', 1500, 2700, NULL),
 (48, 'p48', 1400, 2530, NULL),
 (49, 'p49', 1230, 2330, NULL),
@@ -406,12 +406,12 @@ INSERT INTO `punto_navegacion` (`id`, `nombre`, `punto_origen_x`, `punto_origen_
 (51, 'p51', 1060, 1930, NULL),
 (52, 'p52', 1200, 1840, 13),
 (53, 'p53', 1600, 2890, NULL),
-(54, 'p54', 1440, 2990, NULL),
-(55, 'p55', 1470, 3050, NULL),
-(56, 'p56', 1501, 3032, 20),
+(54, 'p54', 1403, 2993, NULL),
+(55, 'p55', 1436, 3057, NULL),
+(56, 'p56', 1496, 3028, 20),
 (57, 'p57', 1380, 3020, NULL),
-(58, 'p58', 1410, 3080, NULL),
-(59, 'p59', 1371, 3102, 21),
+(58, 'p58', 1436, 3057, NULL),
+(59, 'p59', 1369, 3091, 21),
 (60, 'p60', 1300, 3060, NULL),
 (61, 'p61', 1270, 3000, 22);
 
@@ -487,7 +487,7 @@ INSERT INTO `punto_navegacion_punto_navegacion` (`punto_navegacion_1_id`, `punto
 (51, 52, 190.00),
 (53, 54, 160.00),
 (54, 55, 80.00),
-(54, 57, 160.00),
+(54, 58, 160.00),
 (55, 56, 120.00),
 (57, 58, 80.00),
 (57, 60, 130.00),
