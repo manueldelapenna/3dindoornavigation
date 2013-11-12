@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 12-11-2013 a las 21:46:53
+-- Tiempo de generación: 12-11-2013 a las 23:53:09
 -- Versión del servidor: 5.5.32
 -- Versión de PHP: 5.4.19
 
@@ -64,7 +64,6 @@ INSERT INTO `estructura` (`id`, `nombre`, `tipo`, `capacidad`, `es_navegable`) V
 (19, 'Pared', 3, 0, 0),
 (20, 'Baño hombres 2', 1, 15, 1),
 (21, 'Baño mujeres 2', 1, 15, 1),
-(22, 'Ex entrada a Centro de estudiantes', 1, 15, 0),
 (23, 'Baño Hombres 1', 1, 15, 1),
 (24, 'Baño mujeres 1', 1, 15, 1),
 (25, 'Escalera 1', 1, 15, 1),
@@ -142,7 +141,7 @@ CREATE TABLE IF NOT EXISTS `pared_dibujable` (
   KEY `orientacion_pared_id_idx` (`orientacion_pared_id`),
   KEY `punto_1_id_idx` (`punto_1_id`),
   KEY `punto_2_id_idx` (`punto_2_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=58 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=61 ;
 
 --
 -- Volcado de datos para la tabla `pared_dibujable`
@@ -159,8 +158,8 @@ INSERT INTO `pared_dibujable` (`id`, `punto_1_id`, `punto_2_id`, `link_imagen`, 
 (19, 17, 18, 'link 15', 'Union pasillo lateral izquierdo, con frente de Biblioteca.', 2),
 (20, 18, 21, 'link 16', 'Frente de la Biblioteca de la Facultad', 2),
 (21, 21, 22, 'link 17', 'Union Biblioteca, con pasillo de Alumnos.', 2),
-(22, 22, 23, 'link 18', 'Pasillo interno, con salida al patio interno, frente a alumnos', 2),
-(23, 23, 39, 'link 19', 'Puerta Entrada a pasillo interno, entrando por la entrada de bicicletas.', 2),
+(22, 22, 27, 'link 18', 'Pasillo interno, con salida al patio interno, frente a alumnos', 2),
+(23, 34, 39, 'link 19', 'Puerta Entrada a pasillo interno, entrando por la entrada de bicicletas.', 2),
 (27, 43, 50, 'link  22', 'pared desde alumnos hasta escalera 3', 1),
 (29, 50, 55, 'link 24', 'pared lateral alumnos', 2),
 (31, 55, 65, 'link 26', 'Intendencia, Oficina G, Alumnos B, Personal y Concursos', 1),
@@ -179,7 +178,9 @@ INSERT INTO `pared_dibujable` (`id`, `punto_1_id`, `punto_2_id`, `link_imagen`, 
 (54, 107, 108, 'link', 'Puerta baño mujeres 2', 2),
 (55, 108, 109, 'link', 'BAño mujeres 2, pared final del mapa', 2),
 (56, 38, 39, 'link', 'Pared frontal escalera 3', 1),
-(57, 38, 43, 'link', 'Pared lateral final Economica financiera con escalera 3', 1);
+(57, 38, 43, 'link', 'Pared lateral final Economica financiera con escalera 3', 1),
+(59, 134, 34, 'link', 'Pared frene consultoro medico', 1),
+(60, 134, 27, 'Link', 'Pared afuera contra bibicletas', 2);
 
 -- --------------------------------------------------------
 
@@ -193,7 +194,7 @@ CREATE TABLE IF NOT EXISTS `puntos` (
   `punto_origen_y` bigint(20) NOT NULL,
   `estructura_id` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=133 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=136 ;
 
 --
 -- Volcado de datos para la tabla `puntos`
@@ -222,19 +223,9 @@ INSERT INTO `puntos` (`id`, `punto_origen_x`, `punto_origen_y`, `estructura_id`)
 (20, 2430, 810, 1),
 (21, 3330, 810, 1),
 (22, 3270, 600, 1),
-(23, 600, 600, 1),
-(24, 600, 350, 1),
-(25, 300, 350, 1),
-(26, 300, 600, 1),
 (27, 0, 600, 1),
-(28, 0, 0, 2),
-(29, 300, 0, 2),
-(30, 300, 600, 2),
-(31, 0, 600, 2),
-(32, 300, 0, 3),
 (33, 600, 0, 3),
 (34, 600, 450, 3),
-(35, 300, 450, 3),
 (36, 600, 0, 4),
 (37, 1050, 0, 4),
 (38, 1050, 300, 4),
@@ -310,12 +301,6 @@ INSERT INTO `puntos` (`id`, `punto_origen_x`, `punto_origen_y`, `estructura_id`)
 (108, 1350, 3070, 21),
 (109, 1285, 3110, 21),
 (110, 1490, 3480, 21),
-(111, 1100, 2780, 22),
-(112, 1380, 2630, 22),
-(113, 1470, 2790, 22),
-(114, 1260, 2900, 22),
-(115, 1320, 3010, 22),
-(116, 1250, 3050, 22),
 (117, 4050, 2080, 23),
 (118, 4440, 1870, 23),
 (119, 4360, 1700, 23),
@@ -331,7 +316,10 @@ INSERT INTO `puntos` (`id`, `punto_origen_x`, `punto_origen_y`, `estructura_id`)
 (129, 4190, 1640, 26),
 (130, 4410, 1520, 26),
 (131, 4360, 1420, 26),
-(132, 4140, 1540, 26);
+(132, 4140, 1540, 26),
+(133, 0, 34, 27),
+(134, 0, 450, 3),
+(135, 0, 0, 3);
 
 -- --------------------------------------------------------
 
@@ -371,9 +359,9 @@ INSERT INTO `punto_navegacion` (`id`, `nombre`, `punto_origen_x`, `punto_origen_
 (16, 'P16', 1350, 452, 5),
 (17, 'P17', 825, 525, NULL),
 (18, 'P18', 825, 250, 4),
-(19, 'P19', 825, 563, NULL),
-(20, 'P20', 550, 563, NULL),
-(21, 'P21', 550, 400, 3),
+(19, 'P19', 405, 525, NULL),
+(20, 'P20', 50, 525, NULL),
+(21, 'P21', 50, 457, 3),
 (22, 'P22', 2100, 650, NULL),
 (23, 'P23', 2400, 650, NULL),
 (24, 'p24', 3815, 900, NULL),
@@ -453,8 +441,8 @@ INSERT INTO `punto_navegacion_punto_navegacion` (`punto_navegacion_1_id`, `punto
 (15, 16, 125.00),
 (15, 17, 525.00),
 (17, 18, 275.00),
-(17, 19, 37.50),
-(19, 20, 275.00),
+(17, 19, 420.00),
+(19, 20, 355.00),
 (20, 21, 162.50),
 (24, 25, 515.00),
 (24, 26, 440.00),
