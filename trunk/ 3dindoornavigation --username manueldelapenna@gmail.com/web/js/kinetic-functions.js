@@ -32,7 +32,6 @@ function dibujarPoligono(stage, tipoEstructura, idEstructura, idDestino, pointsT
 //Dibuja circulos si primero es falso y una imagen si es verdadero.
 function dibujarPuntoNavegacion(stage,layer,x,y,id, primero){ 
   // Si primero, se carga una imagen en vez de dibujar un punto
-  
   if(primero){    
     var imageObj = new Image();
     imageObj.onload = function() {
