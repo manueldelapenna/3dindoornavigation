@@ -10,7 +10,10 @@
 <script>
   _BASEPATH = "<?php echo $basepath;?>"; 
   _ENVIROMENT = "<?php echo $enviroment;?>";
-
+  
+  app_maximo_y = <?php echo sfConfig::get('app_maximo_y')?>;
+  escala =  <?php echo $sf_user->getAttribute('escala')?>;
+  
   function dibujarFacu(stage){        
     <?php foreach ($estructuras as $estructura):?>
       <?php $puntos = PuntosTable::getPuntosBy($estructura->getId());?>
@@ -34,27 +37,30 @@
 </script>
 
 <script>
+  function borrarTodosLosPuntos(stage,layer){
+      layer.removeChildren();
+      dibujarFacu(stage);
+      
+  }
+  
   function dibujarTodosLosPuntos(stage,layer){
-      <?php $arreglo_de_puntos = array()?>
-      <?php $aux = 1;?>
-      <?php $sf_user->setAttribute('siguiente_id',$puntos_navegacion[count($puntos_navegacion)-2]->getId());?>
-      <?php foreach($puntos_navegacion as $punto_navegacion):?>
-          <?php
-            $id = $punto_navegacion->getId();
-            $x = $punto_navegacion->getPuntoOrigenX() /$sf_user->getAttribute('escala') + 10;
-            $y = (sfConfig::get('app_maximo_y') - $punto_navegacion->getPuntoOrigenY())
-                                   / $sf_user->getAttribute('escala');
-            $arreglo_de_puntos[] = $x;
-            $arreglo_de_puntos[] = $y;            
-          ?>           
-          <?php if ($aux == count($puntos_navegacion)):?>
-            dibujarPuntoNavegacion(stage,layer,<?php echo $x?>,<?php echo $y?>, <?php echo $id?>, true);
-          <?php else:?>  
-            dibujarPuntoNavegacion(stage,layer,<?php echo $x?>,<?php echo $y?>, <?php echo $id?>, false);
-          <?php endif;?>
-          <?php $aux++;?>
-      <?php endforeach;?>
-      dibujarLinea(stage, layer, new Array(<?php echo implode(',',$arreglo_de_puntos);?>));
+    var aux = new Array();
+    for (var i=0;i<puntosNavegacion.length;i++)
+    {
+        if (i<=posActual){
+            var id = null;
+            var x = puntosNavegacion[posActual-i].x/escala + 10;
+            var y = (app_maximo_y - puntosNavegacion[posActual-i].y)/escala;
+            aux.push(x);
+            aux.push(y);
+            if (i == 0){
+                dibujarPuntoNavegacion(stage,layer,x,y,id,true);
+            }else{
+                dibujarPuntoNavegacion(stage,layer,x,y,id,false);
+            }
+        }
+    }
+      dibujarLinea(stage, layer, aux);
   }    
 </script>
 
@@ -406,6 +412,8 @@ function getPuntoSiguiente()
         
         
     }
+    borrarTodosLosPuntos(stage, layer);
+    dibujarTodosLosPuntos(stage,layer);
     chequearBotonera();
   
 }
@@ -414,6 +422,8 @@ function getPuntoAnterior()
 {
     posActual++;
     irAPunto(puntosNavegacion[posActual].x,25,-puntosNavegacion[posActual].y,camera,true);            
+    borrarTodosLosPuntos(stage, layer);
+    dibujarTodosLosPuntos(stage,layer);
     chequearBotonera();
     
 }
