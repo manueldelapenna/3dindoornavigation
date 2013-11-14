@@ -91,6 +91,8 @@ class mainActions extends sfActions
     //var_dump($this->puntos_navegacion); die;
   } 
  
+  
+  
   /**
    * Función que dibuja el template Busqueda
    * @param sfWebRequest $request 
@@ -101,13 +103,16 @@ class mainActions extends sfActions
   }
   
   public function executeBuscar(sfWebRequest $request){
-    //En actual ID se seteará el parámetro que vendrá del código de barra.
+    
     $estructuraOrigenId = $request->getParameter('id_estructura_origen');
     $puntoNavegacionOrigen = PuntoNavegacionTable::getPuntoDeNavegacionAPartirDeEstructura($estructuraOrigenId)->getFirst();
     $this->getUser()->setAttribute('actual_id',$puntoNavegacionOrigen->getId());
     $this->getUser()->setAttribute('borrados', array());
     $this->getUser()->setAttribute('escala',sfConfig::get('app_escala'));
     $this->estructuras = EstructuraTable::getNavegables($estructuraOrigenId); 
+    $this->destino = $this->getUser()->getAttribute('fin_id'); 
+    
+
   }  
 
   /**

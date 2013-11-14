@@ -1,4 +1,11 @@
 <?php use_helper("I18N");?>
+
+<?php
+    if ($destino != null){
+    echo link_to('Mantener destino anterior','main/navegar?est_id='.$destino,array(
+               "rel" => "external", "style" => "font-size: 18px"));
+    }
+?> 
 <h3 style="font-size: 20px"><?php echo __('Seleccione el destino.');?></h3>
 <ul data-role="listview" data-inset="true" data-filter="true" data-filter-placeholder="Escriba parte del nombre para filtrar...">
   <?php foreach ($estructuras as $estructura):?>
