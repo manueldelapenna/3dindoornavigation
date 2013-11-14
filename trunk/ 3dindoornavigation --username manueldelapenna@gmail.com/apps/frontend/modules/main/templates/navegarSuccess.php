@@ -192,7 +192,7 @@ function init()
 	floor.rotation.x = Math.PI / 2;
 	scene.add(floor);
 
-        chequearBotonera();
+        habilitarBotonera();
         //construccion de paredes
         <?php
                 
@@ -352,11 +352,13 @@ function irAPunto(destinoX,destinoY,destinoZ,cam,debeAvanzar) {
                 //mientras avanza no hace nada
               });
             animacionAvance.onComplete(function () {
-                //termina de avanzar y no hace nada
+                //termina de avanzar y habilita la botonera
+                habilitarBotonera();
             });
             //comienza a avanzar
             animacionAvance.start(); 
          }else{
+             habilitarBotonera();
              $("#popupDialog").popup("open",100,300);
          }
 
@@ -402,7 +404,7 @@ function getPuntoSiguiente()
 //            alert("No funca");
 //        }
 //     });
-    
+    deshabilitarBotonera();
     posActual--;
     if (posActual > 0){
         irAPunto(puntosNavegacion[posActual].x,25,-puntosNavegacion[posActual].y,camera,true);            
@@ -413,24 +415,21 @@ function getPuntoSiguiente()
         
     }
     borrarTodosLosPuntos(stage, layer);
-    dibujarTodosLosPuntos(stage,layer);
-    chequearBotonera();
-  
+    dibujarTodosLosPuntos(stage,layer);   
 }
 
 function getPuntoAnterior() 
 {
+    deshabilitarBotonera();
     posActual++;
-    irAPunto(puntosNavegacion[posActual].x,25,-puntosNavegacion[posActual].y,camera,true);            
+    irAPunto(puntosNavegacion[posActual].x,25,-puntosNavegacion[posActual].y,camera,true);
     borrarTodosLosPuntos(stage, layer);
     dibujarTodosLosPuntos(stage,layer);
-    chequearBotonera();
-    
-}
+ }
 
 function rotar360(angulo_rotacion,cam){
      //calcula pendiente y angulo de rotacion
-
+    deshabilitarBotonera();
     //rotacion
     var animacionRotacion = new TWEEN.Tween(cam.rotation).to({
          x: 0,
@@ -442,6 +441,7 @@ function rotar360(angulo_rotacion,cam){
      animacionRotacion.onComplete(function () {
          //termina de rotar y normaliza el angulo
          cam.rotation.y -= angulo_rotacion;
+         habilitarBotonera();
     
     });
         
@@ -459,16 +459,30 @@ function deshabilitarBotonAvanzar(){
       
 }
 
+function deshabilitarBotones360(){
+    $('#link_360_derecha').addClass('ui-disabled');      
+    $('#link_360_izquierda').addClass('ui-disabled');      
+}
+
+function habilitarBotones360(){
+    $('#link_360_derecha').removeClass('ui-disabled');      
+    $('#link_360_izquierda').removeClass('ui-disabled');      
+      
+}
+
 function habilitarBotonRetroceder(){
     $('#link_retroceder').removeClass('ui-disabled');      
 }
   
 function habilitarBotonAvanzar(){
     $('#link_avanzar').removeClass('ui-disabled');      
-      
 }
 
+
+
 function chequearBotonera(){
+    habilitarBotonAvanzar();
+    habilitarBotonRetroceder();
     if (posActual == 0){
         deshabilitarBotonAvanzar();
         //vuelve al anterior porque solamente lo mira
@@ -476,12 +490,19 @@ function chequearBotonera(){
     }else{
         if (posActual == cantPuntos){
             deshabilitarBotonRetroceder();
-        }else{
-            habilitarBotonAvanzar();
-            habilitarBotonRetroceder();
         }
     }
        
+}
+
+function deshabilitarBotonera(){
+    deshabilitarBotonAvanzar();
+    deshabilitarBotonRetroceder();
+    deshabilitarBotones360();
+}
+function habilitarBotonera(){
+    chequearBotonera();
+    habilitarBotones360();
 }
 
 
