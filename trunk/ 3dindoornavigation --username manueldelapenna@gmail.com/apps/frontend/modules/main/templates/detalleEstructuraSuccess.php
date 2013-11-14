@@ -1,11 +1,12 @@
-<div class="ui-grid-a" id="opcionesNavegacion">
-  <div class="ui-block-a">	
-    <?php echo link_to('Volver a la navegación anterior' ,'main/navegar?est_id='.$destino,array("rel" => "external", " data-role" => "button", "data-icon" => "back"));?>
-  </div>
-  <div class="ui-block-b">	
-    <?php echo link_to('Navegar hacia: '.$estructura->getNombre() ,'main/navegarHacia?est_id='.$estructura->getId(),array("rel" => "external", " data-role" => "button", "data-icon" => "check"));?>
-  </div>    
-</div>
+<ul data-role="listview">
+
+  <li> <?php echo link_to('Navegar a otro sitio desde '.$estructura->getNombre() ,'main/buscar?id_estructura_origen='.$destino,array(
+               "rel" => "external", "style" => "font-size: 18px"));?> 
+  </li>
+
+</ul>
+
+
 
 <div data-role="content" data-theme="c" class="ui-corner-bottom ui-content ui-body-c" role="main">
       <h3><?php echo  $estructura->getNombre(); ?></h3>
