@@ -28,10 +28,10 @@
   <a type="button" id="link_avanzar" href="javascript:getPuntoSiguiente()" 
      data-icon="arrow-r" data-theme="a" rel = "external">Avanzar </a>
     
-  <a id="link_zoom_in" href="javascript:rotar360(2*Math.PI,camera)" 
+  <a id="link_360_izquierda" href="javascript:rotar360(2*Math.PI,camera)" 
      data-role="button" data-icon="arrow-l" data-theme="a" rel = "external">360º Izquierda 
   </a>
-  <a id="link_zoom_out" href="javascript:rotar360(-2*Math.PI,camera)" 
+  <a id="link_360_derecha" href="javascript:rotar360(-2*Math.PI,camera)" 
      data-role="button" data-icon="arrow-r" data-theme="a" rel = "external">360º Derecha
   </a>
     
