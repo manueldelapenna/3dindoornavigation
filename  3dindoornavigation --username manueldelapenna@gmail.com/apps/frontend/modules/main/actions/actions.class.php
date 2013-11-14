@@ -65,6 +65,13 @@ class mainActions extends sfActions
   public function executeNavegar(sfWebRequest $request){     
     //Se setea en el usuario el id de la estructura a donde el usuario desea navegar        
     $this->getUser()->setAttribute('fin_id',$request->getParameter('est_id'));
+    
+    if ($this->getUser()->getAttribute('fin_id') == $this->getUser()->getAttribute('origen_id')){
+        $this->getUser()->setFlash('notice','Ud. se encuentra parado en el mismo lugar al que desea llegar. Por favor seleccione un nuevo destino');
+        $this->getUser()->setAttribute('fin_id', null);
+        $this->redirect('main/buscar?id_estructura_origen='.$this->getUser()->getAttribute('origen_id'));
+    }
+    
     $this->estructuras = Doctrine::getTable('Estructura')->findAll();
     $this->puntos_todas_paredes = Doctrine::getTable('Puntos')->findAll();
     $this->paredes_dibujables = Doctrine::getTable('ParedDibujable')->findAll();
@@ -106,11 +113,15 @@ class mainActions extends sfActions
     
     $estructuraOrigenId = $request->getParameter('id_estructura_origen');
     $puntoNavegacionOrigen = PuntoNavegacionTable::getPuntoDeNavegacionAPartirDeEstructura($estructuraOrigenId)->getFirst();
+    $this->getUser()->setAttribute('origen_id',$estructuraOrigenId);
     $this->getUser()->setAttribute('actual_id',$puntoNavegacionOrigen->getId());
     $this->getUser()->setAttribute('borrados', array());
     $this->getUser()->setAttribute('escala',sfConfig::get('app_escala'));
     $this->estructuras = EstructuraTable::getNavegables($estructuraOrigenId); 
+    
+    //si tiene un destino de una busqueda anterior lo guarda
     $this->destino = $this->getUser()->getAttribute('fin_id'); 
+    $this->estructura = Doctrine::getTable('Estructura')->find($this->destino);
     
 
   }  

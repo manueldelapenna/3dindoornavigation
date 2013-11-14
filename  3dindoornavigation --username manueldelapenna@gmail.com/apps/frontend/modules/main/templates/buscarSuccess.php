@@ -1,8 +1,12 @@
 <?php use_helper("I18N");?>
-
+<?php if ($sf_user->hasFlash('notice')): ?>
+  <div class="success" id="success2">
+    <?php echo $sf_user->getFlash('notice') ?>
+  </div>
+<?php endif; ?>
 <?php
     if ($destino != null){
-    echo link_to('Mantener destino anterior','main/navegar?est_id='.$destino,array(
+    echo link_to('Continuar navegando hacia '. $estructura->getNombre(),'main/navegar?est_id='.$destino,array(
                "rel" => "external", "style" => "font-size: 18px"));
     }
 ?> 
