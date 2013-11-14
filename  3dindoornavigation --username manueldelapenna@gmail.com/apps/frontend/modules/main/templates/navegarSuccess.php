@@ -155,7 +155,7 @@ function init()
 	scene = new THREE.Scene();
 	// CAMERA
 	var SCREEN_WIDTH = window.innerWidth-36, SCREEN_HEIGHT = 500;
-	var VIEW_ANGLE = 45, ASPECT = SCREEN_WIDTH / SCREEN_HEIGHT, NEAR = 0.1, FAR = 20000;
+	var VIEW_ANGLE = 35, ASPECT = SCREEN_WIDTH / SCREEN_HEIGHT, NEAR = 0.1, FAR = 20000;
 	camera = new THREE.PerspectiveCamera( VIEW_ANGLE, ASPECT, NEAR, FAR);
 	camera.position.set(puntosNavegacion[posActual].x,25,-puntosNavegacion[posActual].y);
                 
@@ -326,20 +326,15 @@ function irAPunto(destinoX,destinoY,destinoZ,cam,debeAvanzar) {
     var pendiente = (cam.position.x - destinoX) / (cam.position.z - destinoZ);
     var angulo_rotacion = Math.atan(pendiente);
 
-    // si el punto de destino de z es mayor al actual, da media vuelta mas
-    if (destinoZ>cam.position.z){
-        angulo_rotacion += Math.PI;
-    }
-    //calcula el giro mas corto
-    if (Math.abs(cam.rotation.y - angulo_rotacion)>Math.PI){
-        angulo_rotacion = angulo_rotacion - 2*Math.PI;
-    }
-
+    angulo_rotacion = normalizarAnguloRotacion(cam,destinoZ,angulo_rotacion);
+    
+    var tiempo = tiempoRotacion(cam,angulo_rotacion);
+    
     //rotacion
     var animacionRotacion = new TWEEN.Tween(cam.rotation).to({
          x: 0,
          y: angulo_rotacion,
-         z: 0,});
+         z: 0,},tiempo);
      animacionRotacion.easing(TWEEN.Easing.Linear.None).onUpdate(function () {
          //mientras rota no hace nada
      });
@@ -347,11 +342,12 @@ function irAPunto(destinoX,destinoY,destinoZ,cam,debeAvanzar) {
          //termina de rotar y avanza
          
          if (debeAvanzar){
+            tiempo = tiempoAvanceRetroceso(cam,destinoX,destinoZ);
             var animacionAvance = new TWEEN.Tween(cam.position).to({
                    x: destinoX,
                    y: destinoY,
                    z: destinoZ
-              });
+              },tiempo);
             animacionAvance.easing(TWEEN.Easing.Linear.None).onUpdate(function () {
                 //mientras avanza no hace nada
               });
@@ -492,6 +488,39 @@ function chequearBotonera(){
 function cerrarDialogo(){
     $("#popupDialog").popup("close");
 }
+
+function normalizarAnguloRotacion(cam,destinoZ,angulo_rotacion){
+    
+    //calcula el giro mas corto
+    if (destinoZ>cam.position.z){
+        //el punto de destino de z es mayor al actual, da media vuelta mas
+        angulo_rotacion += Math.PI;
+        if (Math.abs(cam.rotation.y - angulo_rotacion)>Math.PI){
+            angulo_rotacion = angulo_rotacion - 2*Math.PI;
+        }
+    }
+    
+    if (destinoZ<=cam.position.z){
+        if (Math.abs(cam.rotation.y - angulo_rotacion)>Math.PI){
+            angulo_rotacion = angulo_rotacion + 2*Math.PI;
+        }
+    }
+    
+    return angulo_rotacion;
+}
+
+function tiempoRotacion(cam,angulo_rotacion){
+
+     return Math.abs(cam.rotation.y - angulo_rotacion)*1000;
+}
+
+function tiempoAvanceRetroceso(cam,destinoX,destinoZ){
+    //distancia = raiz[(y2 - y1)^2 + (x2 - x1)^2]
+    
+     return Math.sqrt(Math.pow(cam.position.x - destinoX,2) + Math.pow(cam.position.z - destinoZ,2))*3;
+     
+}
+
 
 </script>
     
