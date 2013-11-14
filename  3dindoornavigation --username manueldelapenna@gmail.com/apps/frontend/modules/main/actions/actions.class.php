@@ -133,11 +133,12 @@ class mainActions extends sfActions
    */
   public function executeDetalleEstructura(sfWebRequest $request){    
     $this->destino = 
-      Doctrine::getTable('PuntoNavegacion')->find($request->getParameter('idDestino'))->getEstructuraId();
+      Doctrine::getTable('PuntoNavegacion')->find($request->getParameter('idEstructura'));
     $this->estructura = 
       Doctrine::getTable('Estructura')->find($request->getParameter('idEstructura'));    
     $this->multimedia = 
       MultimediaTable::getMultimediaPara($request->getParameter('idEstructura'));
+    $this->getUser()->setAttribute('fin_id', null);
   }
   
   /**
