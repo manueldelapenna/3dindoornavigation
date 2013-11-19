@@ -77,21 +77,9 @@
   function inicio(){    
     dibujarFacu(stage);
     dibujarTodosLosPuntos(stage,layer);
-//    deshabilitarBotonRetroceder();
-//    deshabilitarBotonAvanzar();    
-//    deshabilitarBotonZoomOut();
-//    deshabilitarBotonZoomIn();
-    
-     stage.draw();
+    stage.draw();
   }  
 
-  function rotar(deg){
-      stage.rotateDeg(deg);
-      stage.draw();
-  }
-
-  
-  
 </script>
 
 
@@ -112,10 +100,7 @@
 </div>
 
         
-        
-        
         <?php include_partial('global/mensajes_usuario');?>
-        
         
 <script>
 /*
@@ -239,10 +224,9 @@ function init()
 function animate() 
 {
     requestAnimationFrame( animate );
-    
-        update();
-        render();		
-        TWEEN.update();
+    //update();
+    render();		
+    TWEEN.update();
     
 }
 
@@ -367,24 +351,6 @@ function irAPunto(destinoX,destinoY,destinoZ,cam,debeAvanzar) {
     //comienza a rotar
     animacionRotacion.start();            
 }
-        
-
-function collision() {
-
-	var originPoint = person.position.clone();
-	for (var vertexIndex = 0; vertexIndex < person.geometry.vertices.length; vertexIndex++)	{		
-		var localVertex = person.geometry.vertices[vertexIndex].clone();
-		var globalVertex = localVertex.applyMatrix4( person.matrix );
-		var directionVector = globalVertex.sub( person.position );
-		
-		var ray = new THREE.Raycaster( originPoint, directionVector.clone().normalize() );
-		var collisionResults = ray.intersectObjects( collidableMeshList );
-		if ( collisionResults.length > 0 && collisionResults[0].distance < directionVector.length() ) 
-			return true;
-		
-	}
-	return false;		
-}
 
 function render() 
 {
@@ -393,18 +359,6 @@ function render()
 
 function getPuntoSiguiente() 
 {
-    
-//    $.ajax({
-//        url: "../../../main/siguiente?idActual="+parseInt(idActual),
-//        dataType: "json",
-//        success: function(data){
-//            idActual = parseInt(data.idSiguiente);
-//            irAPunto(parseInt(data.xSiguiente),25,parseInt(-data.ySiguiente),camera);            
-//        },
-//        error: function(jqXHR, textStatus, errorThrown){
-//            alert("No funca");
-//        }
-//     });
     deshabilitarBotonera();
     posActual--;
     if (posActual > 0){
@@ -450,7 +404,6 @@ function rotar360(angulo_rotacion,cam){
     animacionRotacion.start();            
 } 
 
-
 function deshabilitarBotonRetroceder(){
     $('#link_retroceder').addClass('ui-disabled');      
 }
@@ -478,8 +431,6 @@ function habilitarBotonRetroceder(){
 function habilitarBotonAvanzar(){
     $('#link_avanzar').removeClass('ui-disabled');      
 }
-
-
 
 function chequearBotonera(){
     habilitarBotonAvanzar();

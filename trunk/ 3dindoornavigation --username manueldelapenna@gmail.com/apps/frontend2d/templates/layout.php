@@ -11,12 +11,7 @@
       <link rel="shortcut icon" href="<?php echo public_path('/favicon.ico') ?>" /> 
   </head>
   <body>
-    <script> 
-        if (!window.WebGLRenderingContext) {
-            // the browser doesn't even know what WebGL is
-            window.location = "../web/frontend2d.php";
-        }
-    </script>     
+    
     <div data-role="page" style="width:100%">
       <div data-role="header">
         <h1 style="font-size: 22px">Navegaci&oacute;n Indoor</h1>
@@ -24,17 +19,21 @@
       
       <div data-role="navbar">
           <ul>
-            <li><?php echo link_to('Buscar', 'main/origen', array("rel" => "external", "style" => "font-size: 20px"));?></li>
+            <li><?php echo link_to('Buscar', 'main/buscar', array("rel" => "external", "style" => "font-size: 20px"));?></li>
           </ul>
       </div><!-- /navbar -->
       
       <div data-role="content">        
-
+        <?php if ($sf_request->getParameter('action') == 'navegar'):?>
+          <?php include_partial('global/barra_navegacion');?>        
+        <?php endif;?>        
+        <?php include_partial('global/mensajes_usuario');?>
+        <div id="container"> </div><!--/container - Acá se dibuja el canvas-->    
         <?php echo $sf_content; ?>
       </div><!-- /content -->
       
       <div data-role="footer">
-        <h4 style="font-size: 22px"> &copy; 2014 | Navegaci&oacute;n Indoor 3D | Versi&oacute;n <?php echo sfConfig::get('app_version');?> </h4>
+        <h4 style="font-size: 22px"> &copy; 2012 | Navegaci&oacute;n Indoor 2D | Versi&oacute;n <?php echo sfConfig::get('app_version');?> </h4>
       </div><!-- /footer -->
     </div><!-- /div data-role -->
   </body>
