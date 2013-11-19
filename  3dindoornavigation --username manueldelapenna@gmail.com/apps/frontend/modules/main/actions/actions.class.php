@@ -11,54 +11,6 @@
 class mainActions extends sfActions
 {  
   /**
-   * Función para persitir todos los objetos necesarios en la base de datos
-   * @param sfWebRequest $request 
-   */  
-  public function executePrueba(sfWebRequest $request){
-    
-    $datos = array(
-        "mensaje" => "pruebita",
-        "id" => $request->getParameter('id')
-      );
-       
-      return $this->renderText(json_encode($datos));
-  }    
-  
-  public function executeSiguiente(sfWebRequest $request){
-    $idActual = $request->getParameter('idActual');
-    
-
-    $borrados = $this->getUser()->getAttribute('borrados');        
-    $borrados[] = intval($this->getUser()->getAttribute('actual_id'));    
-    $this->getUser()->setAttribute('borrados',$borrados);
-    
-    $idSiguiente = $this->getUser()->getAttribute('siguiente_id');
-    $this->getUser()->setAttribute('actual_id', $idSiguiente);
-    
-    $puntoSiguiente = Doctrine::getTable('PuntoNavegacion')->find($idSiguiente);
-    
-    $datos = array(
-        "xSiguiente" => $puntoSiguiente->getPuntoOrigenX(),
-        "ySiguiente" => $puntoSiguiente->getPuntoOrigenY(),
-        "idSiguiente" => $idSiguiente,
-        "borrados" => $borrados,
-        "actual" => $this->getUser()->getAttribute('actual_id'),
-      );
-       
-      return $this->renderText(json_encode($datos));
-      
-    
-      
-  } 
-    
-  public function executeCrearEstructuras(sfWebRequest $request){
-    $crear_objectos = new Utilities();
-    $crear_objectos->crearObjetos();
-    $this->getUser()->setFlash('notice','Estructuras creadas satisfactoriamente.');
-    $this->redirect('@homepage');       
-  }   
-    
-  /**
    * Función que permite navegar desde un punto de la facultad (situado por una aplicación externa) a otro seleccionado por el usuario
    * @param sfWebRequest $request 
    */
@@ -97,18 +49,20 @@ class mainActions extends sfActions
     $this->puntos_navegacion = $d->getCamino();  
     //var_dump($this->puntos_navegacion); die;
   } 
- 
   
+  /**
+   * Función que dibuja el template Origen
+   * @param sfWebRequest $request 
+   */  
+  public function executeOrigen(sfWebRequest $request){
+    //En actual ID se seteará el parámetro que vendrá del código de barra.
+    $this->estructuras = EstructuraTable::getNavegables(); 
+  }
   
   /**
    * Función que dibuja el template Busqueda
    * @param sfWebRequest $request 
    */  
- public function executeOrigen(sfWebRequest $request){
-    //En actual ID se seteará el parámetro que vendrá del código de barra.
-    $this->estructuras = EstructuraTable::getNavegables(); 
-  }
-  
   public function executeBuscar(sfWebRequest $request){
     
     $estructuraOrigenId = $request->getParameter('id_estructura_origen');
@@ -140,62 +94,4 @@ class mainActions extends sfActions
       MultimediaTable::getMultimediaPara($request->getParameter('idEstructura'));
     $this->getUser()->setAttribute('fin_id', null);
   }
-  
-  /**
-   * Acción que es ejecutada por el usuario en el template navegar cuando el usuario ejecuta la acción "Avanzar"
-   * @param sfWebRequest $request 
-   */
-  public function executeAdelantar(sfWebRequest $request){    
-    $borrados = $this->getUser()->getAttribute('borrados');        
-    $borrados[] = $this->getUser()->getAttribute('actual_id');    
-    $this->getUser()->setAttribute('borrados',$borrados);
-    $this->getUser()->setAttribute('actual_id',$this->getUser()->getAttribute('siguiente_id'));
-    $this->redirect('main/navegar?est_id='.$this->getUser()->getAttribute('fin_id'));
-  }
-
-  /**
-   * Acción que es ejecutada por el usuario en el template navegar cuando el usuario ejecuta la acción "Retroceder"
-   * @param sfWebRequest $request 
-   */
-  public function executeRetroceder(sfWebRequest $request){
-    $borrados = $this->getUser()->getAttribute('borrados');        
-    $ultimo_elemento = $borrados[count($borrados)-1];
-    $this->getUser()->setAttribute('actual_id',$ultimo_elemento);
-    array_pop($borrados);
-    $this->getUser()->setAttribute('borrados',$borrados);    
-    $this->redirect('main/navegar?est_id='.$this->getUser()->getAttribute('fin_id'));    
-  }
-  
-  /**
-   * Acción que es llamada por el usuario desde el template detalleEstructura que permite cambiar de dirección en el caso de solicitarlo el usuario
-   * @param sfWebRequest $request 
-   */  
-  public function executeNavegarHacia(sfWebRequest $request){
-    //Se inicializa el arreglo de borrados
-    $this->getUser()->setAttribute('borrados', array());    
-    //Se redirige al navegar con los nuevos parámetros seteados
-    $this->redirect('main/navegar?est_id='.$request->getParameter('est_id'));        
-  }
-  
-  /**
-   * Acción que es ejecutada por el usuario en el template navegar cuando el usuario ejecuta la acción "Zoom In"
-   * @param sfWebRequest $request 
-   */
-  public function executeZoomIn(sfWebRequest $request){
-    //Se resta uno a la escala actual
-    $this->getUser()->setAttribute('escala', $this->getUser()->getAttribute('escala')-1);
-    //Se redirige al navegar con los nuevos parámetros seteados       
-    $this->redirect('main/navegar?est_id='.$this->getUser()->getAttribute('fin_id'));        
-  }
-  
-  /**
-   * Acción que es ejecutada por el usuario en el template navegar cuando el usuario ejecuta la acción "Zoom Out"
-   * @param sfWebRequest $request 
-   */
-  public function executeZoomOut(sfWebRequest $request){
-    //Se resta uno a la escala actual
-    $this->getUser()->setAttribute('escala', $this->getUser()->getAttribute('escala')+1);
-    //Se redirige al navegar con los nuevos parámetros seteados       
-    $this->redirect('main/navegar?est_id='.$this->getUser()->getAttribute('fin_id'));    
-  }  
 }

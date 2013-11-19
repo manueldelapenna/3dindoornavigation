@@ -1,0 +1,16 @@
+# You can find more information about this file on the symfony website:
+# http://www.symfony-project.org/reference/1_4/en/11-App
+
+# default values
+all:  
+  #medida (alto y ancho) del canvas
+  canvas_width: '600'
+  canvas_height: '500'
+  maximo_escala: '7'
+  minimo_escala: '3'
+  maximo_y: '3800'
+  #parámetro utilizado para darle una escala a las figuras que se dibujan en el canvas
+  escala:      '5'
+  #Versión del prototipo
+  version: 1.2
+    
