@@ -1,9 +1,10 @@
 <script> 
         if (!window.WebGLRenderingContext) {
             // the browser doesn't even know what WebGL is
-            window.location = "../../../../../web/frontend2d.php/main/buscar?estructura_origen_id=<?php echo $sf_user->getAttribute('actual_id')?>";
+            window.location = "/3dindoornavigation/web/frontend2d.php/main/buscar?estructura_origen_id=<?php echo $sf_user->getAttribute('actual_id')?>";
         }
-    </script>     <?php use_helper("I18N");?>
+</script>
+<?php use_helper("I18N");?>
 <?php if ($sf_user->hasFlash('notice')): ?>
   <div class="success" id="success2">
     <?php echo $sf_user->getFlash('notice') ?>
