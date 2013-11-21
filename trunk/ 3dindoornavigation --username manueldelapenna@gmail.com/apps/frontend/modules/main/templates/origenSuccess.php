@@ -3,7 +3,7 @@
     if (!window.WebGLRenderingContext) {
         // the browser doesn't even know what WebGL is
         
-        window.location = "frontend2d.php?estructura_origen_id=1";
+        window.location = "frontend2d.php?punto_navegacion_origen_id=1";
         
     }
 </script>
