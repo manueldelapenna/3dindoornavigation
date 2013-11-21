@@ -11,12 +11,6 @@
       <link rel="shortcut icon" href="<?php echo public_path('/favicon.ico') ?>" /> 
   </head>
   <body>
-    <script> 
-        if (!window.WebGLRenderingContext) {
-            // the browser doesn't even know what WebGL is
-            window.location = "../web/frontend2d.php";
-        }
-    </script>     
     <div data-role="page" style="width:100%">
       <div data-role="header">
         <h1 style="font-size: 22px">Navegaci&oacute;n Indoor</h1>

@@ -57,7 +57,7 @@ class mainActions extends sfActions
    */  
   public function executeBuscar(sfWebRequest $request){
     //En actual ID se seteará el parámetro que vendrá del código de barra.
-    $this->getUser()->setAttribute('actual_id',1);
+    $this->getUser()->setAttribute('actual_id',$request->getParameter('estructura_origen_id'));
     $this->getUser()->setAttribute('borrados', array());
     $this->getUser()->setAttribute('escala',sfConfig::get('app_escala'));
     $this->estructuras = EstructuraTable::getNavegables(); 
