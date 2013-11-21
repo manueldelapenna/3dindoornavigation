@@ -1,4 +1,5 @@
 <?php use_helper("I18N");?>
+
 <h1><?php echo __('Su navegador no soporta WebGL. Pruebe el navegador 2D.');?></h1>
 <h3 style="font-size: 20px"><?php echo __('Seleccione el destino.');?></h3>
 <ul data-role="listview" data-inset="true" data-filter="true" data-filter-placeholder="Escriba parte del nombre para filtrar...">

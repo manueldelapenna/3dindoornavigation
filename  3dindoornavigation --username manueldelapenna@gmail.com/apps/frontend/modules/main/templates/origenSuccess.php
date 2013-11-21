@@ -1,7 +1,9 @@
 <script> 
     if (!window.WebGLRenderingContext) {
         // the browser doesn't even know what WebGL is
-        window.location = "../web/frontend2d.php/main/buscar?origen_id=1";
+        window.location = "/3dindoornavigation/web/frontend2d.php/main/buscar?estructura_origen_id=1";
+    }else{
+        alert("anda");
     }
 </script>
 
