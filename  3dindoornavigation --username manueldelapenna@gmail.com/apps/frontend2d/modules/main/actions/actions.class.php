@@ -57,10 +57,11 @@ class mainActions extends sfActions
    */  
   public function executeBuscar(sfWebRequest $request){
     //En actual ID se seteará el parámetro que vendrá del código de barra.
-    $this->getUser()->setAttribute('actual_id',$request->getParameter('estructura_origen_id'));
+    $this->getUser()->setAttribute('actual_id',$request->getParameter('punto_navegacion_origen_id'));
     $this->getUser()->setAttribute('borrados', array());
     $this->getUser()->setAttribute('escala',sfConfig::get('app_escala'));
-    $this->estructuras = EstructuraTable::getNavegables(); 
+    $puntoNavegacion = Doctrine::getTable('PuntoNavegacion')->find($request->getParameter('punto_navegacion_origen_id'));
+    $this->estructuras = EstructuraTable::getNavegables($puntoNavegacion->getEstructuraId()); 
   }  
 
   /**
