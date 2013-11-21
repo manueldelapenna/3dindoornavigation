@@ -19,7 +19,7 @@
       
       <div data-role="navbar">
           <ul>
-            <li><?php echo link_to('Buscar', 'main/buscar', array("rel" => "external", "style" => "font-size: 20px"));?></li>
+            <li><?php echo link_to('Buscar', 'main/buscar?punto_navegacion_origen_id=1', array("rel" => "external", "style" => "font-size: 20px"));?></li>
           </ul>
       </div><!-- /navbar -->
       
