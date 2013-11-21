@@ -1,7 +1,7 @@
 <script> 
         if (!window.WebGLRenderingContext) {
             // the browser doesn't even know what WebGL is
-            window.location = "../../../frontend2d.php?estructura_origen_id=<?php echo $sf_user->getAttribute('actual_id')?>";
+            window.location = "../../../../frontend2d.php?estructura_origen_id=<?php echo $sf_user->getAttribute('actual_id')?>";
         }
 </script>
 <?php use_helper("I18N");?>
