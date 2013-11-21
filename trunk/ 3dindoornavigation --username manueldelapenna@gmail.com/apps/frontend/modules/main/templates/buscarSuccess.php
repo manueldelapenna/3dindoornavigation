@@ -1,7 +1,7 @@
 <script> 
         if (!window.WebGLRenderingContext) {
             // the browser doesn't even know what WebGL is
-            window.location = "/3dindoornavigation/web/frontend2d.php/main/buscar?estructura_origen_id=<?php echo $sf_user->getAttribute('actual_id')?>";
+            window.location.pathname = "<?php echo sfConfig::get('sf_web_dir')?>/frontend2d.php/main/buscar?estructura_origen_id=<?php echo $sf_user->getAttribute('actual_id')?>";
         }
 </script>
 <?php use_helper("I18N");?>
