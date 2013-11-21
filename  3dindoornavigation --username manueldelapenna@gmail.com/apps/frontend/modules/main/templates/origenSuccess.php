@@ -3,7 +3,7 @@
     if (!window.WebGLRenderingContext) {
         // the browser doesn't even know what WebGL is
         
-        window.location.href = "<?php echo sfConfig::get('sf_web_dir')?>/frontend2d.php/main/buscar?estructura_origen_id=1";
+        window.location.url = "<?php echo sfConfig::get('sf_web_dir')?>/frontend2d.php/main/buscar?estructura_origen_id=1";
     }
 </script>
 
