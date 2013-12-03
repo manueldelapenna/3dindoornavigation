@@ -19,6 +19,9 @@
   <a id="link_360_derecha" href="javascript:rotar360(-2*Math.PI,camera)" 
      data-role="button" data-icon="arrow-r" data-theme="a" rel = "external">360º Derecha
   </a>
+  <a id="link_360_derecha" href="javascript:actualizarPosicionFisica()" 
+     data-role="button" data-icon="refresh" data-theme="a" rel = "external">Actualizar Pos.
+  </a>
     
   
 </div>
