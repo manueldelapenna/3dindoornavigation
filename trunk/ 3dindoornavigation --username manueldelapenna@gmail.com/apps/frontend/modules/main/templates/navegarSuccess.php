@@ -117,6 +117,7 @@ var keyboard = new THREEx.KeyboardState();
 var clock = new THREE.Clock();
 //hay q obtener de alguna forma el array de puntos
 posActual = <?php echo count($puntos_navegacion)-1?>;
+
 cantPuntos = <?php echo count($puntos_navegacion)-1?>;
 puntosNavegacion = [];
 <?php foreach($puntos_navegacion as $punto_navegacion):?>
