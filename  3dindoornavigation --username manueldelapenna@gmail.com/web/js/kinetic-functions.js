@@ -44,7 +44,7 @@ function dibujarPuntoNavegacion(stage,layer,x,y,id, primero){
         stage.add(layer);
     }    
     
-    imageObj.src = _BASEPATH + "/images/people1.png";
+    imageObj.src = _BASEPATH + "/images/eye.png";
    }//Si no es el punto inicial dibujamos un punto de navegacion simple
    else{
      var circle = new Kinetic.Circle({ 

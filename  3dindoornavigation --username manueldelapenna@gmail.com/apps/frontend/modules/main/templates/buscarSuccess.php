@@ -1,9 +1,3 @@
-<script> 
-        if (!window.WebGLRenderingContext) {
-            // the browser doesn't even know what WebGL is
-            window.location = "../../../../frontend2d.php?punto_navegacion_origen_id=<?php echo $sf_user->getAttribute('actual_id')?>";
-        }
-</script>
 <?php use_helper("I18N");?>
 <?php if ($sf_user->hasFlash('notice')): ?>
   <div class="success" id="success2">
