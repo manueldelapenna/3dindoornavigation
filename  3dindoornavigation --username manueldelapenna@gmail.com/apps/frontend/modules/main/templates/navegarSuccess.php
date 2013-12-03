@@ -44,16 +44,17 @@
   }
   
   function dibujarTodosLosPuntos(stage,layer){
+    
     var aux = new Array();
     for (var i=0;i<puntosNavegacion.length;i++)
     {
-        if (i<=posActual){
+        if (i<=indiceInicioCamino){
             var id = null;
-            var x = puntosNavegacion[posActual-i].x/escala + 10;
-            var y = (app_maximo_y - puntosNavegacion[posActual-i].y)/escala;
+            var x = puntosNavegacion[indiceInicioCamino-i].x/escala + 10;
+            var y = (app_maximo_y - puntosNavegacion[indiceInicioCamino-i].y)/escala;
             aux.push(x);
             aux.push(y);
-            if (i == 0){
+            if (i == puntosNavegacion.length - posActualLogica - 1){
                 dibujarPuntoNavegacion(stage,layer,x,y,id,true);
             }else{
                 dibujarPuntoNavegacion(stage,layer,x,y,id,false);
@@ -99,6 +100,19 @@
   </div>
 </div>
 
+<div data-role="popup" id="popupCamera" data-overlay-theme="a" data-theme="a" style="max-width:600px;" class="ui-corner-all" aria-disabled="false" data-shadow="true" data-corners="true" data-transition="pop">
+  <div data-role="header" data-theme="a" class="ui-corner-top ui-header ui-bar-d" role="banner">
+    <h1 class="ui-title" role="heading" aria-level="1">Lector de códigos QR</h1>
+  </div>
+  <div data-role="content" data-theme="a" style="padding:15px;" class="ui-corner-bottom ui-content ui-body-d" role="main">
+        <video  id="camsource" autoplay width="320" height="240">Put your fallback message here.</video>
+        <canvas id="qr-canvas" width="320" height="240" style="display:none"></canvas>
+        <h3 id="qr-value"></h3>
+    <?php echo link_to_function('Cerrar' ,'cerrarDialogoCamara()',array("data-rel"=>"back" ,"data-role" => "button", "data-icon" => "back" ,  "data-theme"=>"a", "data-corners" => "true"));?>                                   
+  </div>
+</div>
+
+
         
         <?php include_partial('global/mensajes_usuario');?>
         
@@ -112,20 +126,26 @@
 // MAIN
 
 // standard global variables
-var container, scene, camera, renderer;// controls
+var container, scene, camara, renderer;// controls
 var keyboard = new THREEx.KeyboardState();
 var clock = new THREE.Clock();
 //hay q obtener de alguna forma el array de puntos
-posActual = <?php echo count($puntos_navegacion)-1?>;
+posActualLogica = <?php echo count($puntos_navegacion)-1?>;
+indiceInicioCamino = <?php echo count($puntos_navegacion)-1?>;
+
 
 cantPuntos = <?php echo count($puntos_navegacion)-1?>;
 puntosNavegacion = [];
-<?php foreach($puntos_navegacion as $punto_navegacion):?>
+
+ <?php foreach($puntos_navegacion as $punto_navegacion):?>
     var punto = new Object();
+    punto.id = <?php echo $punto_navegacion->getId();?>;
     punto.x = <?php echo $punto_navegacion->getPuntoOrigenX();?>;
     punto.y = <?php echo $punto_navegacion->getPuntoOrigenY();?>;
-    puntosNavegacion.push(punto);           
+    puntosNavegacion.push(punto);
 <?php endforeach;?>
+
+puntoNavegacionFisica = puntosNavegacion[indiceInicioCamino];
 
 // custom global variables
 
@@ -143,20 +163,20 @@ function init()
 	// CAMERA
 	var SCREEN_WIDTH = window.innerWidth-36, SCREEN_HEIGHT = 500;
 	var VIEW_ANGLE = 35, ASPECT = SCREEN_WIDTH / SCREEN_HEIGHT, NEAR = 0.1, FAR = 20000;
-	camera = new THREE.PerspectiveCamera( VIEW_ANGLE, ASPECT, NEAR, FAR);
-	camera.position.set(puntosNavegacion[posActual].x,25,-puntosNavegacion[posActual].y);
+	camara = new THREE.PerspectiveCamera( VIEW_ANGLE, ASPECT, NEAR, FAR);
+	camara.position.set(puntosNavegacion[posActualLogica].x,25,-puntosNavegacion[posActualLogica].y);
                 
         //calcula pendiente y angulo de rotacion para mirar al siguiente punto
-        var pendiente = (puntosNavegacion[posActual-1].x - camera.position.x) / (-puntosNavegacion[posActual-1].y - camera.position.z);
+        var pendiente = (puntosNavegacion[posActualLogica-1].x - camara.position.x) / (-puntosNavegacion[posActualLogica-1].y - camara.position.z);
         var angulo_rotacion = Math.atan(pendiente);
 
         // si el punto de destino de z es mayor al actual, da media vuelta mas
-        if (-puntosNavegacion[posActual-1].y>camera.position.z){
+        if (-puntosNavegacion[posActualLogica-1].y>camara.position.z){
             angulo_rotacion += Math.PI;
         }
         
-	camera.rotation.y = angulo_rotacion;
-        scene.add(camera);
+	camara.rotation.y = angulo_rotacion;
+        scene.add(camara);
 	
 	
         // RENDERER
@@ -239,42 +259,42 @@ function update()
 	
 	// move forwards/backwards/left/right
 	if ( keyboard.pressed("W") )
-            	camera.translateZ( -moveDistance );
+            	camara.translateZ( -moveDistance );
 	if ( keyboard.pressed("S") )
-		camera.translateZ(  moveDistance );
+		camara.translateZ(  moveDistance );
 	if ( keyboard.pressed("Q") )
-		camera.translateX( -moveDistance );
+		camara.translateX( -moveDistance );
 	if ( keyboard.pressed("E") )
-		camera.translateX(  moveDistance );	
+		camara.translateX(  moveDistance );	
 
 	// rotate left/right/up/down
 	if ( keyboard.pressed("A") )
-                camera.rotation.y += rotateAngle;
+                camara.rotation.y += rotateAngle;
 	if ( keyboard.pressed("D") )
-		camera.rotation.y -= rotateAngle;
+		camara.rotation.y -= rotateAngle;
 	if ( keyboard.pressed("R") )
-		camera.rotateOnAxis( new THREE.Vector3(1,0,0), rotateAngle);
+		camara.rotateOnAxis( new THREE.Vector3(1,0,0), rotateAngle);
 	if ( keyboard.pressed("F") )
-		camera.rotateOnAxis( new THREE.Vector3(1,0,0), -rotateAngle);
+		camara.rotateOnAxis( new THREE.Vector3(1,0,0), -rotateAngle);
 	
 	if ( keyboard.pressed("Z") )
 	{
-		camera.position.set(3500,25,200);
-                camera.rotation.set(0,0,0);
+		camara.position.set(3500,25,200);
+                camara.rotation.set(0,0,0);
 	}
         
         if ( keyboard.pressed("C") )
 	{
-           irAPunto(3615,25,-525,camera);
+           irAPunto(3615,25,-525,camara);
                
         }   
         if ( keyboard.pressed("P") )
 	{
-           console.log(camera.position);
+           console.log(camara.position);
         }
         
         if ( keyboard.pressed("L") )
-                camera.rotation.y += Math.PI/2;
+                camara.rotation.y += Math.PI/2;
     
 }
 function dibujarPared(distancia,puntoMedioX,puntoMedioY,anguloRotacion,orientacion) {
@@ -306,7 +326,7 @@ function dibujarPared(distancia,puntoMedioX,puntoMedioY,anguloRotacion,orientaci
     scene.add( pared );
 }
 
-function irAPunto(destinoX,destinoY,destinoZ,cam,debeAvanzar) {
+function irAPunto(destinoX,destinoY,destinoZ,cam) {
     
     //calcula pendiente y angulo de rotacion
     var pendiente = (cam.position.x - destinoX) / (cam.position.z - destinoZ);
@@ -327,49 +347,41 @@ function irAPunto(destinoX,destinoY,destinoZ,cam,debeAvanzar) {
      animacionRotacion.onComplete(function () {
          //termina de rotar y avanza
          
-         if (debeAvanzar){
-            tiempo = tiempoAvanceRetroceso(cam,destinoX,destinoZ);
-            var animacionAvance = new TWEEN.Tween(cam.position).to({
-                   x: destinoX,
-                   y: destinoY,
-                   z: destinoZ
-              },tiempo);
-            animacionAvance.easing(TWEEN.Easing.Linear.None).onUpdate(function () {
-                //mientras avanza no hace nada
-              });
-            animacionAvance.onComplete(function () {
-                //termina de avanzar y habilita la botonera
-                habilitarBotonera();
-            });
-            //comienza a avanzar
-            animacionAvance.start(); 
-         }else{
-             habilitarBotonera();
-             $("#popupDialog").popup("open",100,300);
-         }
-
-    });
-    //comienza a rotar
-    animacionRotacion.start();            
+         
+        tiempo = tiempoAvanceRetroceso(cam,destinoX,destinoZ);
+        var animacionAvance = new TWEEN.Tween(cam.position).to({
+              x: destinoX,
+              y: destinoY,
+              z: destinoZ
+         },tiempo);
+        animacionAvance.easing(TWEEN.Easing.Linear.None).onUpdate(function () {
+           //mientras avanza no hace nada
+         });
+        animacionAvance.onComplete(function () {
+           //termina de avanzar y habilita la botonera
+           habilitarBotonera();
+           //$("#popupDialog").popup("open",100,300);
+        });
+        //comienza a avanzar
+        animacionAvance.start(); 
+        
+        
+        
+     });
+     //comienza a rotar
+     animacionRotacion.start();            
 }
 
 function render() 
 {
-     renderer.render( scene, camera );
+     renderer.render( scene, camara );
 }
 
 function getPuntoSiguiente() 
 {
     deshabilitarBotonera();
-    posActual--;
-    if (posActual > 0){
-        irAPunto(puntosNavegacion[posActual].x,25,-puntosNavegacion[posActual].y,camera,true);            
-    }else{
-    
-        irAPunto(puntosNavegacion[posActual].x,25,-puntosNavegacion[posActual].y,camera,false);
-        
-        
-    }
+    posActualLogica--;
+    irAPunto(puntosNavegacion[posActualLogica].x,25,-puntosNavegacion[posActualLogica].y,camara);
     borrarTodosLosPuntos(stage, layer);
     dibujarTodosLosPuntos(stage,layer);   
 }
@@ -377,8 +389,8 @@ function getPuntoSiguiente()
 function getPuntoAnterior() 
 {
     deshabilitarBotonera();
-    posActual++;
-    irAPunto(puntosNavegacion[posActual].x,25,-puntosNavegacion[posActual].y,camera,true);
+    posActualLogica++;
+    irAPunto(puntosNavegacion[posActualLogica].x,25,-puntosNavegacion[posActualLogica].y,camara);
     borrarTodosLosPuntos(stage, layer);
     dibujarTodosLosPuntos(stage,layer);
  }
@@ -436,12 +448,10 @@ function habilitarBotonAvanzar(){
 function chequearBotonera(){
     habilitarBotonAvanzar();
     habilitarBotonRetroceder();
-    if (posActual == 0){
+    if (posActualLogica == 0){
         deshabilitarBotonAvanzar();
-        //vuelve al anterior porque solamente lo mira
-        posActual++;
     }else{
-        if (posActual == cantPuntos){
+        if (posActualLogica == cantPuntos){
             deshabilitarBotonRetroceder();
         }
     }
@@ -495,6 +505,44 @@ function tiempoAvanceRetroceso(cam,destinoX,destinoZ){
      
 }
 
+function actualizarPosicionFisica(){
+    $("#popupCamera").popup("open",100,300);
+    
+    navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
+
+    var cam_video_id = "camsource"
+
+    
+        // Assign the <video> element to a variable
+        var video = document.getElementById(cam_video_id);
+        var options = {
+            "audio": false,
+            "video": true
+        };
+        // Replace the source of the video element with the stream from the camara
+        if (navigator.getUserMedia) {
+            navigator.getUserMedia(options, function(stream) {
+                video.src = (window.URL && window.URL.createObjectURL(stream)) || stream;
+            }, function(error) {
+                console.log(error)
+            });
+            // Below is the latest syntax. Using the old syntax for the time being for backwards compatibility.
+            // navigator.getUserMedia({video: true}, successCallback, errorCallback);
+        } else {
+            $("#qr-value").text('Sorry, native web camara streaming (getUserMedia) is not supported by this browser...')
+            return;
+        }
+    
+    $(document).ready(function() {
+        if (!navigator.getUserMedia) return;
+        cam = camera(cam_video_id);
+        cam.start()
+    })    
+}
+
+function cerrarDialogoCamara(){
+    $("#popupCamera").popup("close");
+}
 
 </script>
     
