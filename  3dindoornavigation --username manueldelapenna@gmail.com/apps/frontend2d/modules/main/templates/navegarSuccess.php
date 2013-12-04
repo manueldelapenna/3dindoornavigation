@@ -41,9 +41,9 @@
             $arreglo_de_puntos[] = $y;            
           ?>           
           <?php if ($aux == count($puntos_navegacion)):?>
-            dibujarPuntoNavegacion(stage,layer,<?php echo $x?>,<?php echo $y?>, <?php echo $id?>, true);
+            dibujarPuntoNavegacion(stage,layer,<?php echo $x?>,<?php echo $y?>, <?php echo $id?>, true,false);
           <?php else:?>  
-            dibujarPuntoNavegacion(stage,layer,<?php echo $x?>,<?php echo $y?>, <?php echo $id?>, false);
+            dibujarPuntoNavegacion(stage,layer,<?php echo $x?>,<?php echo $y?>, <?php echo $id?>, false,false);
           <?php endif;?>
           <?php $aux++;?>
       <?php endforeach;?>
