@@ -13,15 +13,13 @@
   <a type="button" id="link_avanzar" href="javascript:getPuntoSiguiente()" 
      data-icon="arrow-r" data-theme="a" rel = "external">Avanzar </a>
     
-  <a id="link_360_izquierda" href="javascript:rotar360(2*Math.PI,camera)" 
+  <a id="link_360_izquierda" href="javascript:rotar360(2*Math.PI,camara)" 
      data-role="button" data-icon="arrow-l" data-theme="a" rel = "external">360º Izquierda 
   </a>
-  <a id="link_360_derecha" href="javascript:rotar360(-2*Math.PI,camera)" 
+  <a id="link_360_derecha" href="javascript:rotar360(-2*Math.PI,camara)" 
      data-role="button" data-icon="arrow-r" data-theme="a" rel = "external">360º Derecha
   </a>
-  <a id="link_360_derecha" href="javascript:actualizarPosicionFisica()" 
-     data-role="button" data-icon="refresh" data-theme="a" rel = "external">Actualizar Pos.
-  </a>
+  
     
   
 </div>

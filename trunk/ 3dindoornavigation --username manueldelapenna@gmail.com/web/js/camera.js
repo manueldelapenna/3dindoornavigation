@@ -28,7 +28,7 @@ var camera = (function(p_vid_id, p_inter, p_scale) {
 	    var qr_can = document.getElementById('qr-canvas').getContext('2d');
 	        qr_can.drawImage(video, 0, 0, w, h);
 	    try        { qrcode.decode();  }
-	    catch(err) { $("#qr-value").text(err); }
+	    catch(err) { console.log(err) }
 		// console.timeEnd('capture');
 	} 
 

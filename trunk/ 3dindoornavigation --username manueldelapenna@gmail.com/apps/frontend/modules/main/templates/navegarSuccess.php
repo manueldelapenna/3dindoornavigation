@@ -1,8 +1,13 @@
 <?php use_helper("JavascriptBase");?>
 
 
-    <div id="ThreeJS" style="position: relative; left; border-style: solid; left:0px; top:0px; height: 500px; width: window.innerWidth"> 
+    <div id="ThreeJS" style="position: relative; left:0; border-style: solid; left:0px; top:0px; height: 500px; width: window.innerWidth"> 
         <?php include_partial('global/barra_navegacion');?>     
+        <div style="position:absolute; left: 10px; bottom:70px">
+            <video  id="camsource" autoplay width="320" height="240">Put your fallback message here.</video>
+            <canvas id="qr-canvas" width="320" height="240" style="display:none"></canvas>
+        </div>
+        <?php include_partial('global/barra_qr');?>     
         <div id="container" style="position:absolute; right: 10px; bottom:10px"> </div><!--/container - Acá se dibuja el canvas-->    
     </div>
         
@@ -99,29 +104,10 @@
     <?php echo link_to_function('Cerrar' ,'cerrarDialogo()',array("data-rel"=>"back" ,"data-role" => "button", "data-icon" => "back" ,  "data-theme"=>"a", "data-corners" => "true"));?>                                   
   </div>
 </div>
-
-<div data-role="popup" id="popupCamera" data-overlay-theme="a" data-theme="a" style="max-width:600px;" class="ui-corner-all" aria-disabled="false" data-shadow="true" data-corners="true" data-transition="pop">
-  <div data-role="header" data-theme="a" class="ui-corner-top ui-header ui-bar-d" role="banner">
-    <h1 class="ui-title" role="heading" aria-level="1">Lector de códigos QR</h1>
-  </div>
-  <div data-role="content" data-theme="a" style="padding:15px;" class="ui-corner-bottom ui-content ui-body-d" role="main">
-        <video  id="camsource" autoplay width="320" height="240">Put your fallback message here.</video>
-        <canvas id="qr-canvas" width="320" height="240" style="display:none"></canvas>
-        <h3 id="qr-value"></h3>
-    <?php echo link_to_function('Cerrar' ,'cerrarDialogoCamara()',array("data-rel"=>"back" ,"data-role" => "button", "data-icon" => "back" ,  "data-theme"=>"a", "data-corners" => "true"));?>                                   
-  </div>
-</div>
-
-
         
         <?php include_partial('global/mensajes_usuario');?>
         
 <script>
-/*
-	Three.js "tutorials by example"
-	Author: Lee Stemkoski
-	Date: July 2013 (three.js v59dev)
-*/
 
 // MAIN
 
@@ -180,7 +166,7 @@ function init()
 	
 	
         // RENDERER
-	if ( Detector.webgl )
+	if ( ThreeJsDetector.webgl )
 		renderer = new THREE.WebGLRenderer( {antialias:true} );
 	else
 		renderer = new THREE.CanvasRenderer(); 
@@ -239,6 +225,8 @@ function init()
         //cube.overdraw = true;
         cube.position.set(3500, 0, 200);
         scene.add(cube);
+        
+        activarCamara();
 
 }
 
@@ -445,6 +433,15 @@ function habilitarBotonAvanzar(){
     $('#link_avanzar').removeClass('ui-disabled');      
 }
 
+function deshabilitarBotonPosActual(){
+    $('#link_pos_actual').addClass('ui-disabled');      
+}
+
+function habilitarBotonPosActual(){
+    $('#link_pos_actual').removeClass('ui-disabled');      
+      
+}
+
 function chequearBotonera(){
     habilitarBotonAvanzar();
     habilitarBotonRetroceder();
@@ -462,10 +459,12 @@ function deshabilitarBotonera(){
     deshabilitarBotonAvanzar();
     deshabilitarBotonRetroceder();
     deshabilitarBotones360();
+    deshabilitarBotonPosActual();
 }
 function habilitarBotonera(){
     chequearBotonera();
     habilitarBotones360();
+    habilitarBotonPosActual();
 }
 
 
@@ -505,44 +504,56 @@ function tiempoAvanceRetroceso(cam,destinoX,destinoZ){
      
 }
 
-function actualizarPosicionFisica(){
-    $("#popupCamera").popup("open",100,300);
+function activarCamara(){
+    
     
     navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
 
     var cam_video_id = "camsource"
-
     
-        // Assign the <video> element to a variable
-        var video = document.getElementById(cam_video_id);
-        var options = {
-            "audio": false,
-            "video": true
-        };
-        // Replace the source of the video element with the stream from the camara
-        if (navigator.getUserMedia) {
-            navigator.getUserMedia(options, function(stream) {
-                video.src = (window.URL && window.URL.createObjectURL(stream)) || stream;
-            }, function(error) {
-                console.log(error)
-            });
-            // Below is the latest syntax. Using the old syntax for the time being for backwards compatibility.
-            // navigator.getUserMedia({video: true}, successCallback, errorCallback);
-        } else {
-            $("#qr-value").text('Sorry, native web camara streaming (getUserMedia) is not supported by this browser...')
-            return;
-        }
+    // Assign the <video> element to a variable
+    var video = document.getElementById(cam_video_id);
+    var options = {
+        "audio": false,
+        "video": true
+    };
+    // Replace the source of the video element with the stream from the camara
+    if (navigator.getUserMedia) {
+        navigator.getUserMedia(options, function(stream) {
+            video.src = (window.URL && window.URL.createObjectURL(stream)) || stream;
+        }, function(error) {
+            console.log(error)
+        });
+        // Below is the latest syntax. Using the old syntax for the time being for backwards compatibility.
+        // navigator.getUserMedia({video: true}, successCallback, errorCallback);
+    } else {
+        alert('Sorry, native web camara streaming (getUserMedia) is not supported by this browser...');
+        return;
+    }
     
     $(document).ready(function() {
         if (!navigator.getUserMedia) return;
         cam = camera(cam_video_id);
-        cam.start()
+        $('#link_apagar_lector').addClass('ui-disabled');
     })    
+    
 }
 
-function cerrarDialogoCamara(){
-    $("#popupCamera").popup("close");
+function encenderLector(){
+    cam.start();
+    $('#link_encender_lector').addClass('ui-disabled');
+    $('#link_apagar_lector').removeClass('ui-disabled');
+}
+function apagarLector(){
+    cam.stop();
+    $('#link_apagar_lector').addClass('ui-disabled');
+    $('#link_encender_lector').removeClass('ui-disabled');
 }
 
 </script>
     
+          
+    
+
+    
+          
