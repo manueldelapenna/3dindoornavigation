@@ -60,9 +60,9 @@
             aux.push(x);
             aux.push(y);
             if (i == puntosNavegacion.length - posActualLogica - 1){
-                dibujarPuntoNavegacion(stage,layer,x,y,id,true);
+                dibujarPuntoNavegacion(stage,layer,x,y,id,true,true);
             }else{
-                dibujarPuntoNavegacion(stage,layer,x,y,id,false);
+                dibujarPuntoNavegacion(stage,layer,x,y,id,false,true);
             }
         }
     }
