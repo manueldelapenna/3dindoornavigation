@@ -21,7 +21,7 @@ class mainActions extends sfActions
     if ($this->getUser()->getAttribute('fin_id') == $this->getUser()->getAttribute('origen_id')){
         $this->getUser()->setFlash('notice','Ud. se encuentra parado en el mismo lugar al que desea llegar. Por favor seleccione un nuevo destino');
         $this->getUser()->setAttribute('fin_id', null);
-        $this->redirect('main/buscar?id_estructura_origen='.$this->getUser()->getAttribute('origen_id'));
+        $this->redirect('main/buscar?id_punto_navegacion_origen='.$this->getUser()->getAttribute('actual_id'));
     }
     
     $this->estructuras = Doctrine::getTable('Estructura')->findAll();
@@ -55,8 +55,7 @@ class mainActions extends sfActions
    * @param sfWebRequest $request 
    */  
   public function executeOrigen(sfWebRequest $request){
-    //En actual ID se seteará el parámetro que vendrá del código de barra.
-    $this->estructuras = EstructuraTable::getNavegables(); 
+    
   }
   
   /**
@@ -65,13 +64,12 @@ class mainActions extends sfActions
    */  
   public function executeBuscar(sfWebRequest $request){
     
-    $estructuraOrigenId = $request->getParameter('id_estructura_origen');
-    $puntoNavegacionOrigen = PuntoNavegacionTable::getPuntoDeNavegacionAPartirDeEstructura($estructuraOrigenId)->getFirst();
-    $this->getUser()->setAttribute('origen_id',$estructuraOrigenId);
+    $puntoNavegacionOrigen = Doctrine::getTable('PuntoNavegacion')->find($request->getParameter('id_punto_navegacion_origen'));
+    $this->getUser()->setAttribute('origen_id',$puntoNavegacionOrigen->getEstructuraId());
     $this->getUser()->setAttribute('actual_id',$puntoNavegacionOrigen->getId());
     $this->getUser()->setAttribute('borrados', array());
     $this->getUser()->setAttribute('escala',sfConfig::get('app_escala'));
-    $this->estructuras = EstructuraTable::getNavegables($estructuraOrigenId); 
+    $this->estructuras = EstructuraTable::getNavegables($puntoNavegacionOrigen->getEstructuraId()); 
     
     //si tiene un destino de una busqueda anterior lo guarda
     $this->destino = $this->getUser()->getAttribute('fin_id'); 
@@ -86,10 +84,10 @@ class mainActions extends sfActions
    * @param sfWebRequest $request 
    */
   public function executeDetalleEstructura(sfWebRequest $request){    
-    $this->destino = 
-      Doctrine::getTable('PuntoNavegacion')->find($request->getParameter('idEstructura'));
     $this->estructura = 
       Doctrine::getTable('Estructura')->find($request->getParameter('idEstructura'));    
+    $this->destino = 
+        EstructuraTable::getPuntoNavegacion($request->getParameter('idEstructura'));
     $this->multimedia = 
       MultimediaTable::getMultimediaPara($request->getParameter('idEstructura'));
     $this->getUser()->setAttribute('fin_id', null);

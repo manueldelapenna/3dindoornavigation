@@ -15,4 +15,8 @@
      data-role="button" data-icon="refresh" data-theme="a" rel = "external">Desactivar QR
   </a>
   
+  <a id="link_recalcular_camino" href="javascript:recalcularCamino()" 
+     data-role="button" data-icon="refresh" data-theme="a" rel = "external">Recalcular Camino
+  </a>
+  
 </div>

@@ -27,5 +27,13 @@ class EstructuraTable extends Doctrine_Table
       return $query->execute();              
     }
     
+    public static function getPuntoNavegacion($idEstructura){
+      $query = Doctrine_Query::create()->
+              from('PuntoNavegacion p')->
+              where('p.estructura_id =?',$idEstructura);
+      
+      return $query->execute()->getFirst();              
+    }
+    
 
 }

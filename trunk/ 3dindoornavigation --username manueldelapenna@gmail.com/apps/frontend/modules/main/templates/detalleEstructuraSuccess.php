@@ -1,6 +1,6 @@
 <ul data-role="listview">
 
-  <li> <?php echo link_to('Navegar a otro sitio desde '.$estructura->getNombre() ,'main/buscar?id_estructura_origen='.$destino,array(
+  <li> <?php echo link_to('Navegar a otro sitio desde '.$estructura->getNombre() ,'main/buscar?id_punto_navegacion_origen='.$destino->getId(),array(
                "rel" => "external", "style" => "font-size: 18px"));?> 
   </li>
 

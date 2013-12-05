@@ -30,7 +30,7 @@ function dibujarPoligono(stage, tipoEstructura, idEstructura, idDestino, pointsT
      
 //Función que dibuja los puntos de navegación.
 //Dibuja circulos si primero es falso y una imagen si es verdadero.
-function dibujarPuntoNavegacion(stage,layer,x,y,id, primero,plano3d){ 
+function dibujarPuntoNavegacion(stage,layer,x,y,id, primero,dibujoOjito){ 
   // Si primero, se carga una imagen en vez de dibujar un punto
   if(primero){    
     var imageObj = new Image();
@@ -43,7 +43,8 @@ function dibujarPuntoNavegacion(stage,layer,x,y,id, primero,plano3d){
         layer.add(imageUser);
         stage.add(layer);
     }    
-    if (plano3d){
+	
+    if (dibujoOjito){
 		imageObj.src = _BASEPATH + "/images/eye.png";
 	}else{
 		imageObj.src = _BASEPATH + "/images/people1.png";

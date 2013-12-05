@@ -9,14 +9,14 @@
 </script>
 
 <?php use_helper("I18N");?>
-<h3 style="font-size: 20px"><?php echo __('Seleccione su ubicación actual.');?></h3>
-<ul data-role="listview" data-inset="true" data-filter="true" data-filter-placeholder="Escriba parte del nombre para filtrar...">
-  <?php foreach ($estructuras as $estructura):?>
-  <li> <?php echo link_to($estructura->getNombre(),'main/buscar?id_estructura_origen='.$estructura->getId(),array(
-               "rel" => "external", "style" => "font-size: 18px"));?> 
-  </li>
-  <?php endforeach?>
-</ul>
-        
+<h3 style="font-size: 20px"><?php echo __('Lea un código QR para determinar su ubicación actual.');?></h3>
+<div id="camara" class="origen">
+    <video  id="camsource" autoplay width="320" height="240">Put your fallback message here.</video>
+    <canvas id="qr-canvas" width="320" height="240" style="display:none"></canvas>
+</div>        
+
+<script>
+    activarCamara(true);
+</script>
           
 
