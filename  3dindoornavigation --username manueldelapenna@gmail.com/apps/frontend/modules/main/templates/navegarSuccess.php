@@ -3,7 +3,7 @@
 
     <div id="ThreeJS" style="position: relative; left:0; border-style: solid; left:0px; top:0px; height: 500px; width: window.innerWidth"> 
         <?php include_partial('global/barra_navegacion');?>     
-        <div style="position:absolute; left: 10px; bottom:70px">
+        <div id="camara" class="navegar" style="position:absolute; left: 10px; bottom:70px">
             <video  id="camsource" autoplay width="320" height="240">Put your fallback message here.</video>
             <canvas id="qr-canvas" width="320" height="240" style="display:none"></canvas>
         </div>
@@ -66,7 +66,8 @@
             }
         }
     }
-      dibujarLinea(stage, layer, aux);
+    dibujarLinea(stage, layer, aux);
+    dibujarPuntoNavegacion(stage,layer,puntoNavegacionFisica.x/escala + 10,(app_maximo_y - puntoNavegacionFisica.y)/escala,puntoNavegacionFisica.id, true,false);
   }    
 </script>
 
@@ -131,7 +132,10 @@ puntosNavegacion = [];
     puntosNavegacion.push(punto);
 <?php endforeach;?>
 
-puntoNavegacionFisica = puntosNavegacion[indiceInicioCamino];
+puntoNavegacionFisica = new Object();
+puntoNavegacionFisica.id = puntosNavegacion[indiceInicioCamino].id;
+puntoNavegacionFisica.x = puntosNavegacion[indiceInicioCamino].x;
+puntoNavegacionFisica.y = puntosNavegacion[indiceInicioCamino].y;
 
 // custom global variables
 
@@ -226,7 +230,8 @@ function init()
         cube.position.set(3500, 0, 200);
         scene.add(cube);
         
-        activarCamara();
+        activarCamara(false);
+        deshabilitarBotonRecalcular();
 
 }
 
@@ -348,7 +353,6 @@ function irAPunto(destinoX,destinoY,destinoZ,cam) {
         animacionAvance.onComplete(function () {
            //termina de avanzar y habilita la botonera
            habilitarBotonera();
-           //$("#popupDialog").popup("open",100,300);
         });
         //comienza a avanzar
         animacionAvance.start(); 
@@ -504,50 +508,66 @@ function tiempoAvanceRetroceso(cam,destinoX,destinoZ){
      
 }
 
-function activarCamara(){
-    
-    
-    navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
-
-    var cam_video_id = "camsource"
-    
-    // Assign the <video> element to a variable
-    var video = document.getElementById(cam_video_id);
-    var options = {
-        "audio": false,
-        "video": true
-    };
-    // Replace the source of the video element with the stream from the camara
-    if (navigator.getUserMedia) {
-        navigator.getUserMedia(options, function(stream) {
-            video.src = (window.URL && window.URL.createObjectURL(stream)) || stream;
-        }, function(error) {
-            console.log(error)
-        });
-        // Below is the latest syntax. Using the old syntax for the time being for backwards compatibility.
-        // navigator.getUserMedia({video: true}, successCallback, errorCallback);
-    } else {
-        alert('Sorry, native web camara streaming (getUserMedia) is not supported by this browser...');
-        return;
-    }
-    
-    $(document).ready(function() {
-        if (!navigator.getUserMedia) return;
-        cam = camera(cam_video_id);
-        $('#link_apagar_lector').addClass('ui-disabled');
-    })    
-    
-}
-
 function encenderLector(){
     cam.start();
     $('#link_encender_lector').addClass('ui-disabled');
     $('#link_apagar_lector').removeClass('ui-disabled');
 }
+
 function apagarLector(){
     cam.stop();
     $('#link_apagar_lector').addClass('ui-disabled');
     $('#link_encender_lector').removeClass('ui-disabled');
+}
+
+function actualizarPosicionFisica(codigoQR){
+    
+    var arregloQR = codigoQR.split(",");
+    //dibujarPuntoNavegacion(stage,layer,arregloQR[1]/escala + 10,(app_maximo_y - arregloQR[2])/escala,arregloQR[0], true,false);
+    puntoNavegacionFisica.id = arregloQR[0];
+    puntoNavegacionFisica.x = arregloQR[1];
+    puntoNavegacionFisica.y = arregloQR[2];
+    borrarTodosLosPuntos(stage, layer);
+    dibujarTodosLosPuntos(stage, layer);
+}
+
+function chequearNuevaUbicacionFisica(codigoQr){
+    
+    //chequea si el punto leido está en el camino    
+    var arregloQr = codigoQr.split(",");
+    var estaEnElCamino = false;
+    var esElUltimo = false;
+    for (var i=0;i<puntosNavegacion.length;i++){
+        if (puntosNavegacion[i].id == arregloQr[0]){
+            estaEnElCamino = true;
+            if (i == 0){
+                esElUltimo = true;
+            }
+        }
+    }
+    
+    //el punto leído está en el camino
+    if (estaEnElCamino){
+        deshabilitarBotonRecalcular();
+        if (esElUltimo){
+          $("#popupDialog").popup("open",100,300);
+        }
+    //el punto leído no esta en el camino    
+    }else{
+        habilitarBotonRecalcular();
+    }
+}
+
+function habilitarBotonRecalcular(){
+    $('#link_recalcular_camino').removeClass('ui-disabled');      
+}
+  
+function deshabilitarBotonRecalcular(){
+    $('#link_recalcular_camino').addClass('ui-disabled');      
+}
+
+function recalcularCamino(){
+    location.href = '/3dindoornavigation/web/index.php/main/buscar?id_punto_navegacion_origen=' + puntoNavegacionFisica.id;
 }
 
 </script>
