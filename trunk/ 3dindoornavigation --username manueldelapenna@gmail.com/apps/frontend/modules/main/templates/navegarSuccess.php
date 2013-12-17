@@ -567,7 +567,12 @@ function deshabilitarBotonRecalcular(){
 }
 
 function recalcularCamino(){
-    location.href = '/3dindoornavigation/web/index.php/main/buscar?id_punto_navegacion_origen=' + puntoNavegacionFisica.id;
+    
+    if (_BASEPATH.split(':').length>0){
+        location.href = _BASEPATH +'/index.php/main/buscar?id_punto_navegacion_origen=' + puntoNavegacionFisica.id;
+    }else{
+        location.href = '/3dindoornavigation/web/index.php/main/buscar?id_punto_navegacion_origen=' + puntoNavegacionFisica.id;
+    }
 }
 
 </script>
