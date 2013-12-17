@@ -10,7 +10,11 @@ function read(a)
 	}else{
 		var arregloQr = a.split(",");
 		var id_punto_navegacion_origen = arregloQr[0];
-		location.href = '/3dindoornavigation/web/index.php/main/buscar?id_punto_navegacion_origen=' + id_punto_navegacion_origen;
+                if (_BASEPATH.split(':').length>0){
+                    location.href = _BASEPATH +'/index.php/main/buscar?id_punto_navegacion_origen=' + id_punto_navegacion_origen;
+                }else{
+                    location.href = '/3dindoornavigation/web/index.php/main/buscar?id_punto_navegacion_origen=' + id_punto_navegacion_origen;
+                }
 	}
 }
     

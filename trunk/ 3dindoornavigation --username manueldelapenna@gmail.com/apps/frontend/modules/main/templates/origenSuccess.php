@@ -6,7 +6,9 @@
         window.location = "frontend2d.php?punto_navegacion_origen_id=1";
         
     }
+    _BASEPATH = "<?php echo $basepath;?>"; 
 </script>
+
 
 <?php use_helper("I18N");?>
 <h3 style="font-size: 20px"><?php echo __('Lea un código QR para determinar su ubicación actual.');?></h3>
