@@ -150,11 +150,12 @@ function init()
         
 	// SCENE
 	scene = new THREE.Scene();
+        alturaCamara = 60;
 	// CAMERA
 	var SCREEN_WIDTH = window.innerWidth-36, SCREEN_HEIGHT = 500;
 	var VIEW_ANGLE = 35, ASPECT = SCREEN_WIDTH / SCREEN_HEIGHT, NEAR = 0.1, FAR = 20000;
 	camara = new THREE.PerspectiveCamera( VIEW_ANGLE, ASPECT, NEAR, FAR);
-	camara.position.set(puntosNavegacion[posActualLogica].x,25,-puntosNavegacion[posActualLogica].y);
+	camara.position.set(puntosNavegacion[posActualLogica].x,alturaCamara,-puntosNavegacion[posActualLogica].y);
                 
         //calcula pendiente y angulo de rotacion para mirar al siguiente punto
         var pendiente = (puntosNavegacion[posActualLogica-1].x - camara.position.x) / (-puntosNavegacion[posActualLogica-1].y - camara.position.z);
@@ -215,10 +216,11 @@ function init()
                 $angulo_rotacion = deg2rad(90);
             }
             $orientacion = $pared->getOrientacionPared()->getNombre();
+            $link = $pared->getLinkImagen();
             
             ?>             
             
-            dibujarPared(<?php echo  $distancia ?>,<?php echo $punto_medio_x ?>,<?php echo -$punto_medio_y ?>,<?php echo $angulo_rotacion?>,'<?php echo $orientacion?>');
+            dibujarPared(<?php echo  $distancia ?>,<?php echo $punto_medio_x ?>,<?php echo -$punto_medio_y ?>,<?php echo $angulo_rotacion?>,'<?php echo $orientacion?>','<?php echo $link?>');
             <?php 
         endforeach;
         ?>
@@ -278,7 +280,7 @@ function update()
         
         if ( keyboard.pressed("C") )
 	{
-           irAPunto(3615,25,-525,camara);
+           irAPunto(3615,alturaCamara,-525,camara);
                
         }   
         if ( keyboard.pressed("P") )
@@ -290,7 +292,7 @@ function update()
                 camara.rotation.y += Math.PI/2;
     
 }
-function dibujarPared(distancia,puntoMedioX,puntoMedioY,anguloRotacion,orientacion) {
+function dibujarPared(distancia,puntoMedioX,puntoMedioY,anguloRotacion,orientacion,link) {
     
     var border = 0;
     var elevation = 150;
@@ -304,9 +306,9 @@ function dibujarPared(distancia,puntoMedioX,puntoMedioY,anguloRotacion,orientaci
     
     if (orientacion == 'Norte/Oeste'){
         materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture('') }));
-        materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture('../../../../images/walls.jpg') }));
+        materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture('../../../../images/imagenes-navegador/'+link) }));
     }else{
-        materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture('../../../../images/walls.jpg') }));
+        materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture('../../../../images/imagenes-navegador/'+link) }));
         materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture('') }));
     } 
     var MovingCubeMat = new THREE.MeshFaceMaterial(materialArray);
@@ -373,7 +375,7 @@ function getPuntoSiguiente()
 {
     deshabilitarBotonera();
     posActualLogica--;
-    irAPunto(puntosNavegacion[posActualLogica].x,25,-puntosNavegacion[posActualLogica].y,camara);
+    irAPunto(puntosNavegacion[posActualLogica].x,alturaCamara,-puntosNavegacion[posActualLogica].y,camara);
     borrarTodosLosPuntos(stage, layer);
     dibujarTodosLosPuntos(stage,layer);   
 }
@@ -382,7 +384,7 @@ function getPuntoAnterior()
 {
     deshabilitarBotonera();
     posActualLogica++;
-    irAPunto(puntosNavegacion[posActualLogica].x,25,-puntosNavegacion[posActualLogica].y,camara);
+    irAPunto(puntosNavegacion[posActualLogica].x,alturaCamara,-puntosNavegacion[posActualLogica].y,camara);
     borrarTodosLosPuntos(stage, layer);
     dibujarTodosLosPuntos(stage,layer);
  }
