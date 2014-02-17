@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 10-12-2013 a las 20:07:58
+-- Tiempo de generación: 17-02-2014 a las 20:10:41
 -- Versión del servidor: 5.1.41
 -- Versión de PHP: 5.3.1
 
@@ -146,39 +146,39 @@ CREATE TABLE IF NOT EXISTS `pared_dibujable` (
 --
 
 INSERT INTO `pared_dibujable` (`id`, `punto_1_id`, `punto_2_id`, `link_imagen`, `descripcion`, `orientacion_pared_id`) VALUES
-(6, 5, 6, 'link 5', 'Pared de entrada principal a la Facultad.', 1),
-(7, 6, 7, 'link 6', 'Pared union, frente con lateral derecha.', 1),
-(8, 7, 8, 'link 7', 'Pared Lateral derecha sobre la entrada princial de la facultad', 1),
-(9, 8, 9, 'link 8', 'Pared union lateral derecha, lateral siguiente.', 2),
-(10, 9, 123, 'link 9', 'Pared final, derecha atras.', 1),
+(6, 5, 6, 'frente.png', 'Pared de entrada principal a la Facultad.', 1),
+(7, 6, 7, 'relleno.png', 'Pared union, frente con lateral derecha.', 1),
+(8, 7, 8, 'frente-derecha.png', 'Pared Lateral derecha sobre la entrada princial de la facultad', 1),
+(9, 8, 9, 'ventana-fondo-desde-entrada.png', 'Pared union lateral derecha, lateral siguiente.', 2),
+(10, 9, 123, 'relleno.png', 'Pared final, derecha atras.', 1),
 (12, 109, 12, 'link 11', 'Pared detras de la Fotocopiadora.', 2),
 (13, 12, 17, 'link 12', 'Pasiilo a sector nuevo, Entrada secundaria, frente aula 5, pasillo interno hasta biblioteca.', 1),
-(19, 17, 18, 'link 15', 'Union pasillo lateral izquierdo, con frente de Biblioteca.', 2),
-(20, 18, 21, 'link 16', 'Frente de la Biblioteca de la Facultad', 2),
-(21, 21, 22, 'link 17', 'Union Biblioteca, con pasillo de Alumnos.', 2),
-(22, 22, 27, 'link 18', 'Pasillo interno, con salida al patio interno, frente a alumnos', 2),
-(23, 34, 39, 'link 19', 'Puerta Entrada a pasillo interno, entrando por la entrada de bicicletas.', 2),
-(27, 43, 50, 'link  22', 'pared desde alumnos hasta escalera 3', 1),
-(29, 50, 55, 'link 24', 'pared lateral alumnos', 2),
-(31, 55, 65, 'link 26', 'Intendencia, Oficina G, Alumnos B, Personal y Concursos', 1),
+(19, 17, 18, 'biblioteca-derecha.png', 'Union pasillo lateral izquierdo, con frente de Biblioteca.', 2),
+(20, 18, 21, 'biblioteca.png', 'Frente de la Biblioteca de la Facultad', 2),
+(21, 21, 22, 'biblioteca-izquierda.png', 'Union Biblioteca, con pasillo de Alumnos.', 2),
+(22, 22, 27, 'galeria1.png', 'Pasillo interno, con salida al patio interno, frente a alumnos', 2),
+(23, 34, 39, 'puerta-lateral-escalera3.png', 'Puerta Entrada a pasillo interno, entrando por la entrada de bicicletas.', 2),
+(27, 43, 50, 'galeriaalumnos.png', 'pared desde alumnos hasta escalera 3', 1),
+(29, 50, 55, 'relleno.png', 'pared lateral alumnos', 2),
+(31, 55, 65, 'pared1.png', 'Intendencia, Oficina G, Alumnos B, Personal y Concursos', 1),
 (37, 89, 76, 'link 28', 'Frente Aula 1, 2, 3 y 4', 2),
-(39, 120, 76, 'link 29', 'Lateral aula 1', 2),
+(39, 120, 76, 'relleno.png', 'Lateral aula 1', 2),
 (42, 89, 92, 'link 32', 'Pared final aula 4 mirando desde pizarron.', 1),
 (44, 123, 126, 'link 34', 'Baño mujeres 1', 2),
-(45, 126, 127, 'link 35', 'Pared lateral derecha de la escalera a 2do piso', 2),
-(46, 127, 128, 'link 36', 'Frente del ascensor + escalera', 2),
+(45, 126, 127, 'je', 'Pared lateral derecha de la escalera a 2do piso', 2),
+(46, 127, 128, 'ascensor-escalera.png', 'Frente del ascensor + escalera', 2),
 (47, 128, 125, 'Link 37', 'Pared lateral izquierda ascensor mirando de frente.', 1),
 (48, 120, 125, 'link 38', 'Baño de Hombres 1', 2),
-(49, 92, 101, 'link 39', 'Escalera a primer piso, entrada por atras cercana al aula 4', 2),
-(51, 5, 65, 'Link', 'Pared lateral derecha Intendencia', 2),
+(49, 92, 101, 'he', 'Escalera a primer piso, entrada por atras cercana al aula 4', 2),
+(51, 5, 65, 'relleno.png', 'Pared lateral derecha Intendencia', 2),
 (52, 102, 101, 'Link', 'Puerta baño de hombres 2', 1),
 (53, 107, 102, 'Link', 'Union Baño mujeres y hombres 2', 2),
 (54, 107, 108, 'link', 'Puerta baño mujeres 2', 2),
 (55, 108, 109, 'link', 'BAño mujeres 2, pared final del mapa', 2),
-(56, 38, 39, 'link', 'Pared frontal escalera 3', 1),
-(57, 38, 43, 'link', 'Pared lateral final Economica financiera con escalera 3', 1),
-(59, 134, 34, 'link', 'Pared frene consultoro medico', 1),
-(60, 134, 27, 'Link', 'Pared afuera contra bibicletas', 2);
+(56, 38, 39, 'escalera3.png', 'Pared frontal escalera 3', 1),
+(57, 38, 43, 'relleno.png', 'Pared lateral final Economica financiera con escalera 3', 1),
+(59, 134, 34, 'consultorio.png', 'Pared frente consultoro medico', 1),
+(60, 134, 27, 'relleno.png', 'Pared afuera contra bibicletas', 2);
 
 -- --------------------------------------------------------
 
@@ -332,7 +332,7 @@ CREATE TABLE IF NOT EXISTS `punto_navegacion` (
   `punto_origen_y` bigint(20) NOT NULL,
   `estructura_id` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=62 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=51 ;
 
 --
 -- Volcar la base de datos para la tabla `punto_navegacion`
