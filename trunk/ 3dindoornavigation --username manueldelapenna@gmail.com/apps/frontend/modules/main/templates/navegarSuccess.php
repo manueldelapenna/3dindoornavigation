@@ -139,8 +139,6 @@ puntoNavegacionFisica.y = puntosNavegacion[indiceInicioCamino].y;
 
 // custom global variables
 
-var collidableMeshList = [];
-
 init();
 animate();
 
@@ -176,6 +174,7 @@ function init()
 	else
 		renderer = new THREE.CanvasRenderer(); 
 	renderer.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
+        renderer.setClearColorHex(0xfefcff, 1);
 	container = document.getElementById( 'ThreeJS' );
 	container.appendChild( renderer.domElement );
 		
@@ -317,7 +316,6 @@ function dibujarPared(distancia,puntoMedioX,puntoMedioY,anguloRotacion,orientaci
     pared = new THREE.Mesh( MovingCubeGeom, MovingCubeMat );
     pared.position.set(puntoMedioX, 75, puntoMedioY);
     pared.rotation.y = anguloRotacion;
-    collidableMeshList.push(pared);
     scene.add( pared );
 }
 
