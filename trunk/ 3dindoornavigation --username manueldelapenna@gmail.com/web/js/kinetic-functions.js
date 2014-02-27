@@ -108,5 +108,31 @@ function textoDelAula(stage, layer, text,x,y){
   stage.add(layer);  
 }
 
-
+function borrarTodosLosPuntos(stage,layer){
+      layer.removeChildren();
+      dibujarFacu(stage);
+      
+}
+  
+function dibujarTodosLosPuntos(stage,layer){
+    
+    var aux = new Array();
+    for (var i=0;i<puntosNavegacion.length;i++)
+    {
+        if (i<=indiceInicioCamino){
+            var id = null;
+            var x = puntosNavegacion[indiceInicioCamino-i].x/escala + 10;
+            var y = (app_maximo_y - puntosNavegacion[indiceInicioCamino-i].y)/escala;
+            aux.push(x);
+            aux.push(y);
+            if (i == puntosNavegacion.length - posActualLogica - 1){
+                dibujarPuntoNavegacion(stage,layer,x,y,id,true,true);
+            }else{
+                dibujarPuntoNavegacion(stage,layer,x,y,id,false,true);
+            }
+        }
+    }
+    dibujarLinea(stage, layer, aux);
+    dibujarPuntoNavegacion(stage,layer,puntoNavegacionFisica.x/escala + 10,(app_maximo_y - puntoNavegacionFisica.y)/escala,puntoNavegacionFisica.id, true,false);
+}
 
