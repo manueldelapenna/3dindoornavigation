@@ -1,15 +1,15 @@
 sfGuardUser:
   Claudio_admin:
-    first_name:     Claudio
-    last_name:      Borré
-    email_address:  borre.claudio@gmail.com
-    username:       claudio
-    password:       claudio
+    first_name:     Manuel
+    last_name:      De la Penna
+    email_address:  manueldelapenna@gmail.com
+    username:       manuel
+    password:       manuel
     is_super_admin: true
   Luciano_admin:
-    first_name:     Luciano
-    last_name:      Appathie
-    email_address:  luciano.appathie@gmail.com
-    username:       luciano
-    password:       luciano
+    first_name:     Agustin
+    last_name:      De Nigris
+    email_address:  agustindn@gmail.com@gmail.com
+    username:       agustin
+    password:       agustin
     is_super_admin: true
