@@ -1,6 +1,5 @@
 function activarCamara(encenderLector){
     
-    
     navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
 
     var cam_video_id = "camsource"
