@@ -225,7 +225,6 @@ function apagarLector(){
 function actualizarPosicionFisica(codigoQR){
     
     var arregloQR = codigoQR.split(",");
-    //dibujarPuntoNavegacion(stage,layer,arregloQR[1]/escala + 10,(app_maximo_y - arregloQR[2])/escala,arregloQR[0], true,false);
     puntoNavegacionFisica.id = arregloQR[0];
     puntoNavegacionFisica.x = arregloQR[1];
     puntoNavegacionFisica.y = arregloQR[2];

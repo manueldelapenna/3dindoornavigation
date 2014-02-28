@@ -47,7 +47,7 @@ class mainActions extends sfActions
     $this->destino = $punto_navegacion->getId();
     $d->caminoMinimoDesdeHasta($this->getUser()->getAttribute('actual_id'), $this->destino);    
     $this->puntos_navegacion = $d->getCamino();  
-    //var_dump($this->puntos_navegacion); die;
+    
   } 
   
   /**
@@ -55,8 +55,7 @@ class mainActions extends sfActions
    * @param sfWebRequest $request 
    */  
   public function executeOrigen(sfWebRequest $request){
-    $this->basepath = ('http'.($request->isSecure() ? 's' : '').'://').
-                        $request->getHost().$request->getRelativeUrlRoot();
+
   }
   
   /**
@@ -68,15 +67,12 @@ class mainActions extends sfActions
     $puntoNavegacionOrigen = Doctrine::getTable('PuntoNavegacion')->find($request->getParameter('id_punto_navegacion_origen'));
     $this->getUser()->setAttribute('origen_id',$puntoNavegacionOrigen->getEstructuraId());
     $this->getUser()->setAttribute('actual_id',$puntoNavegacionOrigen->getId());
-    $this->getUser()->setAttribute('borrados', array());
     $this->getUser()->setAttribute('escala',sfConfig::get('app_escala'));
     $this->estructuras = EstructuraTable::getNavegables($puntoNavegacionOrigen->getEstructuraId()); 
     
     //si tiene un destino de una busqueda anterior lo guarda
     $this->destino = $this->getUser()->getAttribute('fin_id'); 
     $this->estructura = Doctrine::getTable('Estructura')->find($this->destino);
-    
-
   }  
 
   /**
