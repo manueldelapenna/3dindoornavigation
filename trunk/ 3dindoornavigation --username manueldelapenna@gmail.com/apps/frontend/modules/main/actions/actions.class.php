@@ -55,7 +55,9 @@ class mainActions extends sfActions
    * @param sfWebRequest $request 
    */  
   public function executeOrigen(sfWebRequest $request){
-
+      //Relative URL Ej: http://localhost/indoor-navigation
+    $this->basepath = ('http'.($request->isSecure() ? 's' : '').'://').
+                        $request->getHost().$request->getRelativeUrlRoot();
   }
   
   /**
